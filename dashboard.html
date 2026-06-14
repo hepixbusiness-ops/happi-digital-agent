@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happi Digital - Tableau de Bord</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Segoe UI', sans-serif; background:#060612; color:#e2e8f0; min-height:100vh; }
+
+.header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  padding: 20px 28px;
+  border-bottom: 1px solid #2d3748;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.logo { display:flex; align-items:center; gap:12px; }
+.logo-icon { width:36px; height:36px; background: linear-gradient(135deg,#48bb78,#38a169); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+.logo h1 { font-size:1.2rem; font-weight:700; }
+.logo h1 span { color:#48bb78; }
+.status { display:flex; align-items:center; gap:8px; font-size:.85rem; color:#48bb78; }
+.dot { width:8px; height:8px; border-radius:50%; background:#48bb78; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; padding:24px; }
+.kpi { background:#1a1a2e; border:1px solid #2d3748; border-radius:10px; padding:18px; }
+.kpi .label { font-size:.7rem; color:#718096; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+.kpi .val { font-size:1.8rem; font-weight:700; }
+.kpi .sub { font-size:.75rem; color:#718096; margin-top:4px; }
+.kpi.g .val { color:#48bb78; }
+.kpi.b .val { color:#63b3ed; }
+.kpi.y .val { color:#f6e05e; }
+.kpi.p .val { color:#b794f4; }
+.kpi.r .val { color:#fc8181; }
+
+.section { padding:0 24px 24px; }
+.section-title { font-size:.85rem; color:#718096; text-transform:uppercase; letter-spacing:.5px; margin-bottom:14px; }
+.box { background:#1a1a2e; border:1px solid #2d3748; border-radius:10px; padding:20px; }
+
+.prog-wrap { background:#2d3748; border-radius:99px; height:10px; margin:12px 0 6px; }
+.prog-bar { height:10px; border-radius:99px; background:linear-gradient(90deg,#48bb78,#38a169); transition:width 1.2s ease; }
+.prog-labels { display:flex; justify-content:space-between; font-size:.75rem; color:#718096; }
+
+.pipe { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+.p-col { background:#111827; border:1px solid #2d3748; border-radius:8px; padding:10px 6px; text-align:center; }
+.p-col .p-label { font-size:.6rem; color:#718096; text-transform:uppercase; margin-bottom:6px; }
+.p-col .p-val { font-size:1.4rem; font-weight:700; }
+.p-col.highlight { border-color:#48bb78; background:#0d1f13; }
+
+table { width:100%; border-collapse:collapse; }
+th { text-align:left; padding:9px 12px; font-size:.7rem; color:#718096; text-transform:uppercase; border-bottom:1px solid #2d3748; }
+td { padding:9px 12px; font-size:.82rem; border-bottom:1px solid #111827; }
+tr:last-child td { border-bottom:none; }
+
+.badge { display:inline-block; padding:2px 8px; border-radius:99px; font-size:.68rem; font-weight:600; }
+.b-nouveau { background:#1e293b; color:#94a3b8; }
+.b-email_envoye { background:#1e3a5f; color:#60a5fa; }
+.b-repondu { background:#14532d; color:#4ade80; }
+.b-rdv { background:#431407; color:#fb923c; }
+.b-propose { background:#2e1065; color:#a78bfa; }
+.b-signe { background:#052e16; color:#22c55e; }
+.b-perdu { background:#3f0b0b; color:#f87171; }
+
+.bottom-bar {
+  position:fixed; bottom:0; left:0; right:0;
+  background:#1a1a2e; border-top:1px solid #2d3748;
+  padding:12px 24px; display:flex; align-items:center; gap:10px;
+}
+.btn { padding:8px 16px; border-radius:7px; border:none; cursor:pointer; font-size:.82rem; font-weight:600; transition:all .2s; }
+.btn-g { background:#48bb78; color:#052e16; }
+.btn-g:hover { background:#38a169; }
+.btn-s { background:#2d3748; color:#e2e8f0; }
+.btn-s:hover { background:#4a5568; }
+.mj { margin-left:auto; font-size:.75rem; color:#4a5568; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">H</div>
+    <h1>Happi <span>Digital</span> &mdash; Agent IA</h1>
+  </div>
+  <div class="status">
+    <div class="dot"></div>
+    Prochain cycle dans <strong id="cd" style="margin-left:4px">--:--:--</strong>
+  </div>
+</div>
+
+<div class="kpis">
+  <div class="kpi b"><div class="label">Total Prospects</div><div class="val" id="k-total">--</div><div class="sub">en base de donnees</div></div>
+  <div class="kpi g"><div class="label">Emails Envoyes</div><div class="val" id="k-emails">--</div><div class="sub">depuis le debut</div></div>
+  <div class="kpi y"><div class="label">En Discussion</div><div class="val" id="k-disc">--</div><div class="sub">repondu + RDV + propose</div></div>
+  <div class="kpi g"><div class="label">Contrats Signes</div><div class="val" id="k-signes">--</div><div class="sub">clients</div></div>
+  <div class="kpi p"><div class="label">CA Encaisse</div><div class="val" id="k-ca">--</div><div class="sub">FCFA</div></div>
+</div>
+
+<div class="section">
+  <div class="box">
+    <div class="section-title">Progression vers 2 000 000 FCFA</div>
+    <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
+    <div class="prog-labels"><span>0</span><span id="prog-pct" style="color:#48bb78;font-weight:700">0%</span><span>2 000 000 FCFA</span></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Pipeline Commercial</div>
+  <div class="pipe">
+    <div class="p-col"><div class="p-label">Nouveau</div><div class="p-val" id="p-n" style="color:#94a3b8">-</div></div>
+    <div class="p-col"><div class="p-label">Contacte</div><div class="p-val" id="p-c" style="color:#60a5fa">-</div></div>
+    <div class="p-col"><div class="p-label">Repondu</div><div class="p-val" id="p-r" style="color:#f6e05e">-</div></div>
+    <div class="p-col"><div class="p-label">RDV</div><div class="p-val" id="p-rdv" style="color:#fb923c">-</div></div>
+    <div class="p-col"><div class="p-label">Propose</div><div class="p-val" id="p-pr" style="color:#a78bfa">-</div></div>
+    <div class="p-col highlight"><div class="p-label">Signe</div><div class="p-val" id="p-s" style="color:#22c55e">-</div></div>
+    <div class="p-col"><div class="p-label">Perdu</div><div class="p-val" id="p-lo" style="color:#f87171">-</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Prospects Recents</div>
+  <div class="box" style="padding:0;overflow:hidden">
+    <table>
+      <thead><tr><th>Entreprise</th><th>Secteur</th><th>Ville</th><th>Telephone</th><th>Statut</th></tr></thead>
+      <tbody id="tbody">
+        <tr><td colspan="5" style="text-align:center;padding:24px;color:#4a5568">Chargement...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="height:70px"></div>
+
+<div class="bottom-bar">
+  <button class="btn btn-g" onclick="window.open('https://mail.google.com/mail/#drafts','_blank')">Gmail &mdash; Envoyer les brouillons</button>
+  <button class="btn btn-s" onclick="window.open('https://supabase.com/dashboard/project/vuzjrsgobeevfqjmsgsm','_blank')">Base de donnees</button>
+  <button class="btn btn-s" onclick="load()">Actualiser</button>
+  <span class="mj">MAJ : <span id="mj">--</span></span>
+</div>
+
+<script>
+var URL = 'https://vuzjrsgobeevfqjmsgsm.supabase.co';
+var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1empyc2dvYmVldmZxam1zZ3NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MjkzMDAsImV4cCI6MjA5NzAwNTMwMH0.fKRj-BiLjsNeHgs34CU4zsK54DqQ2VEIb-R-wj8KMD0';
+
+function sb(p) {
+  return fetch(URL+'/rest/v1'+p, {headers:{'apikey':KEY,'Authorization':'Bearer '+KEY}}).then(function(r){return r.json();});
+}
+
+function fmt(n) { return new Intl.NumberFormat('fr-FR').format(n||0); }
+
+function load() {
+  Promise.all([
+    sb('/leads?select=*&order=created_at.desc&limit=25'),
+    sb('/emails_envoyes?select=id'),
+    sb('/pipeline?select=montant_fcfa'),
+  ]).then(function(res) {
+    var leads = res[0]||[], emails = res[1]||[], pipeline = res[2]||[];
+
+    var c = {nouveau:0,email_envoye:0,repondu:0,rdv:0,propose:0,signe:0,perdu:0};
+    leads.forEach(function(l){ if(c[l.statut]!==undefined) c[l.statut]++; });
+
+    document.getElementById('k-total').textContent = leads.length;
+    document.getElementById('k-emails').textContent = emails.length;
+    document.getElementById('k-disc').textContent = (c.repondu||0)+(c.rdv||0)+(c.propose||0);
+    document.getElementById('k-signes').textContent = c.signe||0;
+
+    var ca = pipeline.reduce(function(s,r){return s+(r.montant_fcfa||0);},0);
+    document.getElementById('k-ca').textContent = fmt(ca);
+
+    var pct = Math.min(100, Math.round((ca/2000000)*100));
+    document.getElementById('prog').style.width = pct+'%';
+    document.getElementById('prog-pct').textContent = pct+'%';
+
+    document.getElementById('p-n').textContent = c.nouveau||0;
+    document.getElementById('p-c').textContent = c.email_envoye||0;
+    document.getElementById('p-r').textContent = c.repondu||0;
+    document.getElementById('p-rdv').textContent = c.rdv||0;
+    document.getElementById('p-pr').textContent = c.propose||0;
+    document.getElementById('p-s').textContent = c.signe||0;
+    document.getElementById('p-lo').textContent = c.perdu||0;
+
+    var tbody = document.getElementById('tbody');
+    if (!leads.length) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:#4a5568">Agent demarre demain matin a 7h00</td></tr>';
+    } else {
+      tbody.innerHTML = leads.map(function(l) {
+        return '<tr><td><strong>'+l.nom+'</strong></td><td>'+l.secteur+'</td><td>'+(l.ville||'Yaounde')+'</td><td>'+(l.telephone||'&mdash;')+'</td><td><span class="badge b-'+l.statut+'">'+l.statut.replace('_',' ')+'</span></td></tr>';
+      }).join('');
+    }
+
+    document.getElementById('mj').textContent = new Date().toLocaleTimeString('fr-FR');
+  }).catch(function(e){ console.error(e); });
+}
+
+function countdown() {
+  var now = new Date(), next = new Date();
+  next.setUTCHours(6,0,0,0);
+  if (now >= next) next.setDate(next.getDate()+1);
+  var d = next-now;
+  var h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
+  document.getElementById('cd').textContent =
+    String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+load();
+setInterval(load, 30000);
+setInterval(countdown, 1000);
+countdown();
+</script>
+</body>
+</html>

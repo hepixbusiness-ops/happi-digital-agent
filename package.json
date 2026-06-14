@@ -1,0 +1,17 @@
+{
+  "name": "happi-digital-agent",
+  "version": "1.0.0",
+  "description": "Agent IA prospection automatique - Happi Digital Yaounde",
+  "main": "src/agent.js",
+  "scripts": {
+    "start": "node src/agent.js",
+    "test": "node src/agent.js --test"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
