@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
  * GÉNÉRATEUR D'ARTICLES DE BLOG
- * Utilise l'API Claude pour créer 1 article par jour
+ * Utilise l'API OpenAI pour créer 1 article par jour
  * Catégories alternées : Digital Cameroun / Tutoriels Web / Conseils Business / IA
  */
 
 const fs = require('fs');
 const path = require('path');
 
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const POSTS_FILE = path.join(__dirname, '..', 'posts.json');
 const BLOG_DIR = path.join(__dirname, '..', 'blog');
 
@@ -71,23 +71,22 @@ Format de réponse JSON strict :
 
 Réponds UNIQUEMENT avec le JSON, sans texte avant ni après.`;
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01',
+      'Authorization': 'Bearer ' + OPENAI_API_KEY,
     },
     body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
+      model: 'gpt-4o-mini',
       max_tokens: 3000,
       messages: [{ role: 'user', content: prompt }],
     }),
   });
 
-  if (!response.ok) throw new Error('API Anthropic: ' + response.status);
+  if (!response.ok) throw new Error('API OpenAI: ' + response.status);
   const data = await response.json();
-  const text = data.content[0].text.trim();
+  const text = data.choices[0].message.content.trim();
 
   // Parser le JSON
   const jsonMatch = text.match(/\{[\s\S]*\}/);
@@ -208,8 +207,8 @@ footer{padding:3rem 5rem;border-top:1px solid var(--border);display:flex;justify
 async function main() {
   console.log('[BLOG] Démarrage génération article...');
 
-  if (!ANTHROPIC_API_KEY) {
-    console.error('[BLOG] ANTHROPIC_API_KEY manquante');
+  if (!OPENAI_API_KEY) {
+    console.error('[BLOG] OPENAI_API_KEY manquante');
     process.exit(1);
   }
 
