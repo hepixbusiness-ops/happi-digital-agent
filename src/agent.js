@@ -94,8 +94,9 @@ async function phase2_EnvoyerEmails() {
 
     log('info', `Email pour: ${lead.nom} (${lead.secteur})`);
 
+    let result = { messageId: null, envoye: false };
     if (!MODE_TEST) {
-      const result = await envoyerEmail(destinataire, sujet, corps);
+      result = await envoyerEmail(destinataire, sujet, corps);
 
       await db.sauvegarderEmail({
         lead_id: lead.id,
@@ -103,7 +104,7 @@ async function phase2_EnvoyerEmails() {
         corps,
         gmail_message_id: result.messageId,
         relance_num: 1,
-        statut: result.envoye ? 'envoye' : 'envoye',
+        statut: 'envoye',
       });
 
       await db.updateLead(lead.id, {
@@ -113,7 +114,7 @@ async function phase2_EnvoyerEmails() {
     }
 
     emailsEnvoyes++;
-    log('ok', `Email ${result?.brouillon ? '(brouillon Gmail)' : 'envoye'} : ${lead.nom}`);
+    log('ok', `Email ${result.brouillon ? '(brouillon Gmail)' : 'envoye'} : ${lead.nom}`);
 
     await new Promise(r => setTimeout(r, 800));
   }
