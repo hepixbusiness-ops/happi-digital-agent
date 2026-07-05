@@ -99,7 +99,13 @@ Pour SUPABASE_SERVICE_KEY :
 ## TABLEAU DE BORD
 
 Ouvre le fichier dashboard.html dans ton navigateur.
-Il se connecte a ta base de donnees en temps reel.
+Il se connecte a ta base de donnees en temps reel et permet de gerer
+les prospects (changer leur statut, ajouter des notes) et les clients
+signes (formule, montant, statut du projet, site livre).
+
+Connexion : email + mot de passe (compte Supabase Auth).
+Pour creer ou changer ce compte : Supabase Studio > Authentication > Users
+> Add user (ou Reset password) sur le projet vuzjrsgobeevfqjmsgsm.
 
 ---
 

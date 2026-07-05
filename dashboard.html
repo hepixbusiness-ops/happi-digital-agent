@@ -3,104 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happi Digital - Tableau de Bord</title>
+<title>Happi Digital — Tableau de Bord</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
+:root {
+  --bg:#0b0b10; --surface:#15151d; --surface2:#1c1c27; --line:#262632;
+  --text:#eae8f0; --muted:#8b899c; --accent:#c99a52; --accent-l:#e0b877;
+  --blue:#6ea8e6; --green:#5cc98a; --yellow:#e8d26e; --purple:#b79bf0; --red:#f0837e;
+}
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Segoe UI', sans-serif; background:#060612; color:#e2e8f0; min-height:100vh; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+h1,h2,.fig { font-family:'Fraunces',serif; }
 
-/* ÉCRAN DE CONNEXION */
-#lock-screen {
-  position:fixed; inset:0; background:#060612;
-  display:flex; align-items:center; justify-content:center; z-index:9999;
-}
-.lock-box {
-  background:#1a1a2e; border:1px solid #2d3748; border-radius:16px;
-  padding:40px; width:100%; max-width:360px; text-align:center;
-}
-.lock-icon { font-size:2.5rem; margin-bottom:1rem; }
-.lock-box h2 { font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
-.lock-box p { font-size:.8rem; color:#718096; margin-bottom:1.5rem; }
-.lock-input {
-  width:100%; padding:12px 16px; border-radius:8px;
-  background:#111827; border:1px solid #2d3748; color:#e2e8f0;
-  font-size:1rem; letter-spacing:.15em; margin-bottom:1rem; outline:none;
-  text-align:center;
-}
-.lock-input:focus { border-color:#48bb78; }
-.lock-btn {
-  width:100%; padding:12px; border-radius:8px; border:none;
-  background:#48bb78; color:#052e16; font-size:.9rem; font-weight:700;
-  cursor:pointer; transition:background .2s;
-}
-.lock-btn:hover { background:#38a169; }
-.lock-error { color:#fc8181; font-size:.8rem; margin-top:.8rem; display:none; }
+/* LOGIN */
+#lock-screen { position:fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center; z-index:9999; padding:1.5rem; }
+.lock-box { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:44px; width:100%; max-width:380px; }
+.lock-icon { font-size:2rem; margin-bottom:1rem; }
+.lock-box h2 { font-size:1.3rem; font-weight:700; margin-bottom:.3rem; }
+.lock-box p { font-size:.82rem; color:var(--muted); margin-bottom:1.6rem; }
+.lock-field { margin-bottom:1rem; }
+.lock-field label { display:block; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:6px; font-weight:600; }
+.lock-input { width:100%; padding:12px 16px; border-radius:10px; background:var(--bg); border:1px solid var(--line); color:var(--text); font-size:.92rem; outline:none; }
+.lock-input:focus { border-color:var(--accent); }
+.lock-btn { width:100%; padding:13px; border-radius:10px; border:none; background:var(--accent); color:#1a1206; font-size:.9rem; font-weight:700; cursor:pointer; transition:background .2s; margin-top:.5rem; }
+.lock-btn:hover { background:var(--accent-l); }
+.lock-btn:disabled { opacity:.6; cursor:default; }
+.lock-error { color:var(--red); font-size:.8rem; margin-top:.9rem; display:none; }
 
-.header {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  padding: 20px 28px;
-  border-bottom: 1px solid #2d3748;
-  display: flex; align-items: center; justify-content: space-between;
-}
+/* HEADER + TABS */
+.header { background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%); padding:20px 28px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
 .logo { display:flex; align-items:center; gap:12px; }
-.logo-icon { width:36px; height:36px; background: linear-gradient(135deg,#48bb78,#38a169); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; }
-.logo h1 { font-size:1.2rem; font-weight:700; }
-.logo h1 span { color:#48bb78; }
-.status { display:flex; align-items:center; gap:8px; font-size:.85rem; color:#48bb78; }
-.dot { width:8px; height:8px; border-radius:50%; background:#48bb78; animation:pulse 2s infinite; }
+.logo-icon { width:38px; height:38px; background:linear-gradient(135deg,var(--accent),var(--accent-l)); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:18px; color:#1a1206; font-weight:700; }
+.logo h1 { font-size:1.15rem; font-weight:700; }
+.logo h1 span { color:var(--accent); font-style:italic; }
+.status { display:flex; align-items:center; gap:8px; font-size:.82rem; color:var(--green); }
+.dot { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
+.tabs { display:flex; gap:6px; padding:16px 24px 0; border-bottom:1px solid var(--line); }
+.tab-btn { padding:10px 18px; border:none; background:none; color:var(--muted); font-size:.85rem; font-weight:600; cursor:pointer; border-radius:8px 8px 0 0; transition:all .2s; }
+.tab-btn:hover { color:var(--text); }
+.tab-btn.active { color:var(--accent); background:var(--surface); border-bottom:2px solid var(--accent); }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
 .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; padding:24px; }
-.kpi { background:#1a1a2e; border:1px solid #2d3748; border-radius:10px; padding:18px; }
-.kpi .label { font-size:.7rem; color:#718096; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
-.kpi .val { font-size:1.8rem; font-weight:700; }
-.kpi .sub { font-size:.75rem; color:#718096; margin-top:4px; }
-.kpi.g .val { color:#48bb78; }
-.kpi.b .val { color:#63b3ed; }
-.kpi.y .val { color:#f6e05e; }
-.kpi.p .val { color:#b794f4; }
-.kpi.r .val { color:#fc8181; }
+.kpi { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px; }
+.kpi .label { font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; font-weight:600; }
+.kpi .val { font-size:1.9rem; font-weight:700; }
+.kpi .sub { font-size:.75rem; color:var(--muted); margin-top:4px; }
+.kpi.g .val { color:var(--green); } .kpi.b .val { color:var(--blue); } .kpi.y .val { color:var(--yellow); } .kpi.p .val { color:var(--purple); } .kpi.r .val { color:var(--accent); }
 
 .section { padding:0 24px 24px; }
-.section-title { font-size:.85rem; color:#718096; text-transform:uppercase; letter-spacing:.5px; margin-bottom:14px; }
-.box { background:#1a1a2e; border:1px solid #2d3748; border-radius:10px; padding:20px; }
+.section-title { font-size:.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:14px; font-weight:600; display:flex; align-items:center; justify-content:space-between; }
+.box { background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px; }
 
-.prog-wrap { background:#2d3748; border-radius:99px; height:10px; margin:12px 0 6px; }
-.prog-bar { height:10px; border-radius:99px; background:linear-gradient(90deg,#48bb78,#38a169); transition:width 1.2s ease; }
-.prog-labels { display:flex; justify-content:space-between; font-size:.75rem; color:#718096; }
-
-.pipe { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
-.p-col { background:#111827; border:1px solid #2d3748; border-radius:8px; padding:10px 6px; text-align:center; }
-.p-col .p-label { font-size:.6rem; color:#718096; text-transform:uppercase; margin-bottom:6px; }
-.p-col .p-val { font-size:1.4rem; font-weight:700; }
-.p-col.highlight { border-color:#48bb78; background:#0d1f13; }
+.prog-wrap { background:var(--surface2); border-radius:99px; height:10px; margin:12px 0 6px; }
+.prog-bar { height:10px; border-radius:99px; background:linear-gradient(90deg,var(--accent),var(--accent-l)); transition:width 1.2s ease; }
+.prog-labels { display:flex; justify-content:space-between; font-size:.75rem; color:var(--muted); }
 
 table { width:100%; border-collapse:collapse; }
-th { text-align:left; padding:9px 12px; font-size:.7rem; color:#718096; text-transform:uppercase; border-bottom:1px solid #2d3748; }
-td { padding:9px 12px; font-size:.82rem; border-bottom:1px solid #111827; }
+th { text-align:left; padding:9px 12px; font-size:.7rem; color:var(--muted); text-transform:uppercase; border-bottom:1px solid var(--line); font-weight:600; }
+td { padding:9px 12px; font-size:.82rem; border-bottom:1px solid var(--surface2); vertical-align:middle; }
 tr:last-child td { border-bottom:none; }
+.table-wrap { overflow-x:auto; }
+
+select.mini, input.mini { background:var(--bg); border:1px solid var(--line); color:var(--text); border-radius:7px; padding:6px 8px; font-size:.78rem; font-family:'Inter',sans-serif; }
+select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); }
 
 .badge { display:inline-block; padding:2px 8px; border-radius:99px; font-size:.68rem; font-weight:600; }
-.b-nouveau { background:#1e293b; color:#94a3b8; }
-.b-email_envoye { background:#1e3a5f; color:#60a5fa; }
-.b-repondu { background:#14532d; color:#4ade80; }
-.b-rdv { background:#431407; color:#fb923c; }
-.b-propose { background:#2e1065; color:#a78bfa; }
-.b-signe { background:#052e16; color:#22c55e; }
-.b-perdu { background:#3f0b0b; color:#f87171; }
+.b-nouveau { background:#1e1e2b; color:#94a3b8; }
+.b-email_envoye { background:#1e3350; color:var(--blue); }
+.b-repondu { background:#173a26; color:var(--green); }
+.b-rdv { background:#3f2a10; color:#f0a35c; }
+.b-propose { background:#2a1e4a; color:var(--purple); }
+.b-signe { background:#123321; color:var(--green); }
+.b-perdu { background:#3a1414; color:var(--red); }
 
-.bottom-bar {
-  position:fixed; bottom:0; left:0; right:0;
-  background:#1a1a2e; border-top:1px solid #2d3748;
-  padding:12px 24px; display:flex; align-items:center; gap:10px;
+.btn { padding:9px 16px; border-radius:8px; border:none; cursor:pointer; font-size:.82rem; font-weight:600; transition:all .2s; font-family:'Inter',sans-serif; }
+.btn-g { background:var(--accent); color:#1a1206; }
+.btn-g:hover { background:var(--accent-l); }
+.btn-s { background:var(--surface2); color:var(--text); border:1px solid var(--line); }
+.btn-s:hover { background:#242432; }
+.btn-r { background:#2a1414; color:var(--red); }
+.btn-r:hover { background:#3a1a1a; }
+.btn-xs { padding:5px 10px; font-size:.72rem; }
+
+.form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:14px; }
+.form-field label { display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:5px; font-weight:600; }
+.form-field input, .form-field select, .form-field textarea { width:100%; padding:9px 12px; border-radius:8px; background:var(--bg); border:1px solid var(--line); color:var(--text); font-size:.85rem; font-family:'Inter',sans-serif; }
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline:none; border-color:var(--accent); }
+
+.bottom-bar { position:fixed; bottom:0; left:0; right:0; background:var(--surface); border-top:1px solid var(--line); padding:12px 24px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.mj { margin-left:auto; font-size:.75rem; color:var(--muted); }
+.empty-row td { text-align:center; padding:24px; color:var(--muted); }
+
+@media (max-width:700px) {
+  .tabs { overflow-x:auto; }
+  .offers-intro-right { text-align:left; }
 }
-.btn { padding:8px 16px; border-radius:7px; border:none; cursor:pointer; font-size:.82rem; font-weight:600; transition:all .2s; }
-.btn-g { background:#48bb78; color:#052e16; }
-.btn-g:hover { background:#38a169; }
-.btn-s { background:#2d3748; color:#e2e8f0; }
-.btn-s:hover { background:#4a5568; }
-.btn-r { background:#3f0b0b; color:#fc8181; }
-.btn-r:hover { background:#7b1c1c; }
-.mj { margin-left:auto; font-size:.75rem; color:#4a5568; }
 </style>
 </head>
 <body>
@@ -110,178 +114,318 @@ tr:last-child td { border-bottom:none; }
   <div class="lock-box">
     <div class="lock-icon">🔐</div>
     <h2>Happi Digital</h2>
-    <p>Tableau de bord privé — accès réservé</p>
-    <input type="password" class="lock-input" id="pwd-input" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')unlock()">
-    <button class="lock-btn" onclick="unlock()">Accéder →</button>
-    <div class="lock-error" id="pwd-error">Mot de passe incorrect</div>
+    <p>Tableau de bord privé — connexion requise</p>
+    <div class="lock-field">
+      <label>Email</label>
+      <input type="email" class="lock-input" id="email-input" placeholder="ton@email.com" autocomplete="username">
+    </div>
+    <div class="lock-field">
+      <label>Mot de passe</label>
+      <input type="password" class="lock-input" id="pwd-input" placeholder="Mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="lock-btn" id="login-btn" onclick="login()">Se connecter →</button>
+    <div class="lock-error" id="pwd-error">Identifiants incorrects</div>
   </div>
 </div>
 
-<div class="header">
-  <div class="logo">
-    <div class="logo-icon">H</div>
-    <h1>Happi <span>Digital</span> &mdash; Agent IA</h1>
+<!-- APP -->
+<div id="app" style="display:none">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">H</div>
+      <h1>Happi <span>Digital</span></h1>
+    </div>
+    <div class="status"><div class="dot"></div>Connecté — MAJ <strong id="mj" style="margin-left:4px">--</strong></div>
   </div>
-  <div class="status">
-    <div class="dot"></div>
-    Prochain cycle dans <strong id="cd" style="margin-left:4px">--:--:--</strong>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
+    <button class="tab-btn" data-tab="prospects">Prospects</button>
+    <button class="tab-btn" data-tab="clients">Clients</button>
   </div>
-</div>
 
-<div class="kpis">
-  <div class="kpi b"><div class="label">Total Prospects</div><div class="val" id="k-total">--</div><div class="sub">en base de donnees</div></div>
-  <div class="kpi g"><div class="label">Emails Envoyes</div><div class="val" id="k-emails">--</div><div class="sub">depuis le debut</div></div>
-  <div class="kpi y"><div class="label">En Discussion</div><div class="val" id="k-disc">--</div><div class="sub">repondu + RDV + propose</div></div>
-  <div class="kpi g"><div class="label">Contrats Signes</div><div class="val" id="k-signes">--</div><div class="sub">clients</div></div>
-  <div class="kpi p"><div class="label">CA Encaisse</div><div class="val" id="k-ca">--</div><div class="sub">FCFA</div></div>
-</div>
-
-<div class="section">
-  <div class="box">
-    <div class="section-title">Progression vers 2 000 000 FCFA</div>
-    <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
-    <div class="prog-labels"><span>0</span><span id="prog-pct" style="color:#48bb78;font-weight:700">0%</span><span>2 000 000 FCFA</span></div>
+  <!-- OVERVIEW -->
+  <div class="tab-panel active" id="tab-overview">
+    <div class="kpis">
+      <div class="kpi b"><div class="label">Total Prospects</div><div class="val" id="k-total">--</div><div class="sub">en base de données</div></div>
+      <div class="kpi g"><div class="label">Emails Envoyés</div><div class="val" id="k-emails">--</div><div class="sub">depuis le début</div></div>
+      <div class="kpi y"><div class="label">En Discussion</div><div class="val" id="k-disc">--</div><div class="sub">répondu + RDV + proposé</div></div>
+      <div class="kpi g"><div class="label">Contrats Signés</div><div class="val" id="k-signes">--</div><div class="sub">clients</div></div>
+      <div class="kpi r"><div class="label">CA Encaissé</div><div class="val" id="k-ca">--</div><div class="sub">FCFA</div></div>
+    </div>
+    <div class="section">
+      <div class="box">
+        <div class="section-title">Progression vers 2 000 000 FCFA</div>
+        <div class="prog-wrap"><div class="prog-bar" id="prog" style="width:0%"></div></div>
+        <div class="prog-labels"><span>0</span><span id="prog-pct" style="color:var(--accent);font-weight:700">0%</span><span>2 000 000 FCFA</span></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Pipeline commercial</div>
+      <div class="box" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:14px">
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Nouveau</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:#94a3b8" id="p-n">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Contacté</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--blue)" id="p-c">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Répondu</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--yellow)" id="p-r">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">RDV</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:#f0a35c" id="p-rdv">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Proposé</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--purple)" id="p-pr">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Signé</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--green)" id="p-s">-</div></div>
+        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Perdu</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--red)" id="p-lo">-</div></div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="section">
-  <div class="section-title">Pipeline Commercial</div>
-  <div class="pipe">
-    <div class="p-col"><div class="p-label">Nouveau</div><div class="p-val" id="p-n" style="color:#94a3b8">-</div></div>
-    <div class="p-col"><div class="p-label">Contacte</div><div class="p-val" id="p-c" style="color:#60a5fa">-</div></div>
-    <div class="p-col"><div class="p-label">Repondu</div><div class="p-val" id="p-r" style="color:#f6e05e">-</div></div>
-    <div class="p-col"><div class="p-label">RDV</div><div class="p-val" id="p-rdv" style="color:#fb923c">-</div></div>
-    <div class="p-col"><div class="p-label">Propose</div><div class="p-val" id="p-pr" style="color:#a78bfa">-</div></div>
-    <div class="p-col highlight"><div class="p-label">Signe</div><div class="p-val" id="p-s" style="color:#22c55e">-</div></div>
-    <div class="p-col"><div class="p-label">Perdu</div><div class="p-val" id="p-lo" style="color:#f87171">-</div></div>
+  <!-- PROSPECTS -->
+  <div class="tab-panel" id="tab-prospects">
+    <div class="section">
+      <div class="section-title">Prospects <span style="color:var(--text)"><span id="prospects-count">--</span> au total (50 plus récents affichés)</span></div>
+      <div class="box table-wrap" style="padding:0">
+        <table>
+          <thead><tr><th>Entreprise</th><th>Secteur</th><th>Ville</th><th>Téléphone</th><th>Statut</th><th>Notes</th><th></th></tr></thead>
+          <tbody id="leads-tbody"><tr class="empty-row"><td colspan="7">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="section">
-  <div class="section-title">Prospects Recents</div>
-  <div class="box" style="padding:0;overflow:hidden">
-    <table>
-      <thead><tr><th>Entreprise</th><th>Secteur</th><th>Ville</th><th>Telephone</th><th>Statut</th></tr></thead>
-      <tbody id="tbody">
-        <tr><td colspan="5" style="text-align:center;padding:24px;color:#4a5568">Chargement...</td></tr>
-      </tbody>
-    </table>
+  <!-- CLIENTS -->
+  <div class="tab-panel" id="tab-clients">
+    <div class="section">
+      <div class="section-title">Ajouter un client signé</div>
+      <div class="box">
+        <div class="form-grid">
+          <div class="form-field"><label>Entreprise</label><input type="text" id="c-nom" placeholder="Nom de l'entreprise"></div>
+          <div class="form-field"><label>Formule</label>
+            <select id="c-formule"><option value="Starter">Starter</option><option value="Pro" selected>Pro</option><option value="Elite">Elite</option></select>
+          </div>
+          <div class="form-field"><label>Montant (FCFA)</label><input type="number" id="c-montant" placeholder="200000"></div>
+          <div class="form-field"><label>Date signature</label><input type="date" id="c-date"></div>
+          <div class="form-field"><label>Statut projet</label>
+            <select id="c-statut"><option value="en_cours">En cours</option><option value="livre">Livré</option><option value="maintenance">Maintenance</option></select>
+          </div>
+          <div class="form-field"><label>URL du site (optionnel)</label><input type="text" id="c-url" placeholder="https://..."></div>
+        </div>
+        <div class="form-field" style="margin-bottom:14px"><label>Notes</label><textarea id="c-notes" rows="2" placeholder="Détails du projet, échéances..."></textarea></div>
+        <input type="hidden" id="c-lead-id">
+        <button class="btn btn-g" onclick="ajouterClient()">Enregistrer le client →</button>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Clients</div>
+      <div class="box table-wrap" style="padding:0">
+        <table>
+          <thead><tr><th>Entreprise</th><th>Formule</th><th>Montant</th><th>Signature</th><th>Statut projet</th><th>Site</th></tr></thead>
+          <tbody id="clients-tbody"><tr class="empty-row"><td colspan="6">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
   </div>
-</div>
 
-<div style="height:70px"></div>
+  <div style="height:70px"></div>
 
-<div class="bottom-bar">
-  <button class="btn btn-g" onclick="window.open('https://mail.google.com/mail/#drafts','_blank')">Gmail — Brouillons</button>
-  <button class="btn btn-s" onclick="window.open('https://supabase.com/dashboard/project/vuzjrsgobeevfqjmsgsm','_blank')">Base de donnees</button>
-  <button class="btn btn-s" onclick="load()">Actualiser</button>
-  <button class="btn btn-r" onclick="logout()">Verrouiller</button>
-  <span class="mj">MAJ : <span id="mj">--</span></span>
+  <div class="bottom-bar">
+    <button class="btn btn-g" onclick="window.open('https://mail.google.com/mail/#drafts','_blank')">Gmail — Brouillons</button>
+    <button class="btn btn-s" onclick="window.open('https://supabase.com/dashboard/project/vuzjrsgobeevfqjmsgsm','_blank')">Base de données</button>
+    <button class="btn btn-s" onclick="loadAll()">Actualiser</button>
+    <button class="btn btn-r" onclick="logout()">Déconnexion</button>
+    <span class="mj">pharel.cloud</span>
+  </div>
 </div>
 
 <script>
-// Hash SHA-256 du mot de passe "happi2025" — ne stocke jamais le mot de passe en clair
-var PWD_HASH = '51e1358eeb789621c43c4b98fb41329ec3b69c556c80005adee605602c0068c3';
-
-async function sha256(msg) {
-  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
-  return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-}
-
-async function unlock() {
-  var pwd = document.getElementById('pwd-input').value;
-  var hash = await sha256(pwd);
-  if (hash === PWD_HASH) {
-    sessionStorage.setItem('hd_auth', hash);
-    document.getElementById('lock-screen').style.display = 'none';
-    load();
-  } else {
-    document.getElementById('pwd-error').style.display = 'block';
-    document.getElementById('pwd-input').value = '';
-    document.getElementById('pwd-input').focus();
-  }
-}
-
-function logout() {
-  sessionStorage.removeItem('hd_auth');
-  location.reload();
-}
-
-// Vérifier si déjà connecté (session en cours)
-(async function() {
-  var stored = sessionStorage.getItem('hd_auth');
-  if (stored === PWD_HASH) {
-    document.getElementById('lock-screen').style.display = 'none';
-    load();
-  }
-})();
-
-// ── DONNÉES ──────────────────────────────────────────────
 var SB_URL = 'https://vuzjrsgobeevfqjmsgsm.supabase.co';
 var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1empyc2dvYmVldmZxam1zZ3NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MjkzMDAsImV4cCI6MjA5NzAwNTMwMH0.fKRj-BiLjsNeHgs34CU4zsK54DqQ2VEIb-R-wj8KMD0';
-
-function sb(p) {
-  return fetch(SB_URL+'/rest/v1'+p, {headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}}).then(function(r){return r.json();});
+var sb = null;
+try {
+  sb = supabase.createClient(SB_URL, SB_KEY);
+} catch (e) {
+  document.getElementById('pwd-error').textContent = 'Erreur de chargement — vérifie ta connexion internet et recharge la page.';
+  document.getElementById('pwd-error').style.display = 'block';
+  document.getElementById('login-btn').disabled = true;
 }
 
-function fmt(n) { return new Intl.NumberFormat('fr-FR').format(n||0); }
+var STATUTS = ['nouveau','email_envoye','repondu','rdv','propose','signe','perdu'];
 
-function load() {
-  Promise.all([
-    sb('/leads?select=*&order=created_at.desc&limit=25'),
-    sb('/emails_envoyes?select=id'),
-    sb('/pipeline?select=montant_fcfa'),
-  ]).then(function(res) {
-    var leads = res[0]||[], emails = res[1]||[], pipeline = res[2]||[];
+function fmt(n) { return new Intl.NumberFormat('fr-FR').format(n || 0); }
 
-    var c = {nouveau:0,email_envoye:0,repondu:0,rdv:0,propose:0,signe:0,perdu:0};
-    leads.forEach(function(l){ if(c[l.statut]!==undefined) c[l.statut]++; });
-
-    document.getElementById('k-total').textContent = leads.length;
-    document.getElementById('k-emails').textContent = emails.length;
-    document.getElementById('k-disc').textContent = (c.repondu||0)+(c.rdv||0)+(c.propose||0);
-    document.getElementById('k-signes').textContent = c.signe||0;
-
-    var ca = pipeline.reduce(function(s,r){return s+(r.montant_fcfa||0);},0);
-    document.getElementById('k-ca').textContent = fmt(ca);
-
-    var pct = Math.min(100, Math.round((ca/2000000)*100));
-    document.getElementById('prog').style.width = pct+'%';
-    document.getElementById('prog-pct').textContent = pct+'%';
-
-    document.getElementById('p-n').textContent = c.nouveau||0;
-    document.getElementById('p-c').textContent = c.email_envoye||0;
-    document.getElementById('p-r').textContent = c.repondu||0;
-    document.getElementById('p-rdv').textContent = c.rdv||0;
-    document.getElementById('p-pr').textContent = c.propose||0;
-    document.getElementById('p-s').textContent = c.signe||0;
-    document.getElementById('p-lo').textContent = c.perdu||0;
-
-    var tbody = document.getElementById('tbody');
-    if (!leads.length) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:24px;color:#4a5568">Agent demarre demain matin a 7h00</td></tr>';
-    } else {
-      tbody.innerHTML = leads.map(function(l) {
-        return '<tr><td><strong>'+l.nom+'</strong></td><td>'+l.secteur+'</td><td>'+(l.ville||'Yaounde')+'</td><td>'+(l.telephone||'&mdash;')+'</td><td><span class="badge b-'+l.statut+'">'+l.statut.replace('_',' ')+'</span></td></tr>';
-      }).join('');
-    }
-
-    document.getElementById('mj').textContent = new Date().toLocaleTimeString('fr-FR');
-  }).catch(function(e){ console.error(e); });
+// ── AUTH ─────────────────────────────────────────────────
+async function login() {
+  if (!sb) return;
+  var email = document.getElementById('email-input').value.trim();
+  var password = document.getElementById('pwd-input').value;
+  var btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Connexion...';
+  var { error } = await sb.auth.signInWithPassword({ email: email, password: password });
+  btn.disabled = false; btn.textContent = 'Se connecter →';
+  if (error) {
+    document.getElementById('pwd-error').textContent = error.message;
+    document.getElementById('pwd-error').style.display = 'block';
+    return;
+  }
+  showApp();
 }
 
-function countdown() {
-  var now = new Date(), next = new Date();
-  next.setUTCHours(6,0,0,0);
-  if (now >= next) next.setDate(next.getDate()+1);
-  var d = next-now;
-  var h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
-  document.getElementById('cd').textContent =
-    String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+async function logout() {
+  await sb.auth.signOut();
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('lock-screen').style.display = 'flex';
 }
 
-setInterval(countdown, 1000);
-countdown();
+function showApp() {
+  document.getElementById('lock-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('c-date').value = new Date().toISOString().split('T')[0];
+  loadAll();
+}
+
+(async function () {
+  if (!sb) return;
+  var { data } = await sb.auth.getSession();
+  if (data && data.session) showApp();
+})();
+
+// ── TABS ─────────────────────────────────────────────────
+document.querySelectorAll('.tab-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ── DONNÉES ──────────────────────────────────────────────
+function loadAll() {
+  loadOverviewAndProspects();
+  loadClients();
+  document.getElementById('mj').textContent = new Date().toLocaleTimeString('fr-FR');
+}
+
+async function loadOverviewAndProspects() {
+  var leadsRes = await sb.from('leads').select('*').order('created_at', { ascending: false }).limit(50);
+  var emailsRes = await sb.from('emails_envoyes').select('id');
+  var pipelineRes = await sb.from('pipeline').select('montant_fcfa');
+
+  var leads = leadsRes.data || [], emails = emailsRes.data || [], pipeline = pipelineRes.data || [];
+
+  var c = { nouveau: 0, email_envoye: 0, repondu: 0, rdv: 0, propose: 0, signe: 0, perdu: 0 };
+  leads.forEach(function (l) { if (c[l.statut] !== undefined) c[l.statut]++; });
+
+  document.getElementById('prospects-count').textContent = leads.length;
+  document.getElementById('k-total').textContent = leads.length;
+  document.getElementById('k-emails').textContent = emails.length;
+  document.getElementById('k-disc').textContent = (c.repondu || 0) + (c.rdv || 0) + (c.propose || 0);
+  document.getElementById('k-signes').textContent = c.signe || 0;
+
+  var ca = pipeline.reduce(function (s, r) { return s + (r.montant_fcfa || 0); }, 0);
+  document.getElementById('k-ca').textContent = fmt(ca);
+
+  var pct = Math.min(100, Math.round((ca / 2000000) * 100));
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+
+  document.getElementById('p-n').textContent = c.nouveau || 0;
+  document.getElementById('p-c').textContent = c.email_envoye || 0;
+  document.getElementById('p-r').textContent = c.repondu || 0;
+  document.getElementById('p-rdv').textContent = c.rdv || 0;
+  document.getElementById('p-pr').textContent = c.propose || 0;
+  document.getElementById('p-s').textContent = c.signe || 0;
+  document.getElementById('p-lo').textContent = c.perdu || 0;
+
+  var tbody = document.getElementById('leads-tbody');
+  if (!leads.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Aucun prospect pour le moment</td></tr>';
+  } else {
+    tbody.innerHTML = leads.map(function (l) {
+      var opts = STATUTS.map(function (s) { return '<option value="' + s + '"' + (s === l.statut ? ' selected' : '') + '>' + s.replace('_', ' ') + '</option>'; }).join('');
+      return '<tr data-id="' + l.id + '">' +
+        '<td><strong>' + l.nom + '</strong></td>' +
+        '<td>' + l.secteur + '</td>' +
+        '<td>' + (l.ville || 'Yaounde') + '</td>' +
+        '<td>' + (l.telephone || '&mdash;') + '</td>' +
+        '<td><select class="mini" onchange="updateLeadStatut(\'' + l.id + '\', this.value)">' + opts + '</select></td>' +
+        '<td><input class="mini" type="text" value="' + (l.notes ? l.notes.replace(/"/g, '&quot;') : '') + '" onblur="updateLeadNotes(\'' + l.id + '\', this.value)" style="width:140px"></td>' +
+        '<td><button class="btn btn-g btn-xs" onclick="preremplirClient(\'' + l.id + '\', ' + JSON.stringify(l.nom) + ')">Marquer signé</button></td>' +
+        '</tr>';
+    }).join('');
+  }
+}
+
+async function updateLeadStatut(id, statut) {
+  await sb.from('leads').update({ statut: statut, updated_at: new Date().toISOString() }).eq('id', id);
+  loadOverviewAndProspects();
+}
+
+async function updateLeadNotes(id, notes) {
+  await sb.from('leads').update({ notes: notes }).eq('id', id);
+}
+
+function preremplirClient(leadId, nom) {
+  document.querySelector('.tab-btn[data-tab="clients"]').click();
+  document.getElementById('c-lead-id').value = leadId;
+  document.getElementById('c-nom').value = nom;
+  document.getElementById('c-nom').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function loadClients() {
+  var res = await sb.from('clients').select('*').order('created_at', { ascending: false });
+  var clients = res.data || [];
+  var tbody = document.getElementById('clients-tbody');
+  if (!clients.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Aucun client signé pour le moment</td></tr>';
+    return;
+  }
+  var statutLabels = { en_cours: 'En cours', livre: 'Livré', maintenance: 'Maintenance' };
+  tbody.innerHTML = clients.map(function (c) {
+    return '<tr>' +
+      '<td><strong>' + c.nom_entreprise + '</strong></td>' +
+      '<td>' + (c.formule || '&mdash;') + '</td>' +
+      '<td>' + fmt(c.montant_fcfa) + ' FCFA</td>' +
+      '<td>' + (c.date_signature || '&mdash;') + '</td>' +
+      '<td><span class="badge b-signe">' + (statutLabels[c.statut_projet] || c.statut_projet) + '</span></td>' +
+      '<td>' + (c.site_url ? '<a href="' + c.site_url + '" target="_blank" style="color:var(--accent)">Voir le site</a>' : '&mdash;') + '</td>' +
+      '</tr>';
+  }).join('');
+}
+
+async function ajouterClient() {
+  var nom = document.getElementById('c-nom').value.trim();
+  var montant = parseInt(document.getElementById('c-montant').value, 10) || 0;
+  if (!nom || !montant) { alert('Merci de renseigner au moins le nom de l\'entreprise et le montant.'); return; }
+
+  var leadId = document.getElementById('c-lead-id').value || null;
+  var payload = {
+    lead_id: leadId,
+    nom_entreprise: nom,
+    formule: document.getElementById('c-formule').value,
+    montant_fcfa: montant,
+    date_signature: document.getElementById('c-date').value || new Date().toISOString().split('T')[0],
+    site_url: document.getElementById('c-url').value.trim() || null,
+    statut_projet: document.getElementById('c-statut').value,
+    notes: document.getElementById('c-notes').value.trim() || null,
+  };
+
+  var { error } = await sb.from('clients').insert(payload);
+  if (error) { alert('Erreur : ' + error.message); return; }
+
+  // Garder le CA / la barre de progression à jour (source utilisée par l'agent quotidien)
+  await sb.from('pipeline').insert({
+    lead_id: leadId,
+    montant_fcfa: montant,
+    date_signature: payload.date_signature,
+    site_url: payload.site_url,
+    notes: payload.notes,
+  });
+
+  if (leadId) await sb.from('leads').update({ statut: 'signe' }).eq('id', leadId);
+
+  document.getElementById('c-nom').value = '';
+  document.getElementById('c-montant').value = '';
+  document.getElementById('c-url').value = '';
+  document.getElementById('c-notes').value = '';
+  document.getElementById('c-lead-id').value = '';
+
+  loadAll();
+}
 </script>
 </body>
 </html>
