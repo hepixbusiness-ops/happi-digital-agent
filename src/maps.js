@@ -62,42 +62,28 @@ async function chercherEntreprises(recherche, ville, nombreMax) {
       return simulerProspects(recherche, ville, nombreMax);
     }
 
-    // Premier filtre : ceux que la recherche textuelle ne lie a aucun site
-    const candidats = data.results.filter(p => !p.website).slice(0, nombreMax * 2);
-
-    // Verification approfondie via Google Places Details : la recherche textuelle
-    // manque parfois un site existant (ex: boutique en ligne non liee a la fiche).
-    // On ecarte ces faux positifs pour ne garder que les vrais prospects sans site.
-    const prospects = [];
-    for (const p of candidats) {
-      if (prospects.length >= nombreMax) break;
-
-      const details = await getDetailsLieu(p.place_id);
-      if (details.website) {
-        console.log(`[MAPS] Ecarte (site reel detecte) : ${p.name} -> ${details.website}`);
-        continue;
-      }
-
-      const note = p.rating || null;
-      const avis = p.user_ratings_total || 0;
-      prospects.push({
-        nom: p.name,
-        adresse: p.formatted_address || '',
-        telephone: details.telephone || p.formatted_phone_number || p.international_phone_number || null,
-        email: details.email || null,
-        google_place_id: p.place_id,
-        ville: ville,
-        note_google: note,
-        avis_count: avis,
-        maps_url: genererMapsUrl(p.place_id, p.name, ville),
-        score: calculerScore(note, avis),
-        accroche: genererAccroche(note, avis),
+    // Filtrer ceux sans site web = nos prospects prioritaires
+    const prospects = data.results
+      .filter(p => !p.website)
+      .slice(0, nombreMax)
+      .map(p => {
+        const note = p.rating || null;
+        const avis = p.user_ratings_total || 0;
+        return {
+          nom: p.name,
+          adresse: p.formatted_address || '',
+          telephone: p.formatted_phone_number || p.international_phone_number || null,
+          google_place_id: p.place_id,
+          ville: ville,
+          note_google: note,
+          avis_count: avis,
+          maps_url: genererMapsUrl(p.place_id, p.name, ville),
+          score: calculerScore(note, avis),
+          accroche: genererAccroche(note, avis),
+        };
       });
 
-      await new Promise(r => setTimeout(r, 200));
-    }
-
-    console.log(`[MAPS] ${prospects.length} prospects sans site verifies pour "${recherche}" a ${ville}`);
+    console.log(`[MAPS] ${prospects.length} prospects sans site trouves pour "${recherche}" a ${ville}`);
     return prospects;
 
   } catch (err) {
