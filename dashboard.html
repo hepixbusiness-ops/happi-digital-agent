@@ -428,15 +428,22 @@ async function loadClients() {
   }
   var statutLabels = { en_cours: 'En cours', livre: 'Livré', maintenance: 'Maintenance' };
   tbody.innerHTML = clients.map(function (c) {
+    var opts = Object.keys(statutLabels).map(function (s) {
+      return '<option value="' + s + '"' + (s === c.statut_projet ? ' selected' : '') + '>' + statutLabels[s] + '</option>';
+    }).join('');
     return '<tr>' +
       '<td><strong>' + c.nom_entreprise + '</strong></td>' +
       '<td>' + (c.formule || '&mdash;') + '</td>' +
       '<td>' + fmt(c.montant_fcfa) + ' FCFA</td>' +
       '<td>' + (c.date_signature || '&mdash;') + '</td>' +
-      '<td><span class="badge b-signe">' + (statutLabels[c.statut_projet] || c.statut_projet) + '</span></td>' +
+      '<td><select class="mini" onchange="updateClientStatut(\'' + c.id + '\', this.value)">' + opts + '</select></td>' +
       '<td>' + (c.site_url ? '<a href="' + c.site_url + '" target="_blank" style="color:var(--accent)">Voir le site</a>' : '&mdash;') + '</td>' +
       '</tr>';
   }).join('');
+}
+
+async function updateClientStatut(id, statut) {
+  await sb.from('clients').update({ statut_projet: statut, updated_at: new Date().toISOString() }).eq('id', id);
 }
 
 async function ajouterClient() {
