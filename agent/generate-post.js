@@ -118,6 +118,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
   <ul class="nav-links">
     <li><a href="/#services">Services</a></li>
     <li><a href="/#offres">Offres</a></li>
+    <li><a href="/realisations.html">Réalisations</a></li>
     <li><a href="/blog.html">Blog</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
@@ -128,6 +129,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
   <div class="nav-drawer-panel">
     <a href="/#services">Services</a>
     <a href="/#offres">Offres</a>
+    <a href="/realisations.html">Réalisations</a>
     <a href="/blog.html">Blog</a>
     <a href="/#contact">Contact</a>
     <a href="https://wa.me/237699179254" class="nav-cta">Démarrer →</a>
