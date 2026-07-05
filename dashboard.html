@@ -104,6 +104,9 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
 .b-propose { background:#2a1e4a; color:var(--purple); }
 .b-signe { background:#123321; color:var(--green); }
 .b-perdu { background:#3a1414; color:var(--red); }
+.b-renouv-ok { background:#173a26; color:var(--green); }
+.b-renouv-soon { background:#3f2a10; color:#f0a35c; }
+.b-renouv-late { background:#3a1414; color:var(--red); }
 
 .btn { padding:9px 16px; border-radius:8px; border:none; cursor:pointer; font-size:.82rem; font-weight:600; transition:all .2s; font-family:'Inter',sans-serif; }
 .btn-g { background:var(--accent); color:#1a1206; }
@@ -196,6 +199,10 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
       <div class="section-title">CA encaissé dans le temps</div>
       <div class="box chart-card" id="chart-ca"><div class="chart-empty">Chargement...</div></div>
     </div>
+    <div class="section">
+      <div class="section-title">Bénéfice par rapport au prix du projet</div>
+      <div class="box chart-card" id="chart-benefice"><div class="chart-empty">Chargement...</div></div>
+    </div>
   </div>
 
   <!-- PROSPECTS -->
@@ -217,7 +224,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
   <!-- CLIENTS -->
   <div class="tab-panel" id="tab-clients">
     <div class="section">
-      <div class="section-title">Ajouter un client signé</div>
+      <div class="section-title" id="client-form-title">Ajouter un client signé</div>
       <div class="box">
         <div class="form-grid">
           <div class="form-field"><label>Entreprise</label><input type="text" id="c-nom" placeholder="Nom de l'entreprise"></div>
@@ -225,23 +232,38 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
             <select id="c-formule"><option value="Starter">Starter</option><option value="Pro" selected>Pro</option><option value="Elite">Elite</option></select>
           </div>
           <div class="form-field"><label>Montant (FCFA)</label><input type="number" id="c-montant" placeholder="200000"></div>
-          <div class="form-field"><label>Date signature</label><input type="date" id="c-date"></div>
+          <div class="form-field"><label>Bénéfice (FCFA)</label><input type="number" id="c-benefice" placeholder="80000"></div>
+          <div class="form-field"><label>Date signature</label><input type="date" id="c-date" onchange="suggererRenouvellement()"></div>
           <div class="form-field"><label>Statut projet</label>
             <select id="c-statut"><option value="en_cours">En cours</option><option value="livre">Livré</option><option value="maintenance">Maintenance</option></select>
           </div>
+          <div class="form-field"><label>Renouvellement hébergement</label><input type="date" id="c-renouvellement"></div>
           <div class="form-field"><label>URL du site (optionnel)</label><input type="text" id="c-url" placeholder="https://..."></div>
         </div>
         <div class="form-field" style="margin-bottom:14px"><label>Notes</label><textarea id="c-notes" rows="2" placeholder="Détails du projet, échéances..."></textarea></div>
+        <input type="hidden" id="c-edit-id">
         <input type="hidden" id="c-lead-id">
-        <button class="btn btn-g" onclick="ajouterClient()">Enregistrer le client →</button>
+        <div style="display:flex;gap:10px;align-items:center">
+          <button class="btn btn-g" id="c-submit-btn" onclick="enregistrerClient()">Enregistrer le client →</button>
+          <button class="btn btn-s" id="c-cancel-btn" onclick="annulerEditionClient()" style="display:none">Annuler la modification</button>
+        </div>
       </div>
     </div>
+    <div class="kpis" style="padding:0 24px 14px">
+      <div class="kpi b"><div class="label">Total clients</div><div class="val" id="k-nb-clients">--</div><div class="sub">signés</div></div>
+      <div class="kpi g"><div class="label">CA clients</div><div class="val" id="k-ca-clients">--</div><div class="sub">FCFA facturés</div></div>
+      <div class="kpi p"><div class="label">Bénéfice total</div><div class="val" id="k-benefice-total">--</div><div class="sub" id="k-marge-moy">FCFA</div></div>
+      <div class="kpi y"><div class="label">Renouvellements</div><div class="val" id="k-renouv">--</div><div class="sub">hébergement ≤ 30 jours</div></div>
+    </div>
     <div class="section">
-      <div class="section-title">Clients</div>
+      <div class="section-title">
+        Clients
+        <input type="text" class="mini" id="client-search" placeholder="Rechercher une entreprise..." style="width:220px" oninput="renderClientsTable()">
+      </div>
       <div class="box table-wrap" style="padding:0">
         <table>
-          <thead><tr><th>Entreprise</th><th>Formule</th><th>Montant</th><th>Signature</th><th>Statut projet</th><th>Site</th><th></th></tr></thead>
-          <tbody id="clients-tbody"><tr class="empty-row"><td colspan="7">Chargement...</td></tr></tbody>
+          <thead><tr><th>Entreprise</th><th>Formule</th><th>Montant</th><th>Bénéfice</th><th>Signature</th><th>Renouvellement</th><th>Statut projet</th><th>Site</th><th>Notes</th><th></th></tr></thead>
+          <tbody id="clients-tbody"><tr class="empty-row"><td colspan="10">Chargement...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -332,6 +354,7 @@ async function loadOverviewAndProspects() {
   var emailsRes = await sb.from('emails_envoyes').select('id');
   var pipelineRes = await sb.from('pipeline').select('montant_fcfa');
   var kpisRes = await sb.from('kpis').select('date, ca_fcfa').order('date', { ascending: true });
+  var clientsRes = await sb.from('clients').select('nom_entreprise, montant_fcfa, benefice_fcfa');
 
   var leads = leadsRes.data || [], emails = emailsRes.data || [], pipeline = pipelineRes.data || [];
 
@@ -354,6 +377,7 @@ async function loadOverviewAndProspects() {
   renderPipelineChart(c);
   renderSecteursChart(leads);
   renderCAChart(kpisRes.data || []);
+  renderBeneficeChart(clientsRes.data || []);
 
   // Leads chauds en premier (score decroissant, puis plus recents)
   leads = leads.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
@@ -572,6 +596,52 @@ function renderCAChart(kpis) {
   });
 }
 
+// Nuage de points : correlation entre le prix facture et le benefice reel par client
+function renderBeneficeChart(clients) {
+  var container = document.getElementById('chart-benefice');
+  var points = clients.filter(function (c) { return c.montant_fcfa != null && c.benefice_fcfa != null; });
+  if (!points.length) {
+    container.innerHTML = '<div class="chart-empty">Renseigne le bénéfice de tes clients (onglet Clients) pour voir apparaître ce graphique</div>';
+    return;
+  }
+
+  var width = 1160, height = 280, padLeft = 90, padRight = 30, padTop = 20, padBottom = 40;
+  var plotW = width - padLeft - padRight, plotH = height - padTop - padBottom;
+
+  var maxX = Math.max.apply(null, points.map(function (p) { return p.montant_fcfa; })) * 1.12 || 1;
+  var minY = Math.min(0, Math.min.apply(null, points.map(function (p) { return p.benefice_fcfa; })));
+  var maxY = Math.max(1, Math.max.apply(null, points.map(function (p) { return p.benefice_fcfa; }))) * 1.15;
+
+  function xAt(v) { return padLeft + (v / maxX) * plotW; }
+  function yAt(v) { return padTop + plotH - ((v - minY) / (maxY - minY)) * plotH; }
+  var zeroY = yAt(0);
+
+  var dots = points.map(function (p) {
+    var x = xAt(p.montant_fcfa), y = yAt(p.benefice_fcfa);
+    var marge = p.montant_fcfa ? Math.round((p.benefice_fcfa / p.montant_fcfa) * 100) : 0;
+    var label = p.nom_entreprise + ' — prix ' + fmt(p.montant_fcfa) + ' FCFA';
+    var value = fmt(p.benefice_fcfa) + ' FCFA de bénéfice (' + marge + '%)';
+    return '<circle class="chart-point" data-value="' + value + '" data-label="' + label + '" cx="' + x + '" cy="' + y + '" r="5" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"></circle>' +
+      '<circle cx="' + x + '" cy="' + y + '" r="14" fill="transparent" class="chart-point" data-value="' + value + '" data-label="' + label + '"></circle>';
+  }).join('');
+
+  var svg = '<svg class="chart-svg" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Corrélation entre le prix du projet et le bénéfice par client">' +
+    '<line class="chart-grid-line" x1="' + padLeft + '" y1="' + padTop + '" x2="' + padLeft + '" y2="' + (padTop + plotH) + '"></line>' +
+    '<line class="chart-grid-line" x1="' + padLeft + '" y1="' + zeroY + '" x2="' + (width - padRight) + '" y2="' + zeroY + '"></line>' +
+    '<text class="chart-axis-label" x="' + padLeft + '" y="' + (height - 12) + '" text-anchor="start">0 FCFA</text>' +
+    '<text class="chart-axis-label" x="' + (width - padRight) + '" y="' + (height - 12) + '" text-anchor="end">' + fmt(Math.round(maxX)) + ' FCFA (prix)</text>' +
+    '<text class="chart-axis-label" x="' + (padLeft - 8) + '" y="' + (zeroY + 4) + '" text-anchor="end">0</text>' +
+    '<text class="chart-axis-label" x="' + (padLeft - 8) + '" y="' + (padTop + 10) + '" text-anchor="end">' + fmt(Math.round(maxY)) + '</text>' +
+    dots +
+    '</svg>';
+  container.innerHTML = svg;
+
+  container.querySelectorAll('.chart-point').forEach(function (p) {
+    p.addEventListener('pointermove', function (evt) { showChartTooltip(evt, p.dataset.value, p.dataset.label); });
+    p.addEventListener('pointerleave', hideChartTooltip);
+  });
+}
+
 async function updateLeadStatut(id, statut) {
   await sb.from('leads').update({ statut: statut, updated_at: new Date().toISOString() }).eq('id', id);
   loadOverviewAndProspects();
@@ -588,12 +658,52 @@ function preremplirClient(leadId, nom) {
   document.getElementById('c-nom').scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
+function suggererRenouvellement() {
+  var dateEl = document.getElementById('c-date');
+  var renouvEl = document.getElementById('c-renouvellement');
+  if (!dateEl.value || renouvEl.value) return;
+  var d = new Date(dateEl.value);
+  d.setFullYear(d.getFullYear() + 1);
+  renouvEl.value = d.toISOString().split('T')[0];
+}
+
+function renouvBadge(dateStr) {
+  if (!dateStr) return '&mdash;';
+  var days = Math.ceil((new Date(dateStr) - new Date()) / 86400000);
+  var cls = days < 0 ? 'b-renouv-late' : (days <= 30 ? 'b-renouv-soon' : 'b-renouv-ok');
+  var label = days < 0 ? ('en retard de ' + Math.abs(days) + 'j') : (days + ' j');
+  return '<span class="badge ' + cls + '">' + dateStr + ' · ' + label + '</span>';
+}
+
+var currentClients = [];
+
 async function loadClients() {
   var res = await sb.from('clients').select('*').order('created_at', { ascending: false });
-  var clients = res.data || [];
+  currentClients = res.data || [];
+  renderClientsTable();
+}
+
+function renderClientsTable() {
+  var search = (document.getElementById('client-search').value || '').trim().toLowerCase();
+  var clients = search
+    ? currentClients.filter(function (c) { return (c.nom_entreprise || '').toLowerCase().includes(search); })
+    : currentClients;
+
+  document.getElementById('k-nb-clients').textContent = currentClients.length;
+  document.getElementById('k-ca-clients').textContent = fmt(currentClients.reduce(function (s, c) { return s + (c.montant_fcfa || 0); }, 0));
+  var totalMontant = currentClients.reduce(function (s, c) { return s + (c.montant_fcfa || 0); }, 0);
+  var totalBenefice = currentClients.reduce(function (s, c) { return s + (c.benefice_fcfa || 0); }, 0);
+  document.getElementById('k-benefice-total').textContent = fmt(totalBenefice) + ' FCFA';
+  document.getElementById('k-marge-moy').textContent = totalMontant ? 'marge moyenne ' + Math.round((totalBenefice / totalMontant) * 100) + '%' : 'FCFA';
+  document.getElementById('k-renouv').textContent = currentClients.filter(function (c) {
+    if (!c.date_renouvellement_hebergement) return false;
+    var days = Math.ceil((new Date(c.date_renouvellement_hebergement) - new Date()) / 86400000);
+    return days <= 30;
+  }).length;
+
   var tbody = document.getElementById('clients-tbody');
   if (!clients.length) {
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Aucun client signé pour le moment</td></tr>';
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="10">' + (search ? 'Aucun client ne correspond à la recherche' : 'Aucun client signé pour le moment') + '</td></tr>';
     return;
   }
   var statutLabels = { en_cours: 'En cours', livre: 'Livré', maintenance: 'Maintenance' };
@@ -601,16 +711,61 @@ async function loadClients() {
     var opts = Object.keys(statutLabels).map(function (s) {
       return '<option value="' + s + '"' + (s === c.statut_projet ? ' selected' : '') + '>' + statutLabels[s] + '</option>';
     }).join('');
+    var notes = c.notes ? '<span title="' + c.notes.replace(/"/g, '&quot;') + '">' + c.notes.slice(0, 40) + (c.notes.length > 40 ? '…' : '') + '</span>' : '&mdash;';
+    var marge = (c.montant_fcfa && c.benefice_fcfa != null) ? Math.round((c.benefice_fcfa / c.montant_fcfa) * 100) + '%' : '';
+    var benefice = c.benefice_fcfa != null ? (fmt(c.benefice_fcfa) + ' FCFA' + (marge ? ' <span style="color:var(--muted)">(' + marge + ')</span>' : '')) : '&mdash;';
     return '<tr>' +
       '<td><strong>' + c.nom_entreprise + '</strong></td>' +
       '<td>' + (c.formule || '&mdash;') + '</td>' +
       '<td>' + fmt(c.montant_fcfa) + ' FCFA</td>' +
+      '<td>' + benefice + '</td>' +
       '<td>' + (c.date_signature || '&mdash;') + '</td>' +
+      '<td>' + renouvBadge(c.date_renouvellement_hebergement) + '</td>' +
       '<td><select class="mini" onchange="updateClientStatut(\'' + c.id + '\', this.value)">' + opts + '</select></td>' +
       '<td>' + (c.site_url ? '<a href="' + c.site_url + '" target="_blank" style="color:var(--accent)">Voir le site</a>' : '&mdash;') + '</td>' +
-      '<td><button class="btn btn-r btn-xs" onclick="deleteClient(\'' + c.id + '\', ' + JSON.stringify(c.nom_entreprise) + ')">Supprimer</button></td>' +
+      '<td style="max-width:180px">' + notes + '</td>' +
+      '<td style="white-space:nowrap"><button class="btn btn-s btn-xs" onclick="modifierClient(\'' + c.id + '\')">Modifier</button> ' +
+      '<button class="btn btn-r btn-xs" onclick="deleteClient(\'' + c.id + '\', ' + JSON.stringify(c.nom_entreprise) + ')">Supprimer</button></td>' +
       '</tr>';
   }).join('');
+}
+
+function modifierClient(id) {
+  var c = currentClients.find(function (x) { return x.id === id; });
+  if (!c) return;
+  document.getElementById('c-edit-id').value = c.id;
+  document.getElementById('c-nom').value = c.nom_entreprise || '';
+  document.getElementById('c-formule').value = c.formule || 'Pro';
+  document.getElementById('c-montant').value = c.montant_fcfa || '';
+  document.getElementById('c-benefice').value = c.benefice_fcfa != null ? c.benefice_fcfa : '';
+  document.getElementById('c-date').value = c.date_signature || '';
+  document.getElementById('c-statut').value = c.statut_projet || 'en_cours';
+  document.getElementById('c-renouvellement').value = c.date_renouvellement_hebergement || '';
+  document.getElementById('c-url').value = c.site_url || '';
+  document.getElementById('c-notes').value = c.notes || '';
+
+  document.getElementById('client-form-title').textContent = 'Modifier ' + c.nom_entreprise;
+  document.getElementById('c-submit-btn').textContent = 'Mettre à jour le client →';
+  document.getElementById('c-cancel-btn').style.display = 'inline-block';
+  document.getElementById('c-nom').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function viderFormulaireClient() {
+  document.getElementById('c-edit-id').value = '';
+  document.getElementById('c-lead-id').value = '';
+  document.getElementById('c-nom').value = '';
+  document.getElementById('c-montant').value = '';
+  document.getElementById('c-benefice').value = '';
+  document.getElementById('c-renouvellement').value = '';
+  document.getElementById('c-url').value = '';
+  document.getElementById('c-notes').value = '';
+  document.getElementById('client-form-title').textContent = 'Ajouter un client signé';
+  document.getElementById('c-submit-btn').textContent = 'Enregistrer le client →';
+  document.getElementById('c-cancel-btn').style.display = 'none';
+}
+
+function annulerEditionClient() {
+  viderFormulaireClient();
 }
 
 async function deleteClient(id, nom) {
@@ -622,24 +777,38 @@ async function deleteClient(id, nom) {
 
 async function updateClientStatut(id, statut) {
   await sb.from('clients').update({ statut_projet: statut, updated_at: new Date().toISOString() }).eq('id', id);
+  loadClients();
 }
 
-async function ajouterClient() {
+async function enregistrerClient() {
   var nom = document.getElementById('c-nom').value.trim();
   var montant = parseInt(document.getElementById('c-montant').value, 10) || 0;
   if (!nom || !montant) { alert('Merci de renseigner au moins le nom de l\'entreprise et le montant.'); return; }
 
-  var leadId = document.getElementById('c-lead-id').value || null;
+  var beneficeRaw = document.getElementById('c-benefice').value;
+  var editId = document.getElementById('c-edit-id').value;
   var payload = {
-    lead_id: leadId,
     nom_entreprise: nom,
     formule: document.getElementById('c-formule').value,
     montant_fcfa: montant,
+    benefice_fcfa: beneficeRaw !== '' ? parseInt(beneficeRaw, 10) : null,
     date_signature: document.getElementById('c-date').value || new Date().toISOString().split('T')[0],
+    date_renouvellement_hebergement: document.getElementById('c-renouvellement').value || null,
     site_url: document.getElementById('c-url').value.trim() || null,
     statut_projet: document.getElementById('c-statut').value,
     notes: document.getElementById('c-notes').value.trim() || null,
   };
+
+  if (editId) {
+    var { error } = await sb.from('clients').update(payload).eq('id', editId);
+    if (error) { alert('Erreur : ' + error.message); return; }
+    viderFormulaireClient();
+    loadClients();
+    return;
+  }
+
+  var leadId = document.getElementById('c-lead-id').value || null;
+  payload.lead_id = leadId;
 
   var { error } = await sb.from('clients').insert(payload);
   if (error) { alert('Erreur : ' + error.message); return; }
@@ -655,12 +824,7 @@ async function ajouterClient() {
 
   if (leadId) await sb.from('leads').update({ statut: 'signe' }).eq('id', leadId);
 
-  document.getElementById('c-nom').value = '';
-  document.getElementById('c-montant').value = '';
-  document.getElementById('c-url').value = '';
-  document.getElementById('c-notes').value = '';
-  document.getElementById('c-lead-id').value = '';
-
+  viderFormulaireClient();
   loadAll();
 }
 </script>
