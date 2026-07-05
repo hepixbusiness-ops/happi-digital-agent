@@ -63,6 +63,28 @@ h1,h2,.fig { font-family:'Fraunces',serif; }
 
 .prog-wrap { background:var(--surface2); border-radius:99px; height:10px; margin:12px 0 6px; }
 .prog-bar { height:10px; border-radius:99px; background:linear-gradient(90deg,var(--accent),var(--accent-l)); transition:width 1.2s ease; }
+
+/* CHARTS */
+.charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.chart-svg { width:100%; height:auto; display:block; overflow:visible; font-family:'Inter',sans-serif; }
+.chart-bar-hit { cursor:pointer; }
+.chart-bar-hit:hover rect.chart-bar-fill, .chart-bar-hit.hovered rect.chart-bar-fill { filter:brightness(1.12); }
+.chart-axis-label { font-size:10.5px; fill:var(--muted); }
+.chart-value-label { font-size:11px; fill:var(--text); font-weight:600; }
+.chart-grid-line { stroke:var(--line); stroke-width:1; }
+.chart-target-line { stroke:var(--muted); stroke-width:1; stroke-dasharray:3 3; }
+.chart-point { cursor:pointer; }
+.chart-tooltip {
+  position:fixed; z-index:999; pointer-events:none; background:var(--surface2);
+  border:1px solid var(--line); border-radius:8px; padding:8px 12px; font-size:.76rem;
+  color:var(--text); box-shadow:0 8px 24px rgba(0,0,0,.45); opacity:0; transform:translateY(4px);
+  transition:opacity .12s, transform .12s; max-width:240px; white-space:nowrap;
+}
+.chart-tooltip.visible { opacity:1; transform:translateY(0); }
+.chart-tooltip .tt-value { font-weight:700; }
+.chart-tooltip .tt-label { color:var(--muted); font-size:.68rem; margin-top:2px; }
+.chart-empty { padding:2.5rem 1rem; text-align:center; color:var(--muted); font-size:.82rem; }
+@media (max-width:900px) { .charts-grid { grid-template-columns:1fr; } }
 .prog-labels { display:flex; justify-content:space-between; font-size:.75rem; color:var(--muted); }
 
 table { width:100%; border-collapse:collapse; }
@@ -160,17 +182,19 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
         <div class="prog-labels"><span>0</span><span id="prog-pct" style="color:var(--accent);font-weight:700">0%</span><span>2 000 000 FCFA</span></div>
       </div>
     </div>
-    <div class="section">
-      <div class="section-title">Pipeline commercial</div>
-      <div class="box" style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:14px">
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Nouveau</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:#94a3b8" id="p-n">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Contacté</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--blue)" id="p-c">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Répondu</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--yellow)" id="p-r">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">RDV</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:#f0a35c" id="p-rdv">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Proposé</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--purple)" id="p-pr">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Signé</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--green)" id="p-s">-</div></div>
-        <div style="text-align:center"><div style="font-size:.6rem;color:var(--muted);text-transform:uppercase;margin-bottom:6px">Perdu</div><div class="fig" style="font-size:1.3rem;font-weight:700;color:var(--red)" id="p-lo">-</div></div>
+    <div class="charts-grid">
+      <div class="section" style="padding-top:0">
+        <div class="section-title">Pipeline commercial</div>
+        <div class="box chart-card" id="chart-pipeline"><div class="chart-empty">Chargement...</div></div>
       </div>
+      <div class="section" style="padding-top:0">
+        <div class="section-title">Prospects par secteur</div>
+        <div class="box chart-card" id="chart-secteurs"><div class="chart-empty">Chargement...</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">CA encaissé dans le temps</div>
+      <div class="box chart-card" id="chart-ca"><div class="chart-empty">Chargement...</div></div>
     </div>
   </div>
 
@@ -216,8 +240,8 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
       <div class="section-title">Clients</div>
       <div class="box table-wrap" style="padding:0">
         <table>
-          <thead><tr><th>Entreprise</th><th>Formule</th><th>Montant</th><th>Signature</th><th>Statut projet</th><th>Site</th></tr></thead>
-          <tbody id="clients-tbody"><tr class="empty-row"><td colspan="6">Chargement...</td></tr></tbody>
+          <thead><tr><th>Entreprise</th><th>Formule</th><th>Montant</th><th>Signature</th><th>Statut projet</th><th>Site</th><th></th></tr></thead>
+          <tbody id="clients-tbody"><tr class="empty-row"><td colspan="7">Chargement...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -307,6 +331,7 @@ async function loadOverviewAndProspects() {
   var leadsRes = await sb.from('leads').select('*').order('created_at', { ascending: false }).limit(50);
   var emailsRes = await sb.from('emails_envoyes').select('id');
   var pipelineRes = await sb.from('pipeline').select('montant_fcfa');
+  var kpisRes = await sb.from('kpis').select('date, ca_fcfa').order('date', { ascending: true });
 
   var leads = leadsRes.data || [], emails = emailsRes.data || [], pipeline = pipelineRes.data || [];
 
@@ -326,13 +351,9 @@ async function loadOverviewAndProspects() {
   document.getElementById('prog').style.width = pct + '%';
   document.getElementById('prog-pct').textContent = pct + '%';
 
-  document.getElementById('p-n').textContent = c.nouveau || 0;
-  document.getElementById('p-c').textContent = c.email_envoye || 0;
-  document.getElementById('p-r').textContent = c.repondu || 0;
-  document.getElementById('p-rdv').textContent = c.rdv || 0;
-  document.getElementById('p-pr').textContent = c.propose || 0;
-  document.getElementById('p-s').textContent = c.signe || 0;
-  document.getElementById('p-lo').textContent = c.perdu || 0;
+  renderPipelineChart(c);
+  renderSecteursChart(leads);
+  renderCAChart(kpisRes.data || []);
 
   // Leads chauds en premier (score decroissant, puis plus recents)
   leads = leads.slice().sort(function (a, b) { return (b.score || 0) - (a.score || 0); });
@@ -402,6 +423,155 @@ function exporterCSV() {
   URL.revokeObjectURL(url);
 }
 
+// ── GRAPHIQUES ───────────────────────────────────────────
+// Rampe ordinale (une teinte, du clair au foncé) validee pour la surface sombre du dashboard
+var CHART_ORDINAL_RAMP = ['#fceccc', '#e9c98a', '#d1a860', '#b8873f', '#9c6f30', '#714f27'];
+
+var chartTooltipEl = null;
+function getChartTooltip() {
+  if (!chartTooltipEl) {
+    chartTooltipEl = document.createElement('div');
+    chartTooltipEl.className = 'chart-tooltip';
+    document.body.appendChild(chartTooltipEl);
+  }
+  return chartTooltipEl;
+}
+function showChartTooltip(evt, valueText, labelText) {
+  var tt = getChartTooltip();
+  tt.innerHTML = '';
+  var v = document.createElement('div');
+  v.className = 'tt-value';
+  v.textContent = valueText;
+  var l = document.createElement('div');
+  l.className = 'tt-label';
+  l.textContent = labelText;
+  tt.appendChild(v);
+  tt.appendChild(l);
+  tt.style.left = (evt.clientX + 14) + 'px';
+  tt.style.top = (evt.clientY + 14) + 'px';
+  tt.classList.add('visible');
+}
+function hideChartTooltip() {
+  if (chartTooltipEl) chartTooltipEl.classList.remove('visible');
+}
+
+// Graphique en barres horizontales : compare une magnitude entre categories
+function renderHBarChart(containerId, items, opts) {
+  opts = opts || {};
+  var container = document.getElementById(containerId);
+  if (!items.length || items.every(function (i) { return !i.value; })) {
+    container.innerHTML = '<div class="chart-empty">' + (opts.emptyText || 'Pas encore de données') + '</div>';
+    return;
+  }
+  var width = 560, rowH = 34, padLeft = 108, padRight = 54, padTop = 6, padBottom = 6;
+  var height = items.length * rowH + padTop + padBottom;
+  var maxVal = Math.max.apply(null, items.map(function (i) { return i.value; })) || 1;
+  var plotW = width - padLeft - padRight;
+
+  var bars = items.map(function (item, i) {
+    var y = padTop + i * rowH;
+    var barW = Math.max(2, (item.value / maxVal) * plotW);
+    var barH = 18;
+    var barY = y + (rowH - barH) / 2;
+    var valueText = opts.formatValue ? opts.formatValue(item.value) : item.value;
+    return '<g class="chart-bar-hit" data-value="' + valueText + '" data-label="' + item.label + '">' +
+      '<rect x="0" y="' + y + '" width="' + width + '" height="' + rowH + '" fill="transparent"></rect>' +
+      '<text class="chart-axis-label" x="' + (padLeft - 12) + '" y="' + (y + rowH / 2 + 4) + '" text-anchor="end">' + item.label + '</text>' +
+      '<rect class="chart-bar-fill" x="' + padLeft + '" y="' + barY + '" width="' + barW + '" height="' + barH + '" rx="4" fill="' + item.color + '"></rect>' +
+      '<text class="chart-value-label" x="' + (padLeft + barW + 8) + '" y="' + (y + rowH / 2 + 4) + '">' + valueText + '</text>' +
+      '</g>';
+  }).join('');
+
+  var svg = '<svg class="chart-svg" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="' + (opts.ariaLabel || '') + '">' +
+    '<line class="chart-grid-line" x1="' + padLeft + '" y1="0" x2="' + padLeft + '" y2="' + height + '"></line>' +
+    bars + '</svg>';
+  container.innerHTML = svg;
+
+  container.querySelectorAll('.chart-bar-hit').forEach(function (g) {
+    g.addEventListener('pointermove', function (evt) {
+      g.classList.add('hovered');
+      showChartTooltip(evt, g.dataset.value, g.dataset.label);
+    });
+    g.addEventListener('pointerleave', function () {
+      g.classList.remove('hovered');
+      hideChartTooltip();
+    });
+  });
+}
+
+function renderPipelineChart(counts) {
+  var stages = [
+    { key: 'nouveau', label: 'Nouveau' },
+    { key: 'email_envoye', label: 'Contacté' },
+    { key: 'repondu', label: 'Répondu' },
+    { key: 'rdv', label: 'RDV' },
+    { key: 'propose', label: 'Proposé' },
+    { key: 'signe', label: 'Signé' },
+  ];
+  var items = stages.map(function (s, i) {
+    return { label: s.label, value: counts[s.key] || 0, color: CHART_ORDINAL_RAMP[i] };
+  });
+  // "Perdu" est un statut d'echec, pas une etape de progression : couleur de statut dediee (rouge), separee de la rampe ordinale
+  items.push({ label: 'Perdu', value: counts.perdu || 0, color: 'var(--red)' });
+  renderHBarChart('chart-pipeline', items, { ariaLabel: 'Prospects par étape du pipeline' });
+}
+
+function renderSecteursChart(leads) {
+  var counts = {};
+  leads.forEach(function (l) { counts[l.secteur] = (counts[l.secteur] || 0) + 1; });
+  var items = Object.keys(counts)
+    .map(function (secteur) { return { label: secteur, value: counts[secteur], color: 'var(--accent)' }; })
+    .sort(function (a, b) { return b.value - a.value; })
+    .slice(0, 8);
+  renderHBarChart('chart-secteurs', items, { ariaLabel: 'Prospects par secteur', emptyText: 'Aucun prospect pour le moment' });
+}
+
+// Graphique aire + ligne : tendance du CA dans le temps, avec repere sur l'objectif
+function renderCAChart(kpis) {
+  var container = document.getElementById('chart-ca');
+  if (kpis.length < 2) {
+    container.innerHTML = '<div class="chart-empty">Pas encore assez de données pour une tendance (revenez après quelques jours de suivi)</div>';
+    return;
+  }
+  var width = 1160, height = 220, padLeft = 70, padRight = 30, padTop = 20, padBottom = 30;
+  var plotW = width - padLeft - padRight, plotH = height - padTop - padBottom;
+  var target = 2000000;
+  var maxVal = Math.max(target, Math.max.apply(null, kpis.map(function (k) { return k.ca_fcfa || 0; }))) * 1.08;
+
+  function xAt(i) { return padLeft + (i / (kpis.length - 1)) * plotW; }
+  function yAt(v) { return padTop + plotH - (v / maxVal) * plotH; }
+
+  var linePoints = kpis.map(function (k, i) { return xAt(i) + ',' + yAt(k.ca_fcfa || 0); }).join(' ');
+  var areaPoints = linePoints + ' ' + xAt(kpis.length - 1) + ',' + (padTop + plotH) + ' ' + xAt(0) + ',' + (padTop + plotH);
+  var targetY = yAt(target);
+
+  var dots = kpis.map(function (k, i) {
+    var x = xAt(i), y = yAt(k.ca_fcfa || 0);
+    var dateLabel = new Date(k.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+    return '<circle class="chart-point" data-value="' + fmt(k.ca_fcfa || 0) + ' FCFA" data-label="' + dateLabel + '" cx="' + x + '" cy="' + y + '" r="4" fill="var(--accent)" stroke="var(--surface)" stroke-width="2"></circle>' +
+      '<circle cx="' + x + '" cy="' + y + '" r="12" fill="transparent" class="chart-point" data-value="' + fmt(k.ca_fcfa || 0) + ' FCFA" data-label="' + dateLabel + '"></circle>';
+  }).join('');
+
+  var lastX = xAt(kpis.length - 1), lastY = yAt(kpis[kpis.length - 1].ca_fcfa || 0);
+
+  var svg = '<svg class="chart-svg" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-label="Évolution du CA encaissé dans le temps">' +
+    '<line class="chart-grid-line" x1="' + padLeft + '" y1="' + padTop + '" x2="' + padLeft + '" y2="' + (padTop + plotH) + '"></line>' +
+    '<line class="chart-grid-line" x1="' + padLeft + '" y1="' + (padTop + plotH) + '" x2="' + (width - padRight) + '" y2="' + (padTop + plotH) + '"></line>' +
+    '<line class="chart-target-line" x1="' + padLeft + '" y1="' + targetY + '" x2="' + (width - padRight) + '" y2="' + targetY + '"></line>' +
+    '<text class="chart-axis-label" x="' + (width - padRight) + '" y="' + (targetY - 6) + '" text-anchor="end">Objectif 2 000 000 FCFA</text>' +
+    '<polygon points="' + areaPoints + '" fill="var(--accent)" opacity="0.1"></polygon>' +
+    '<polyline points="' + linePoints + '" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>' +
+    '<text class="chart-value-label" x="' + lastX + '" y="' + (lastY - 12) + '" text-anchor="end">' + fmt(kpis[kpis.length - 1].ca_fcfa || 0) + ' FCFA</text>' +
+    dots +
+    '</svg>';
+  container.innerHTML = svg;
+
+  container.querySelectorAll('.chart-point').forEach(function (p) {
+    p.addEventListener('pointermove', function (evt) { showChartTooltip(evt, p.dataset.value, p.dataset.label); });
+    p.addEventListener('pointerleave', hideChartTooltip);
+  });
+}
+
 async function updateLeadStatut(id, statut) {
   await sb.from('leads').update({ statut: statut, updated_at: new Date().toISOString() }).eq('id', id);
   loadOverviewAndProspects();
@@ -423,7 +593,7 @@ async function loadClients() {
   var clients = res.data || [];
   var tbody = document.getElementById('clients-tbody');
   if (!clients.length) {
-    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Aucun client signé pour le moment</td></tr>';
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Aucun client signé pour le moment</td></tr>';
     return;
   }
   var statutLabels = { en_cours: 'En cours', livre: 'Livré', maintenance: 'Maintenance' };
@@ -438,8 +608,16 @@ async function loadClients() {
       '<td>' + (c.date_signature || '&mdash;') + '</td>' +
       '<td><select class="mini" onchange="updateClientStatut(\'' + c.id + '\', this.value)">' + opts + '</select></td>' +
       '<td>' + (c.site_url ? '<a href="' + c.site_url + '" target="_blank" style="color:var(--accent)">Voir le site</a>' : '&mdash;') + '</td>' +
+      '<td><button class="btn btn-r btn-xs" onclick="deleteClient(\'' + c.id + '\', ' + JSON.stringify(c.nom_entreprise) + ')">Supprimer</button></td>' +
       '</tr>';
   }).join('');
+}
+
+async function deleteClient(id, nom) {
+  if (!confirm('Supprimer définitivement le client "' + nom + '" ? Cette action est irréversible.')) return;
+  var { error } = await sb.from('clients').delete().eq('id', id);
+  if (error) { alert('Erreur : ' + error.message); return; }
+  loadClients();
 }
 
 async function updateClientStatut(id, statut) {
