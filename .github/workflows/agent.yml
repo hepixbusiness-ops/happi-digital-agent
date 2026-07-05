@@ -46,6 +46,7 @@ jobs:
         run: node src/agent.js
 
       - name: Commit et push (article + posts.json)
+        if: always()
         run: |
           git config user.name "Happi Digital Agent"
           git config user.email "noreply@happi.digital"
