@@ -56,6 +56,11 @@ async function phase1_TrouverProspects() {
       email: e.email || null,
       adresse: e.adresse || null,
       google_place_id: e.google_place_id,
+      note_google: e.note_google || null,
+      avis_count: e.avis_count || null,
+      maps_url: e.maps_url || null,
+      accroche: e.accroche || null,
+      score: e.score || null,
       statut: 'nouveau',
     }));
 
