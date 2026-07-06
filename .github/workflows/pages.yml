@@ -32,10 +32,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Préparer le contenu public (exclure les apps non déployées ici)
+        run: |
+          mkdir -p _site
+          rsync -a --exclude='_site' --exclude='.git' --exclude='.github' \
+            --exclude='.claude' --exclude='brief-portal' ./ _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
