@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette — accent verrouillé, aucune autre teinte de marque autorisée */
+  --color-accent: #0f6b57;
+  --color-accent-strong: #0b5445;
+  --color-accent-soft: #e3ede9;
+  --color-bg-base: #eef0ea;
+  --color-surface: #f7f8f4;
+  --color-surface-raised: #ffffff;
+  --color-ink: #16211c;
+  --color-ink-soft: #4a544d;
+  --color-ink-faint: #7c857e;
+  --color-rail: #16211c;
+  --color-rail-ink: #eef0ea;
+  --color-rail-line: rgba(238, 240, 234, 0.14);
+  --color-line: rgba(22, 33, 28, 0.1);
+  --color-line-strong: rgba(22, 33, 28, 0.18);
+  --color-error: #a3402b;
+  --color-error-soft: #f3e3de;
+
+  --font-sans: var(--font-sans-loaded), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-loaded), ui-monospace, "SFMono-Regular", monospace;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-5: 40px;
+  --spacing-6: 48px;
+  --spacing-7: 56px;
+  --spacing-8: 64px;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background: var(--color-bg-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-rail-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .text-h1 {
+    font-size: clamp(2rem, 1.5rem + 2.2vw, 3.25rem);
+    line-height: 1.05;
+    font-weight: 600;
+  }
+
+  .text-h2 {
+    font-size: clamp(1.375rem, 1.1rem + 1.2vw, 1.875rem);
+    line-height: 1.15;
+    font-weight: 600;
+  }
+
+  .font-label {
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+}
