@@ -42,7 +42,7 @@ insert into storage.buckets (id, name, public)
 values ('briefs', 'briefs', true)
 on conflict (id) do nothing;
 
--- Le bucket est public en lecture (URLs directes utilisées dans le webhook
--- n8n et un futur dashboard) ; l'écriture reste réservée au service_role
--- (la Edge Function submit-brief), aucune policy d'upload n'est donc
--- ajoutée pour anon/authenticated.
+-- Le bucket est public en lecture (URLs directes utilisables plus tard
+-- depuis un dashboard) ; l'écriture reste réservée au service_role (la
+-- Edge Function submit-brief), aucune policy d'upload n'est donc ajoutée
+-- pour anon/authenticated.

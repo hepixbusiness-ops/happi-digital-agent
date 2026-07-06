@@ -1,11 +1,11 @@
 // Supabase Edge Function — reçoit la soumission du portail de brief
 // (pharel.cloud/brief, export statique sans serveur Next.js) : upload des
-// fichiers, enregistrement en base, puis notification du webhook n8n.
+// fichiers puis enregistrement en base. Rien d'autre — pas d'automatisation
+// externe, juste la récupération des données.
 //
 // SUPABASE_URL et SUPABASE_SERVICE_ROLE_KEY sont injectés automatiquement
-// par Supabase dans l'environnement de chaque Edge Function. Seul
-// N8N_WEBHOOK_URL doit être défini manuellement :
-//   supabase secrets set N8N_WEBHOOK_URL=https://... --project-ref vuzjrsgobeevfqjmsgsm
+// par Supabase dans l'environnement de chaque Edge Function, rien à
+// configurer manuellement.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
@@ -137,20 +137,6 @@ Deno.serve(async (req: Request) => {
         JSON.stringify({ message: "Votre dossier n'a pas pu être enregistré. Réessayez dans un instant." }),
         { status: 500, headers: { ...cors, "Content-Type": "application/json" } }
       );
-    }
-
-    const webhookUrl = Deno.env.get("N8N_WEBHOOK_URL");
-    if (webhookUrl) {
-      try {
-        await fetch(webhookUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(brief),
-        });
-      } catch {
-        // Le dossier est déjà enregistré en base ; l'automatisation Drive/Notion
-        // pourra être rejouée manuellement même si le webhook échoue ici.
-      }
     }
 
     return new Response(JSON.stringify({ reference }), {
