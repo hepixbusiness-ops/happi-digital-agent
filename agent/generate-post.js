@@ -11,6 +11,7 @@ const path = require('path');
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const POSTS_FILE = path.join(__dirname, '..', 'posts.json');
 const BLOG_DIR = path.join(__dirname, '..', 'blog');
+const SITEMAP_FILE = path.join(__dirname, '..', 'sitemap.xml');
 
 // Sujets rotatifs pour 30 jours de contenu
 const SUJETS = [
@@ -94,23 +95,57 @@ Réponds UNIQUEMENT avec le JSON, sans texte avant ni après.`;
   return JSON.parse(jsonMatch[0]);
 }
 
-function genererHTMLArticle(article, sujetObj, slug) {
+function jsonLdScript(obj) {
+  return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
+}
+
+function genererHTMLArticle(article, sujetObj, slug, dateISO) {
   const date = getDateFR();
+  const description = article.meta_description || article.extrait;
+  const jsonLd = jsonLdScript({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.titre,
+    description: description,
+    image: 'https://pharel.cloud/assets/photo.jpg',
+    datePublished: dateISO,
+    dateModified: dateISO,
+    author: { '@type': 'Person', name: 'Pharel Happi' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Pharel Happi — Studio Digital',
+      logo: { '@type': 'ImageObject', url: 'https://pharel.cloud/assets/photo.jpg' },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://pharel.cloud/blog/${slug}.html` },
+  });
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${article.titre} | Pharel Happi</title>
-<meta name="description" content="${article.meta_description || article.extrait}">
+<meta name="description" content="${description}">
 <meta property="og:title" content="${article.titre}">
-<meta property="og:description" content="${article.extrait}">
+<meta property="og:description" content="${description}">
 <meta property="og:url" content="https://pharel.cloud/blog/${slug}.html">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://pharel.cloud/assets/photo.jpg">
+<meta property="og:locale" content="fr_CM">
+<meta property="og:site_name" content="Pharel Happi — Studio Digital">
+<meta property="article:published_time" content="${dateISO}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${article.titre}">
+<meta name="twitter:description" content="${description}">
+<meta name="twitter:image" content="https://pharel.cloud/assets/photo.jpg">
+<meta name="author" content="Pharel Happi">
+<meta name="robots" content="index, follow">
+<meta name="keywords" content="${(sujetObj.tags || []).join(', ')}">
 <link rel="canonical" href="https://pharel.cloud/blog/${slug}.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+${jsonLd}
 </head>
 <body>
 <nav>
@@ -171,6 +206,27 @@ function genererHTMLArticle(article, sujetObj, slug) {
 </html>`;
 }
 
+function genererSitemap(posts) {
+  const urls = [
+    { loc: 'https://pharel.cloud/', changefreq: 'weekly', priority: '1.0' },
+    { loc: 'https://pharel.cloud/blog.html', changefreq: 'daily', priority: '0.9' },
+    { loc: 'https://pharel.cloud/realisations.html', changefreq: 'monthly', priority: '0.7' },
+  ].concat(
+    posts.map(function(p) {
+      return { loc: 'https://pharel.cloud/blog/' + p.slug + '.html', changefreq: 'monthly', priority: '0.6', lastmod: p.dateISO };
+    })
+  );
+
+  const body = urls.map(function(u) {
+    return '  <url>\n    <loc>' + u.loc + '</loc>\n' +
+      (u.lastmod ? '    <lastmod>' + u.lastmod + '</lastmod>\n' : '') +
+      '    <changefreq>' + u.changefreq + '</changefreq>\n' +
+      '    <priority>' + u.priority + '</priority>\n  </url>';
+  }).join('\n');
+
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + '\n</urlset>\n';
+}
+
 async function main() {
   console.log('[BLOG] Démarrage génération article...');
 
@@ -185,6 +241,15 @@ async function main() {
   // Charger posts existants
   let posts = [];
   try { posts = JSON.parse(fs.readFileSync(POSTS_FILE, 'utf8')); } catch {}
+
+  // Un seul article par jour : si l'un d'eux date déjà d'aujourd'hui, on s'arrête
+  // là (évite le contenu quasi-dupliqué qu'un second déclenchement le même jour
+  // avait produit par le passé).
+  const todayISO = new Date().toISOString().split('T')[0];
+  if (posts.find(function(p) { return p.dateISO === todayISO; })) {
+    console.log('[BLOG] Un article a déjà été publié aujourd\'hui:', todayISO);
+    process.exit(0);
+  }
 
   // Choisir le sujet (rotation sur les jours)
   const dayIndex = Math.floor(Date.now() / 86400000) % SUJETS.length;
@@ -203,7 +268,7 @@ async function main() {
   }
 
   // Générer le HTML de l'article
-  const html = genererHTMLArticle(article, sujetObj, slug);
+  const html = genererHTMLArticle(article, sujetObj, slug, dateISO);
   fs.writeFileSync(path.join(BLOG_DIR, slug + '.html'), html, 'utf8');
 
   // Ajouter à l'index posts.json
@@ -220,6 +285,9 @@ async function main() {
 
   posts.unshift(postEntry); // Ajouter en premier (plus récent d'abord)
   fs.writeFileSync(POSTS_FILE, JSON.stringify(posts, null, 2), 'utf8');
+
+  // Régénérer le sitemap (pages statiques + tous les articles)
+  fs.writeFileSync(SITEMAP_FILE, genererSitemap(posts), 'utf8');
 
   console.log('[BLOG] Article publié:', article.titre);
   console.log('[BLOG] URL:', 'https://pharel.cloud/blog/' + slug + '.html');

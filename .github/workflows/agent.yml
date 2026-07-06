@@ -50,7 +50,7 @@ jobs:
         run: |
           git config user.name "Happi Digital Agent"
           git config user.email "noreply@happi.digital"
-          git add posts.json blog/
+          git add posts.json blog/ sitemap.xml
           git diff --staged --quiet || git commit -m "blog: nouvel article publié le $(date '+%d/%m/%Y')"
           git push
 
