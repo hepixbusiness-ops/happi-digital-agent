@@ -15,7 +15,7 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://brief.pharel.cloud";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://pharel.cloud/brief";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

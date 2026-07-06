@@ -1,6 +1,8 @@
 -- Portail de brief client — à exécuter dans Supabase Studio (SQL Editor)
 -- sur le projet que vous souhaitez utiliser pour ce portail.
 
+-- Projet Supabase déjà utilisé par dashboard.html : vuzjrsgobeevfqjmsgsm
+
 -- 1) Table des dossiers reçus
 create table if not exists public.briefs (
   id uuid primary key default gen_random_uuid(),
@@ -26,8 +28,8 @@ create table if not exists public.briefs (
 );
 
 -- 2) RLS : verrouillé par défaut. Seul le rôle service_role (utilisé par la
---    route serveur /api/submit) peut lire/écrire — il contourne RLS de base,
---    donc aucune policy explicite n'est nécessaire pour lui.
+--    Edge Function submit-brief) peut lire/écrire — il contourne RLS de
+--    base, donc aucune policy explicite n'est nécessaire pour lui.
 alter table public.briefs enable row level security;
 
 -- Si vous souhaitez plus tard consulter les dossiers depuis un dashboard
@@ -42,5 +44,5 @@ on conflict (id) do nothing;
 
 -- Le bucket est public en lecture (URLs directes utilisées dans le webhook
 -- n8n et un futur dashboard) ; l'écriture reste réservée au service_role
--- (la route /api/submit), aucune policy d'upload n'est donc ajoutée pour
--- anon/authenticated.
+-- (la Edge Function submit-brief), aucune policy d'upload n'est donc
+-- ajoutée pour anon/authenticated.

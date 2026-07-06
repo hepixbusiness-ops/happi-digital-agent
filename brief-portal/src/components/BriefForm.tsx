@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/Button";
 import { BRIEF_VIDE, BriefData, ErreursBrief } from "@/lib/types";
 import { validerEtape, estEtapeValide } from "@/lib/validation";
 import { TOTAL_ETAPES } from "@/lib/config";
+import { SUBMIT_BRIEF_URL, SUPABASE_ANON_KEY } from "@/lib/supabasePublic";
 
 const VARIANTS_ETAPE = {
   initial: { opacity: 0, y: 12 },
@@ -64,7 +65,11 @@ export function BriefForm() {
       if (logo) form.append("logo", logo.file, logo.file.name);
       visuels.forEach((v) => form.append("visuels", v.file, v.file.name));
 
-      const res = await fetch("/api/submit", { method: "POST", body: form });
+      const res = await fetch(SUBMIT_BRIEF_URL, {
+        method: "POST",
+        headers: { apikey: SUPABASE_ANON_KEY },
+        body: form,
+      });
       const json = await res.json();
 
       if (!res.ok) {
