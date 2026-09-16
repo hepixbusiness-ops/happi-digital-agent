@@ -24,7 +24,7 @@ Ce que je peux faire pour ${nom} :
 ✓ Site avec votre menu, photos et horaires
 ✓ Bouton WhatsApp pour les reservations
 ✓ Visible sur Google en 7 jours
-✓ Livre en 72h a partir de 100 000 FCFA
+✓ Livre en 72h a partir de 252 000 FCFA
 
 Je peux vous envoyer une maquette gratuite de votre futur site aujourd'hui, sans engagement.
 
@@ -91,7 +91,7 @@ Ce que je propose :
 ✓ Fonctionne sur telephone et ordinateur
 ✓ WhatsApp et localisation integres
 ✓ Visible sur Google
-✓ Livre en 72h - a partir de 100 000 FCFA
+✓ Livre en 72h - a partir de 252 000 FCFA
 ✓ Paiement MTN MoMo ou Orange Money
 
 Je peux vous montrer une maquette gratuite en 24h, sans engagement.

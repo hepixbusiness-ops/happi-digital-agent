@@ -46,8 +46,8 @@ module.exports = {
 
   // Offres commerciales
   offres: {
-    starter: { nom: 'Starter', prix: 100000, description: 'Site vitrine 3 pages' },
-    pro: { nom: 'Pro', prix: 200000, description: 'Site 5 pages + SEO + maintenance 3 mois' },
-    premium: { nom: 'Premium', prix: 350000, description: 'E-commerce ou site complexe' },
+    starter: { nom: 'Starter', prix: 252000, description: 'Site vitrine 3 pages' },
+    pro: { nom: 'Pro', prix: 400000, description: 'Site 5 pages + SEO + maintenance 3 mois' },
+    premium: { nom: 'Premium', prix: 650000, description: 'E-commerce ou site complexe' },
   },
 };
