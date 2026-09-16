@@ -171,6 +171,18 @@ nav.scrolled { box-shadow: var(--shadow-sm); }
 .hero-right { position: relative; display: flex; justify-content: center; align-items: flex-end; z-index: 2; }
 .photo-frame { position: relative; width: 100%; max-width: 420px; }
 .photo-frame img { width: 100%; border-radius: var(--radius); display: block; position: relative; z-index: 2; box-shadow: var(--shadow-lg); }
+/* Variante portrait détouré : le sujet se pose sur une arche teintée,
+   l'ombre suit la silhouette au lieu d'un rectangle. */
+.photo-frame.is-cutout::before {
+  content: ''; position: absolute; inset: 6% -5% 2% -5%; z-index: 1;
+  background: linear-gradient(165deg, var(--accent-wash-2), var(--accent-wash) 50%, rgba(169,119,47,.02));
+  border-radius: 210px 210px 32px 32px;
+}
+.photo-frame.is-cutout img {
+  border-radius: 0; box-shadow: none;
+  filter: drop-shadow(0 28px 34px rgba(23, 20, 15, .26));
+}
+
 .photo-chip {
   position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 14px 18px; z-index: 3; box-shadow: var(--shadow-md); animation: float 4.5s ease-in-out infinite;

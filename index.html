@@ -229,8 +229,9 @@
   </div>
 
   <div class="hero-right">
-    <div class="photo-frame">
-      <img src="assets/photo.jpg" alt="Portrait de Pharel Happi, développeur web à Yaoundé" width="440" height="520" fetchpriority="high">
+    <div class="photo-frame is-cutout">
+      <img src="assets/photo-detoure.png" alt="Portrait de Pharel Happi, développeur web à Yaoundé" width="440" height="520" fetchpriority="high"
+           onerror="this.onerror=null;this.src='assets/photo.jpg';this.closest('.photo-frame').classList.remove('is-cutout')">
       <div class="photo-chip chip-1">
         <div class="chip-num">72h</div>
         <div class="chip-label">Délai livraison</div>
