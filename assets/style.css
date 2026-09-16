@@ -530,8 +530,9 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
   font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
   color: var(--ink-soft); border: 1px solid var(--line-strong); border-radius: 6px; padding: 4px 9px;
 }
-.work-thumb-1 { background: linear-gradient(135deg, #2f6b46, #6fae6f 60%, var(--accent-l)); }
-.work-thumb-2 { background: linear-gradient(135deg, #1f4f3f, #3d7a63 55%, #8fbf8a); }
+/* Dégradés calés sur la charte réelle de chaque client */
+.work-thumb-1 { background: linear-gradient(135deg, #14361f, #2f7d32 55%, #62b544); }
+.work-thumb-2 { background: linear-gradient(135deg, #2b1b19, #8e2b23 55%, #cf3b2e); }
 .work-thumb::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 34px 34px; pointer-events: none; }
 .work-initials { font-family: var(--font-display); font-size: 3.2rem; font-weight: 700; color: rgba(255,255,255,.92); letter-spacing: -.02em; position: relative; z-index: 1; }
 .work-body { padding: 2rem 2.2rem 2.2rem; }
