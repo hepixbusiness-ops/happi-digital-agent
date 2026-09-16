@@ -156,6 +156,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
     <li><a href="/#services">Services</a></li>
     <li><a href="/#process">Méthode</a></li>
     <li><a href="/#offres">Offres</a></li>
+    <li><a href="/#creatif">Design</a></li>
     <li><a href="/realisations.html">Réalisations</a></li>
     <li><a href="/blog.html" class="active">Blog</a></li>
     <li><a href="/#contact">Contact</a></li>
@@ -168,6 +169,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
     <a href="/#services">Services</a>
     <a href="/#process">Méthode</a>
     <a href="/#offres">Offres</a>
+    <a href="/#creatif">Design</a>
     <a href="/realisations.html">Réalisations</a>
     <a href="/blog.html">Blog</a>
     <a href="/#contact">Contact</a>
@@ -194,7 +196,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
   <div class="cta-box">
     <h3>Besoin d'un site web pour votre entreprise ?</h3>
     <p>Je crée des sites web professionnels en 72h pour les entreprises camerounaises.<br>
-    Paiement en MTN MoMo ou Orange Money. À partir de 100 000 FCFA.</p>
+    Paiement en MTN MoMo ou Orange Money. À partir de 252 000 FCFA.</p>
     <a href="https://wa.me/237699179254?text=Bonjour%20Pharel,%20j'ai%20lu%20votre%20article%20et%20je%20voudrais%20un%20site%20web" class="btn-gold">
       Me contacter sur WhatsApp →
     </a>
@@ -206,6 +208,7 @@ function genererHTMLArticle(article, sujetObj, slug) {
   <div class="footer-links">
     <a href="/#services">Services</a>
     <a href="/#offres">Offres</a>
+    <a href="/#creatif">Design</a>
     <a href="/realisations.html">Réalisations</a>
     <a href="/blog.html">Blog</a>
     <a href="/#contact">Contact</a>
