@@ -170,7 +170,7 @@ nav.scrolled { box-shadow: var(--shadow-sm); }
 
 .hero-right { position: relative; display: flex; justify-content: center; align-items: flex-end; z-index: 2; }
 .photo-frame { position: relative; width: 100%; max-width: 420px; }
-.photo-frame img { width: 100%; border-radius: var(--radius); display: block; position: relative; z-index: 2; box-shadow: var(--shadow-lg); }
+.photo-frame img { width: 100%; height: auto; border-radius: var(--radius); display: block; position: relative; z-index: 2; box-shadow: var(--shadow-lg); }
 /* Variante portrait détouré : le sujet se pose sur une arche teintée,
    l'ombre suit la silhouette au lieu d'un rectangle. */
 .photo-frame.is-cutout::before {
