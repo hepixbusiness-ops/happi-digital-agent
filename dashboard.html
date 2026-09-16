@@ -120,7 +120,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
 .btn-wa:hover { background:#268055; }
 .wa-link { color:var(--green); text-decoration:none; border-bottom:1px dotted currentColor; }
 .wa-link:hover { color:#7fe0a8; }
-.wa-preview { width:100%; min-height:380px; padding:14px 16px; border-radius:10px; background:var(--bg); border:1px solid var(--line); color:var(--text); font-size:.85rem; line-height:1.65; font-family:'Inter',sans-serif; resize:vertical; }
+.wa-preview { width:100%; min-height:390px; padding:14px 16px; border-radius:10px; background:var(--bg); border:1px solid var(--line); color:var(--text); font-size:.85rem; line-height:1.65; font-family:'Inter',sans-serif; resize:vertical; }
 .wa-preview:focus { outline:none; border-color:var(--accent); }
 .wa-meta { font-size:.74rem; color:var(--muted); margin-top:8px; }
 .wa-meta strong { color:var(--text); font-variant-numeric:tabular-nums; }
@@ -265,7 +265,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
 
         <div class="form-field" style="margin-bottom:6px">
           <label>Message à envoyer (modifiable)</label>
-          <textarea class="wa-preview" id="wa-message" rows="17" oninput="marquerMessageModifie()"></textarea>
+          <textarea class="wa-preview" id="wa-message" rows="13" oninput="marquerMessageModifie()"></textarea>
         </div>
         <div class="wa-meta" id="wa-info">Saisissez un numéro pour activer l'envoi.</div>
 
@@ -512,49 +512,43 @@ function contexteProspect(ctx) {
   var secteur = (ctx.secteur || '').trim().toLowerCase();
   var ville = (ctx.ville || '').trim();
   if (entreprise && secteur && ville) {
-    return 'En cherchant des ' + secteur + ' à ' + ville + ', j\'ai vu que ' + entreprise +
-      ' n\'apparaît pas encore avec un site web. Aujourd\'hui vos clients cherchent sur Google avant d\'appeler.';
+    return 'En cherchant des ' + secteur + ' à ' + ville + ', j\'ai vu que ' + entreprise + ' n\'a pas encore de site web.';
   }
   if (entreprise) {
-    return 'J\'ai remarqué que ' + entreprise + ' n\'a pas encore de site web. Aujourd\'hui vos clients cherchent sur Google avant d\'appeler.';
+    return 'J\'ai vu que ' + entreprise + ' n\'a pas encore de site web.';
   }
-  return 'Aujourd\'hui vos clients cherchent sur Google avant d\'appeler. Sans site web, ils tombent sur vos concurrents à votre place.';
+  return 'Vos clients vous cherchent sur Google avant d\'appeler.';
 }
 
 function genererMessageWhatsApp(modele, ctx) {
   ctx = ctx || {};
   var entreprise = (ctx.entreprise || '').trim();
   var signature = '\n\nPharel Happi\n' + MON_NUMERO;
+  var entete = 'Bonjour,\n\nPharel Happi, studio Happi Digital à Yaoundé.\n\n';
 
   if (modele === 'design') {
-    return 'Bonjour,\n\n' +
-      'Je suis Pharel Happi, du studio Happi Digital à Yaoundé.\n\n' +
-      'Je réalise vos supports de communication : affiches publicitaires, logos et identité visuelle, ' +
-      'bannières, montage vidéo et motion design. De quoi publier chaque semaine sans que cela vous prenne du temps.\n\n' +
-      (entreprise
-        ? 'Pour ' + entreprise + ', je peux préparer un premier visuel avant toute commande, pour que vous voyiez le rendu.'
-        : 'Je peux préparer un premier visuel avant toute commande, pour que vous voyiez le rendu.') + '\n\n' +
-      'Mes réalisations : ' + SITE_URL + '\n\n' +
-      'Cela vous intéresse ?' + signature;
+    return entete +
+      'Je réalise vos affiches publicitaires, logos, bannières, montages vidéo et motion design. ' +
+      'Je crée aussi des sites web livrés en 72h.\n\n' +
+      (entreprise ? 'Pour ' + entreprise + ', je peux' : 'Je peux') +
+      ' préparer un premier visuel gratuit, avant toute commande.\n\n' +
+      SITE_URL + '\n\nCela vous intéresse ?' + signature;
   }
 
   if (modele === 'relance') {
-    return 'Bonjour,\n\n' +
-      'Pharel Happi, du studio Happi Digital. Je me permets de revenir vers vous.\n\n' +
-      'Ma proposition tient toujours : un site web professionnel livré en 72h, paiement MTN MoMo ou Orange Money, ' +
-      'et une maquette gratuite avant que vous ne vous engagiez.\n\n' +
-      'Si ce n\'est pas le bon moment, dites-le moi simplement, je n\'insisterai pas.\n\n' +
+    return 'Bonjour,\n\nPharel Happi, studio Happi Digital. Je reviens vers vous.\n\n' +
+      'Ma proposition tient toujours : site web en 72h, affiches, logos, montage vidéo et motion design. ' +
+      'Maquette ou premier visuel gratuit.\n\n' +
+      'Si ce n\'est pas le bon moment, dites-le moi, je n\'insisterai pas.\n\n' +
       SITE_URL + signature;
   }
 
-  return 'Bonjour,\n\n' +
-    'Je suis Pharel Happi, du studio Happi Digital à Yaoundé.\n\n' +
-    'Je crée des sites web professionnels livrés en 72h : site vitrine, boutique en ligne avec paiement ' +
-    'MTN MoMo et Orange Money, et référencement Google pour que vos clients vous trouvent.\n\n' +
+  return entete +
+    'Je crée des sites web livrés en 72h, vitrine ou boutique avec paiement MTN MoMo et Orange Money. ' +
+    'Je réalise aussi vos affiches publicitaires, logos, bannières, montages vidéo et motion design.\n\n' +
     contexteProspect(ctx) + '\n\n' +
-    'Je peux vous envoyer une maquette gratuite de votre futur site sous 24h, sans engagement.\n\n' +
-    'Mes réalisations et mes tarifs : ' + SITE_URL + '\n\n' +
-    'Cela vous intéresse ?' + signature;
+    'Maquette ou premier visuel gratuit, sans engagement.\n\n' +
+    SITE_URL + '\n\nCela vous intéresse ?' + signature;
 }
 
 function contexteFormulaireWhatsApp() {
