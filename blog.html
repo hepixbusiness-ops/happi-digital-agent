@@ -5,11 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Pharel Happi | Conseils Digital & Web Cameroun</title>
 <meta name="description" content="Conseils digital, web et IA pour les entreprises camerounaises. Articles publiés chaque semaine par Pharel Happi.">
+<meta property="og:title" content="Blog — Pharel Happi">
+<meta property="og:description" content="Conseils pratiques, tutoriels web et stratégies digitales pour les entrepreneurs camerounais.">
+<meta property="og:url" content="https://pharel.cloud/blog">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pharel.cloud/assets/photo.jpg">
+<meta property="og:locale" content="fr_CM">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog — Pharel Happi">
+<meta name="twitter:description" content="Conseils pratiques, tutoriels web et stratégies digitales pour les entrepreneurs camerounais.">
+<meta name="twitter:image" content="https://pharel.cloud/assets/photo.jpg">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#1c1917">
 <link rel="canonical" href="https://pharel.cloud/blog">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Blog Pharel Happi",
+  "description": "Conseils digital, web et IA pour les entreprises camerounaises.",
+  "url": "https://pharel.cloud/blog",
+  "inLanguage": "fr",
+  "publisher": {
+    "@type": "Person",
+    "name": "Pharel Happi",
+    "url": "https://pharel.cloud"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -17,17 +46,19 @@
   <a href="/" class="nav-logo">Pharel<span>.</span></a>
   <ul class="nav-links">
     <li><a href="/#services">Services</a></li>
+    <li><a href="/#process">Méthode</a></li>
     <li><a href="/#offres">Offres</a></li>
     <li><a href="/realisations.html">Réalisations</a></li>
     <li><a href="/blog.html" class="active">Blog</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
   <a href="https://wa.me/237699179254" class="nav-cta">Démarrer →</a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-drawer" id="nav-drawer">
   <div class="nav-drawer-panel">
     <a href="/#services">Services</a>
+    <a href="/#process">Méthode</a>
     <a href="/#offres">Offres</a>
     <a href="/realisations.html">Réalisations</a>
     <a href="/blog.html">Blog</a>
@@ -40,6 +71,20 @@
   <div class="eyebrow">Ressources & Conseils</div>
   <h1 style="margin-top:2rem">Tout ce que vous devez savoir<br>sur le <em>digital au Cameroun.</em></h1>
   <p>Conseils pratiques, tutoriels web et stratégies digitales pour les entrepreneurs camerounais. Publié chaque jour.</p>
+  <div class="blog-stats">
+    <div>
+      <div class="blog-stat-num" id="stat-count">·</div>
+      <div class="blog-stat-label">Articles publiés</div>
+    </div>
+    <div>
+      <div class="blog-stat-num">4</div>
+      <div class="blog-stat-label">Thématiques</div>
+    </div>
+    <div>
+      <div class="blog-stat-num">100%</div>
+      <div class="blog-stat-label">Contexte camerounais</div>
+    </div>
+  </div>
 </div>
 
 <div class="filters" data-reveal>
@@ -50,11 +95,17 @@
     <button class="filter-btn" data-cat="conseils">Conseils Business</button>
     <button class="filter-btn" data-cat="ia">Intelligence Artificielle</button>
   </div>
+  <div class="blog-search">
+    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="search" id="blog-search-input" placeholder="Rechercher un article..." aria-label="Rechercher un article">
+  </div>
 </div>
 
 <div class="articles">
   <div class="articles-grid" id="articles-grid" data-reveal>
-    <div class="empty"><h3>Chargement des articles...</h3></div>
+    <div class="skeleton-card"><div class="skeleton-line h-sm w-40"></div><div class="skeleton-line h-lg"></div><div class="skeleton-line h-lg w-80"></div><div class="skeleton-line"></div><div class="skeleton-line w-60"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h-sm w-40"></div><div class="skeleton-line h-lg"></div><div class="skeleton-line h-lg w-80"></div><div class="skeleton-line"></div><div class="skeleton-line w-60"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h-sm w-40"></div><div class="skeleton-line h-lg"></div><div class="skeleton-line h-lg w-80"></div><div class="skeleton-line"></div><div class="skeleton-line w-60"></div></div>
   </div>
   <div class="pagination" id="pagination"></div>
 </div>
@@ -69,18 +120,41 @@
 
 <footer>
   <span class="footer-logo">Pharel<span>.</span>cloud</span>
+  <div class="footer-links">
+    <a href="/#services">Services</a>
+    <a href="/#process">Méthode</a>
+    <a href="/#offres">Offres</a>
+    <a href="/realisations.html">Réalisations</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/#contact">Contact</a>
+  </div>
   <span class="footer-copy">© 2025 Pharel Happi — Yaoundé, Cameroun</span>
 </footer>
+
+<a href="https://wa.me/237699179254?text=Bonjour%20Pharel,%20je%20veux%20un%20site%20web" id="wa-float" aria-label="Discuter sur WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+<button id="scroll-top" aria-label="Retour en haut">
+  <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+</button>
 
 <script>
 var allPosts = [];
 var currentCat = 'tous';
+var currentQuery = '';
 var currentPage = 1;
 var perPage = 9;
 
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
 function catClass(cat) {
-  if (!cat) return 'cat-digital';
-  var c = cat.toLowerCase();
+  var c = (cat || '').toLowerCase();
   if (c.includes('tech') || c.includes('tutoriel') || c.includes('web')) return 'cat-tech';
   if (c.includes('ia') || c.includes('intelligence')) return 'cat-tech';
   if (c.includes('conseil') || c.includes('business')) return 'cat-conseils';
@@ -98,51 +172,82 @@ function catMatch(post, cat) {
   return true;
 }
 
+function queryMatch(post, q) {
+  if (!q) return true;
+  var hay = [post.titre, post.extrait, post.categorie, (post.tags || []).join(' ')].join(' ').toLowerCase();
+  return hay.includes(q);
+}
+
+function cardHTML(p) {
+  return '<a href="/blog/' + encodeURIComponent(p.slug) + '.html" class="article-card">' +
+    '<div class="article-cat ' + catClass(p.categorie) + '">' + esc(p.categorie || 'Digital') + '</div>' +
+    '<h2 class="article-title">' + esc(p.titre) + '</h2>' +
+    '<p class="article-excerpt">' + esc(p.extrait) + '</p>' +
+    '<div class="article-meta card-meta">' + esc(p.date) + ' &middot; ' + esc(p.lecture || '5') + ' min de lecture</div>' +
+    '</a>';
+}
+
+function featuredHTML(p) {
+  return '<a href="/blog/' + encodeURIComponent(p.slug) + '.html" class="article-card article-featured">' +
+    '<div>' +
+      '<div class="featured-flag">' +
+        '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/></svg>' +
+        'Dernier article' +
+      '</div>' +
+      '<h2 class="article-title">' + esc(p.titre) + '</h2>' +
+      '<div class="featured-read">Lire l\'article ' +
+        '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:16px;height:16px"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>' +
+      '</div>' +
+    '</div>' +
+    '<div class="featured-side">' +
+      '<div class="article-cat ' + catClass(p.categorie) + '">' + esc(p.categorie || 'Digital') + '</div>' +
+      '<p class="article-excerpt">' + esc(p.extrait) + '</p>' +
+      '<div class="article-meta card-meta">' + esc(p.date) + ' &middot; ' + esc(p.lecture || '5') + ' min de lecture</div>' +
+    '</div>' +
+  '</a>';
+}
+
 function renderArticles() {
-  var filtered = allPosts.filter(function(p){ return catMatch(p, currentCat); });
+  var filtered = allPosts.filter(function (p) {
+    return catMatch(p, currentCat) && queryMatch(p, currentQuery);
+  });
   var start = (currentPage - 1) * perPage;
   var page = filtered.slice(start, start + perPage);
   var grid = document.getElementById('articles-grid');
+  var pag = document.getElementById('pagination');
 
   if (!page.length) {
-    grid.innerHTML = '<div class="empty"><h3>Aucun article dans cette catégorie</h3><p>Revenez bientôt — l\'agent publie chaque jour.</p></div>';
-    document.getElementById('pagination').innerHTML = '';
+    grid.innerHTML = currentQuery
+      ? '<div class="empty"><h3>Aucun résultat pour « ' + esc(currentQuery) + ' »</h3><p>Essayez un autre mot-clé, ou parcourez toutes les catégories.</p></div>'
+      : '<div class="empty"><h3>Aucun article dans cette catégorie</h3><p>Revenez bientôt, l\'agent publie chaque jour.</p></div>';
+    pag.innerHTML = '';
     return;
   }
 
-  grid.innerHTML = page.map(function(p, i) {
-    var isNew = i === 0 && currentPage === 1 && currentCat === 'tous';
-    return '<a href="/blog/' + p.slug + '.html" class="article-card">' +
-      (isNew ? '<span class="article-badge">Nouveau</span>' : '') +
-      '<div class="article-cat ' + catClass(p.categorie) + '">' + (p.categorie || 'Digital') + '</div>' +
-      '<h2 class="article-title">' + p.titre + '</h2>' +
-      '<p class="article-excerpt">' + p.extrait + '</p>' +
-      '<div class="article-meta card-meta">' + p.date + ' &middot; ' + (p.lecture || '5') + ' min de lecture</div>' +
-      '</a>';
+  var showFeatured = currentPage === 1 && currentCat === 'tous' && !currentQuery;
+  grid.innerHTML = page.map(function (p, i) {
+    return (showFeatured && i === 0) ? featuredHTML(p) : cardHTML(p);
   }).join('');
 
-  // Pagination
   var totalPages = Math.ceil(filtered.length / perPage);
-  var pag = document.getElementById('pagination');
   if (totalPages <= 1) { pag.innerHTML = ''; return; }
   var html = '';
   for (var i = 1; i <= totalPages; i++) {
     html += '<button class="page-btn' + (i === currentPage ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
   }
   pag.innerHTML = html;
-  pag.querySelectorAll('.page-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      currentPage = parseInt(this.dataset.page);
+  pag.querySelectorAll('.page-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      currentPage = parseInt(this.dataset.page, 10);
       renderArticles();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 }
 
-// Filtres
-document.querySelectorAll('.filter-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+document.querySelectorAll('.filter-btn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
     this.classList.add('active');
     currentCat = this.dataset.cat;
     currentPage = 1;
@@ -150,15 +255,33 @@ document.querySelectorAll('.filter-btn').forEach(function(btn) {
   });
 });
 
-// Charger les articles
+(function () {
+  var input = document.getElementById('blog-search-input');
+  var timer;
+  input.addEventListener('input', function () {
+    var value = this.value.trim().toLowerCase();
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      currentQuery = value;
+      currentPage = 1;
+      renderArticles();
+    }, 180);
+  });
+})();
+
 fetch('/posts.json')
-  .then(function(r){ return r.json(); })
-  .then(function(posts) {
-    allPosts = posts.sort(function(a,b){ return new Date(b.dateISO||b.date) - new Date(a.dateISO||a.date); });
+  .then(function (r) { return r.json(); })
+  .then(function (posts) {
+    allPosts = posts.sort(function (a, b) {
+      return new Date(b.dateISO || b.date) - new Date(a.dateISO || a.date);
+    });
+    document.getElementById('stat-count').textContent = allPosts.length;
     renderArticles();
   })
-  .catch(function() {
-    document.getElementById('articles-grid').innerHTML = '<div class="empty"><h3>Les articles arrivent bientôt</h3><p>L\'agent publie le premier article demain matin.</p></div>';
+  .catch(function () {
+    document.getElementById('stat-count').textContent = '0';
+    document.getElementById('articles-grid').innerHTML =
+      '<div class="empty"><h3>Les articles arrivent bientôt</h3><p>Le premier article est publié demain matin.</p></div>';
   });
 </script>
 <script src="assets/site.js"></script>
