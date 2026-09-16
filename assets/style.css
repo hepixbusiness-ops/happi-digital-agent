@@ -493,7 +493,10 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
 .work-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.6rem; }
 .work-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: all .35s var(--ease); }
 .work-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); }
-.work-thumb { height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.work-thumb {
+  aspect-ratio: 11 / 5; min-height: 190px;
+  display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
 .work-shot {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: top center; z-index: 1;
