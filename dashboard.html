@@ -116,6 +116,15 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
 .btn-r { background:#2a1414; color:var(--red); }
 .btn-r:hover { background:#3a1a1a; }
 .btn-xs { padding:5px 10px; font-size:.72rem; }
+.btn-wa { background:#1f6b45; color:#eafff3; }
+.btn-wa:hover { background:#268055; }
+.wa-link { color:var(--green); text-decoration:none; border-bottom:1px dotted currentColor; }
+.wa-link:hover { color:#7fe0a8; }
+.wa-preview { width:100%; min-height:380px; padding:14px 16px; border-radius:10px; background:var(--bg); border:1px solid var(--line); color:var(--text); font-size:.85rem; line-height:1.65; font-family:'Inter',sans-serif; resize:vertical; }
+.wa-preview:focus { outline:none; border-color:var(--accent); }
+.wa-meta { font-size:.74rem; color:var(--muted); margin-top:8px; }
+.wa-meta strong { color:var(--text); font-variant-numeric:tabular-nums; }
+.wa-meta.err strong { color:var(--red); }
 
 .form-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin-bottom:14px; }
 .form-field label { display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:5px; font-weight:600; }
@@ -167,6 +176,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
     <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
     <button class="tab-btn" data-tab="prospects">Prospects</button>
     <button class="tab-btn" data-tab="clients">Clients</button>
+    <button class="tab-btn" data-tab="whatsapp">Message WhatsApp</button>
   </div>
 
   <!-- OVERVIEW -->
@@ -217,6 +227,53 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
           <thead><tr><th>Score</th><th>Entreprise</th><th>Secteur</th><th>Ville</th><th>Téléphone</th><th>Maps</th><th>Note (avis)</th><th>Accroche d'appel</th><th>Statut</th><th>Notes</th><th></th></tr></thead>
           <tbody id="leads-tbody"><tr class="empty-row"><td colspan="11">Chargement...</td></tr></tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGE WHATSAPP -->
+  <div class="tab-panel" id="tab-whatsapp">
+    <div class="section">
+      <div class="section-title">Préparer un message de prospection</div>
+      <div class="box">
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Numéro WhatsApp</label>
+            <input type="tel" id="wa-numero" placeholder="699 179 254 ou +33 6 12 34 56 78" oninput="rafraichirWhatsApp()">
+          </div>
+          <div class="form-field">
+            <label>Entreprise (optionnel)</label>
+            <input type="text" id="wa-entreprise" placeholder="Nom de l'entreprise" oninput="rafraichirWhatsApp()">
+          </div>
+          <div class="form-field">
+            <label>Secteur (optionnel)</label>
+            <input type="text" id="wa-secteur" placeholder="restaurant, clinique, école..." oninput="rafraichirWhatsApp()">
+          </div>
+          <div class="form-field">
+            <label>Ville (optionnel)</label>
+            <input type="text" id="wa-ville" placeholder="Yaoundé" oninput="rafraichirWhatsApp()">
+          </div>
+          <div class="form-field">
+            <label>Modèle</label>
+            <select id="wa-modele" onchange="rafraichirWhatsApp(true)">
+              <option value="site">Pas encore de site web</option>
+              <option value="design">Design &amp; contenu visuel</option>
+              <option value="relance">Relance</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-field" style="margin-bottom:6px">
+          <label>Message à envoyer (modifiable)</label>
+          <textarea class="wa-preview" id="wa-message" rows="17" oninput="marquerMessageModifie()"></textarea>
+        </div>
+        <div class="wa-meta" id="wa-info">Saisissez un numéro pour activer l'envoi.</div>
+
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px">
+          <button class="btn btn-wa" id="wa-send" onclick="ouvrirWhatsApp()" disabled>Ouvrir WhatsApp →</button>
+          <button class="btn btn-s" onclick="copierMessageWhatsApp()">Copier le message</button>
+          <button class="btn btn-s" onclick="rafraichirWhatsApp(true)">Régénérer le message</button>
+        </div>
       </div>
     </div>
   </div>
@@ -346,6 +403,7 @@ document.querySelectorAll('.tab-btn').forEach(function (btn) {
 function loadAll() {
   loadOverviewAndProspects();
   loadClients();
+  rafraichirWhatsApp(true);
   document.getElementById('mj').textContent = new Date().toLocaleTimeString('fr-FR');
 }
 
@@ -391,22 +449,176 @@ async function loadOverviewAndProspects() {
       var opts = STATUTS.map(function (s) { return '<option value="' + s + '"' + (s === l.statut ? ' selected' : '') + '>' + s.replace('_', ' ') + '</option>'; }).join('');
       var noteAvis = l.note_google ? (l.note_google + '/5 (' + (l.avis_count || 0) + ')') : '&mdash;';
       var mapsLink = l.maps_url ? '<a href="' + l.maps_url + '" target="_blank" style="color:var(--accent)">Ouvrir</a>' : '&mdash;';
+      var tel = normaliserNumeroWhatsApp(l.telephone);
+      var telCell = !l.telephone ? '&mdash;'
+        : tel.valide
+          ? '<a class="wa-link" target="_blank" rel="noopener" title="Ouvrir WhatsApp avec le message déjà rempli" href="'
+            + lienWhatsApp(tel.numero, genererMessageWhatsApp('site', { entreprise: l.nom, secteur: l.secteur, ville: l.ville }))
+            + '">' + l.telephone + '</a>'
+          : l.telephone;
       var accroche = l.accroche ? '<span title="' + l.accroche.replace(/"/g, '&quot;') + '">' + l.accroche.slice(0, 60) + (l.accroche.length > 60 ? '…' : '') + '</span>' : '&mdash;';
       return '<tr data-id="' + l.id + '">' +
         '<td>' + (l.score != null ? '<strong>' + l.score + '/10</strong>' : '&mdash;') + '</td>' +
         '<td><strong>' + l.nom + '</strong></td>' +
         '<td>' + l.secteur + '</td>' +
         '<td>' + (l.ville || 'Yaounde') + '</td>' +
-        '<td>' + (l.telephone || '&mdash;') + '</td>' +
+        '<td>' + telCell + '</td>' +
         '<td>' + mapsLink + '</td>' +
         '<td>' + noteAvis + '</td>' +
         '<td style="max-width:220px">' + accroche + '</td>' +
         '<td><select class="mini" onchange="updateLeadStatut(\'' + l.id + '\', this.value)">' + opts + '</select></td>' +
         '<td><input class="mini" type="text" value="' + (l.notes ? l.notes.replace(/"/g, '&quot;') : '') + '" onblur="updateLeadNotes(\'' + l.id + '\', this.value)" style="width:140px"></td>' +
-        '<td><button class="btn btn-g btn-xs" onclick="preremplirClient(\'' + l.id + '\', ' + JSON.stringify(l.nom) + ')">Marquer signé</button></td>' +
+        '<td style="white-space:nowrap">' +
+          '<button class="btn btn-wa btn-xs" onclick="preparerWhatsAppDepuisProspect(\'' + l.id + '\')">WhatsApp</button> ' +
+          '<button class="btn btn-g btn-xs" onclick="preremplirClient(\'' + l.id + '\', ' + JSON.stringify(l.nom) + ')">Marquer signé</button>' +
+        '</td>' +
         '</tr>';
     }).join('');
   }
+}
+
+// ── MESSAGE WHATSAPP ─────────────────────────────────────
+var SITE_URL = 'https://pharel.cloud';
+var MON_NUMERO = '+237 699 179 254';
+var waMessageModifie = false;
+
+// Normalise une saisie libre en numero exploitable par wa.me (chiffres, indicatif inclus).
+function normaliserNumeroWhatsApp(brut) {
+  var saisie = String(brut == null ? '' : brut).trim();
+  var chiffres = saisie.replace(/\D/g, '');
+  if (!chiffres) return { valide: false, raison: 'Saisissez un numéro pour activer l\'envoi.' };
+
+  var international = saisie.charAt(0) === '+' || chiffres.indexOf('00') === 0;
+  if (chiffres.indexOf('00') === 0) chiffres = chiffres.slice(2);
+
+  // Numéro camerounais local : 9 chiffres commençant par 6
+  if (!international && chiffres.length === 9 && chiffres.charAt(0) === '6') chiffres = '237' + chiffres;
+
+  if (!international && chiffres.charAt(0) === '0') {
+    return { valide: false, raison: 'Numéro local d\'un autre pays : ajoutez l\'indicatif, par exemple +33.' };
+  }
+  if (chiffres.length < 8 || chiffres.length > 15) {
+    return { valide: false, raison: 'Numéro incomplet. Avec l\'indicatif pays, attendu entre 8 et 15 chiffres.' };
+  }
+  return { valide: true, numero: chiffres };
+}
+
+function lienWhatsApp(numero, message) {
+  return 'https://wa.me/' + numero + '?text=' + encodeURIComponent(message);
+}
+
+function contexteProspect(ctx) {
+  var entreprise = (ctx.entreprise || '').trim();
+  var secteur = (ctx.secteur || '').trim().toLowerCase();
+  var ville = (ctx.ville || '').trim();
+  if (entreprise && secteur && ville) {
+    return 'En cherchant des ' + secteur + ' à ' + ville + ', j\'ai vu que ' + entreprise +
+      ' n\'apparaît pas encore avec un site web. Aujourd\'hui vos clients cherchent sur Google avant d\'appeler.';
+  }
+  if (entreprise) {
+    return 'J\'ai remarqué que ' + entreprise + ' n\'a pas encore de site web. Aujourd\'hui vos clients cherchent sur Google avant d\'appeler.';
+  }
+  return 'Aujourd\'hui vos clients cherchent sur Google avant d\'appeler. Sans site web, ils tombent sur vos concurrents à votre place.';
+}
+
+function genererMessageWhatsApp(modele, ctx) {
+  ctx = ctx || {};
+  var entreprise = (ctx.entreprise || '').trim();
+  var signature = '\n\nPharel Happi\n' + MON_NUMERO;
+
+  if (modele === 'design') {
+    return 'Bonjour,\n\n' +
+      'Je suis Pharel Happi, du studio Happi Digital à Yaoundé.\n\n' +
+      'Je réalise vos supports de communication : affiches publicitaires, logos et identité visuelle, ' +
+      'bannières, montage vidéo et motion design. De quoi publier chaque semaine sans que cela vous prenne du temps.\n\n' +
+      (entreprise
+        ? 'Pour ' + entreprise + ', je peux préparer un premier visuel avant toute commande, pour que vous voyiez le rendu.'
+        : 'Je peux préparer un premier visuel avant toute commande, pour que vous voyiez le rendu.') + '\n\n' +
+      'Mes réalisations : ' + SITE_URL + '\n\n' +
+      'Cela vous intéresse ?' + signature;
+  }
+
+  if (modele === 'relance') {
+    return 'Bonjour,\n\n' +
+      'Pharel Happi, du studio Happi Digital. Je me permets de revenir vers vous.\n\n' +
+      'Ma proposition tient toujours : un site web professionnel livré en 72h, paiement MTN MoMo ou Orange Money, ' +
+      'et une maquette gratuite avant que vous ne vous engagiez.\n\n' +
+      'Si ce n\'est pas le bon moment, dites-le moi simplement, je n\'insisterai pas.\n\n' +
+      SITE_URL + signature;
+  }
+
+  return 'Bonjour,\n\n' +
+    'Je suis Pharel Happi, du studio Happi Digital à Yaoundé.\n\n' +
+    'Je crée des sites web professionnels livrés en 72h : site vitrine, boutique en ligne avec paiement ' +
+    'MTN MoMo et Orange Money, et référencement Google pour que vos clients vous trouvent.\n\n' +
+    contexteProspect(ctx) + '\n\n' +
+    'Je peux vous envoyer une maquette gratuite de votre futur site sous 24h, sans engagement.\n\n' +
+    'Mes réalisations et mes tarifs : ' + SITE_URL + '\n\n' +
+    'Cela vous intéresse ?' + signature;
+}
+
+function contexteFormulaireWhatsApp() {
+  return {
+    entreprise: document.getElementById('wa-entreprise').value,
+    secteur: document.getElementById('wa-secteur').value,
+    ville: document.getElementById('wa-ville').value,
+  };
+}
+
+function marquerMessageModifie() { waMessageModifie = true; }
+
+// forcer = true écrase le texte même s'il a été modifié à la main
+function rafraichirWhatsApp(forcer) {
+  var champ = document.getElementById('wa-message');
+  if (forcer || !waMessageModifie) {
+    champ.value = genererMessageWhatsApp(document.getElementById('wa-modele').value, contexteFormulaireWhatsApp());
+    waMessageModifie = false;
+  }
+
+  var tel = normaliserNumeroWhatsApp(document.getElementById('wa-numero').value);
+  var info = document.getElementById('wa-info');
+  var bouton = document.getElementById('wa-send');
+  if (tel.valide) {
+    info.className = 'wa-meta';
+    info.innerHTML = 'Sera envoyé au <strong>+' + tel.numero + '</strong>. WhatsApp s\'ouvre avec le message déjà rempli, il ne reste qu\'à appuyer sur envoyer.';
+    bouton.disabled = false;
+  } else {
+    info.className = 'wa-meta err';
+    info.innerHTML = '<strong>' + tel.raison + '</strong>';
+    bouton.disabled = true;
+  }
+}
+
+function ouvrirWhatsApp() {
+  var tel = normaliserNumeroWhatsApp(document.getElementById('wa-numero').value);
+  if (!tel.valide) return;
+  window.open(lienWhatsApp(tel.numero, document.getElementById('wa-message').value), '_blank', 'noopener');
+}
+
+function copierMessageWhatsApp() {
+  var champ = document.getElementById('wa-message');
+  navigator.clipboard.writeText(champ.value).then(function () {
+    var info = document.getElementById('wa-info');
+    var avant = info.innerHTML;
+    info.innerHTML = 'Message copié.';
+    setTimeout(function () { info.innerHTML = avant; }, 1800);
+  }).catch(function () {
+    champ.select();
+    alert('Copie automatique refusée par le navigateur. Le message est sélectionné, faites Ctrl+C.');
+  });
+}
+
+// Bascule vers l'onglet WhatsApp avec les champs remplis depuis un prospect
+function preparerWhatsAppDepuisProspect(id) {
+  var lead = currentLeads.filter(function (l) { return String(l.id) === String(id); })[0];
+  if (!lead) return;
+  document.getElementById('wa-numero').value = lead.telephone || '';
+  document.getElementById('wa-entreprise').value = lead.nom || '';
+  document.getElementById('wa-secteur').value = lead.secteur || '';
+  document.getElementById('wa-ville').value = lead.ville || '';
+  document.getElementById('wa-modele').value = 'site';
+  document.querySelector('.tab-btn[data-tab="whatsapp"]').click();
+  rafraichirWhatsApp(true);
 }
 
 // ── EXPORT CSV ───────────────────────────────────────────

@@ -49,7 +49,7 @@ Ce que je propose :
 ✓ Site avec vos specialites et vos medecins
 ✓ Formulaire de prise de rendez-vous en ligne
 ✓ Horaires et localisation GPS
-✓ Livre en 72h a partir de 150 000 FCFA
+✓ Livre en 72h a partir de 252 000 FCFA
 
 Maquette gratuite disponible sous 24h.
 
@@ -70,7 +70,7 @@ Ce que je cree pour vous :
 ✓ Site avec votre programme et vos frais
 ✓ Inscription en ligne
 ✓ Galerie photos
-✓ Livre en 72h a partir de 120 000 FCFA
+✓ Livre en 72h a partir de 252 000 FCFA
 
 Pharel Happi - Happi Digital | +237 699 179 254`,
   },
