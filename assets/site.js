@@ -148,27 +148,88 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
   var NUMERO = '237699179254';
   var declencheur = null;
+  var mode = 'site';               // 'site' (formules) ou 'creatif' (design & contenu)
   var formuleCourante = { nom: '', prix: '' };
 
   var champNom = document.getElementById('qz-nom');
   var labelNom = document.getElementById('qz-nom-label');
   var champAttentes = document.getElementById('qz-attentes');
+  var labelAttentes = document.getElementById('qz-attentes-label');
   var champSecteur = document.getElementById('qz-secteur');
+  var blocType = document.getElementById('qz-field-type');
+  var blocPresta = document.getElementById('qz-field-presta');
+  var blocFichiers = document.getElementById('qz-field-fichiers');
+
+  var TEXTES = {
+    site: {
+      badge: 'Formule choisie',
+      intro: "Quatre questions, une minute. Vos réponses partent avec votre message WhatsApp : je peux vous répondre avec un vrai devis plutôt qu'un questionnaire de plus.",
+      attentes: 'Qu\'attendez-vous de ce site ?',
+      placeholder: 'Ex. être trouvé sur Google, montrer mes réalisations, recevoir des commandes, arrêter de répondre aux mêmes questions sur WhatsApp...',
+    },
+    creatif: {
+      badge: 'Design & contenu',
+      intro: "Quelques questions, une minute. Vos réponses partent avec votre message WhatsApp : je peux vous chiffrer le travail sans vous rappeler pour les mêmes détails.",
+      attentes: 'Décrivez votre projet',
+      placeholder: 'Ex. une vidéo de 30 s pour Facebook à partir de mes photos de chantier, un logo pour ma boutique, trois affiches pour une promotion...',
+    },
+  };
 
   function valeurRadio(nom) {
     var coche = form.querySelector('input[name="' + nom + '"]:checked');
     return coche ? coche.value : '';
   }
 
+  function prestationsCochees() {
+    return Array.prototype.map.call(
+      form.querySelectorAll('input[name="qz-presta"]:checked'),
+      function (c) { return c.value; }
+    );
+  }
+
   function marquer(id, invalide) {
     document.getElementById(id).classList.toggle('invalid', invalide);
   }
 
-  function ouvrir(lien) {
-    declencheur = lien;
-    formuleCourante = { nom: lien.dataset.formule || '', prix: lien.dataset.prix || '' };
-    document.getElementById('qz-formule-nom').textContent =
-      formuleCourante.nom + (formuleCourante.prix ? ' · ' + formuleCourante.prix : '');
+  // La question sur les fichiers ne concerne que la vidéo
+  function majBlocFichiers() {
+    var presta = prestationsCochees();
+    var video = presta.indexOf('Montage vidéo') !== -1 || presta.indexOf('Motion design') !== -1;
+    blocFichiers.hidden = !(mode === 'creatif' && video);
+  }
+
+  function ouvrir(el) {
+    declencheur = el;
+    var nouveauMode = el.hasAttribute('data-creatif') ? 'creatif' : 'site';
+    // La description est propre à la demande : on la vide en changeant de mode,
+    // mais on la garde si la modale est simplement rouverte au même endroit.
+    if (nouveauMode !== mode) champAttentes.value = '';
+    mode = nouveauMode;
+    var t = TEXTES[mode];
+
+    document.getElementById('qz-formule-label').textContent = t.badge;
+    document.getElementById('qz-intro').textContent = t.intro;
+    labelAttentes.textContent = t.attentes;
+    champAttentes.placeholder = t.placeholder;
+
+    blocType.hidden = mode !== 'site';
+    blocPresta.hidden = mode !== 'creatif';
+
+    if (mode === 'site') {
+      formuleCourante = { nom: el.dataset.formule || '', prix: el.dataset.prix || '' };
+      document.getElementById('qz-formule-nom').textContent =
+        formuleCourante.nom + (formuleCourante.prix ? ' · ' + formuleCourante.prix : '');
+    } else {
+      var presta = el.dataset.creatif;
+      form.querySelectorAll('input[name="qz-presta"]').forEach(function (c) {
+        c.checked = presta ? c.value === presta : false;
+      });
+      document.getElementById('qz-formule-nom').textContent = presta || 'Devis sur mesure';
+    }
+    majBlocFichiers();
+
+    form.querySelectorAll('.qz-field').forEach(function (f) { f.classList.remove('invalid'); });
+
     overlay.hidden = false;
     // laisse le navigateur peindre l'état initial avant de lancer la transition
     requestAnimationFrame(function () { overlay.classList.add('open'); });
@@ -185,24 +246,35 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
   function composerMessage() {
     var profil = valeurRadio('qz-profil');
-    var lignes = [
-      'Bonjour Pharel,',
-      '',
-      'Je suis intéressé(e) par la formule ' + formuleCourante.nom +
-        (formuleCourante.prix ? ' (' + formuleCourante.prix + ')' : '') + '.',
-      '',
-      (profil === 'Particulier' ? 'Particulier : ' : 'Entreprise : ') + champNom.value.trim(),
-      'Type de site : ' + valeurRadio('qz-type'),
-    ];
+    var lignes = ['Bonjour Pharel,', ''];
+
+    if (mode === 'site') {
+      lignes.push('Je suis intéressé(e) par la formule ' + formuleCourante.nom +
+        (formuleCourante.prix ? ' (' + formuleCourante.prix + ')' : '') + '.');
+    } else {
+      lignes.push('Je veux un devis pour du design et du contenu visuel.');
+    }
+    lignes.push('');
+    lignes.push((profil === 'Particulier' ? 'Particulier : ' : 'Entreprise : ') + champNom.value.trim());
+
+    if (mode === 'site') {
+      lignes.push('Type de site : ' + valeurRadio('qz-type'));
+    } else {
+      lignes.push('Prestations : ' + prestationsCochees().join(', '));
+      if (!blocFichiers.hidden && valeurRadio('qz-fichiers')) {
+        lignes.push('Fichiers : ' + valeurRadio('qz-fichiers'));
+      }
+    }
     if (champSecteur.value.trim()) lignes.push('Secteur : ' + champSecteur.value.trim());
-    lignes.push('', 'Mes attentes :', champAttentes.value.trim());
+
+    lignes.push('', mode === 'site' ? 'Mes attentes :' : 'Mon projet :', champAttentes.value.trim());
     return lignes.join('\n');
   }
 
-  document.querySelectorAll('.card-cta[data-formule]').forEach(function (lien) {
-    lien.addEventListener('click', function (e) {
+  document.querySelectorAll('.card-cta[data-formule], [data-creatif]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
       e.preventDefault();
-      ouvrir(lien);
+      ouvrir(el);
     });
   });
 
@@ -230,19 +302,25 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   form.querySelectorAll('input[name="qz-type"]').forEach(function (radio) {
     radio.addEventListener('change', function () { marquer('qz-field-type', false); });
   });
+  form.querySelectorAll('input[name="qz-presta"]').forEach(function (c) {
+    c.addEventListener('change', function () {
+      majBlocFichiers();
+      if (prestationsCochees().length) marquer('qz-field-presta', false);
+    });
+  });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var sansNom = !champNom.value.trim();
-    var sansType = !valeurRadio('qz-type');
+    var sansChoix = mode === 'site' ? !valeurRadio('qz-type') : !prestationsCochees().length;
     var sansAttentes = champAttentes.value.trim().length < 5;
 
     marquer('qz-field-nom', sansNom);
-    marquer('qz-field-type', sansType);
+    marquer(mode === 'site' ? 'qz-field-type' : 'qz-field-presta', sansChoix);
     marquer('qz-field-attentes', sansAttentes);
 
     if (sansNom) { champNom.focus(); return; }
-    if (sansType) { document.getElementById('qz-type-v').focus(); return; }
+    if (sansChoix) { document.getElementById(mode === 'site' ? 'qz-type-v' : 'qz-p1').focus(); return; }
     if (sansAttentes) { champAttentes.focus(); return; }
 
     window.open('https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(composerMessage()), '_blank', 'noopener');
