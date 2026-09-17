@@ -139,3 +139,113 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     });
   }
 })();
+
+// Questionnaire de projet avant l'envoi WhatsApp
+(function () {
+  var overlay = document.getElementById('qz-overlay');
+  var form = document.getElementById('qz-form');
+  if (!overlay || !form) return;
+
+  var NUMERO = '237699179254';
+  var declencheur = null;
+  var formuleCourante = { nom: '', prix: '' };
+
+  var champNom = document.getElementById('qz-nom');
+  var labelNom = document.getElementById('qz-nom-label');
+  var champAttentes = document.getElementById('qz-attentes');
+  var champSecteur = document.getElementById('qz-secteur');
+
+  function valeurRadio(nom) {
+    var coche = form.querySelector('input[name="' + nom + '"]:checked');
+    return coche ? coche.value : '';
+  }
+
+  function marquer(id, invalide) {
+    document.getElementById(id).classList.toggle('invalid', invalide);
+  }
+
+  function ouvrir(lien) {
+    declencheur = lien;
+    formuleCourante = { nom: lien.dataset.formule || '', prix: lien.dataset.prix || '' };
+    document.getElementById('qz-formule-nom').textContent =
+      formuleCourante.nom + (formuleCourante.prix ? ' · ' + formuleCourante.prix : '');
+    overlay.hidden = false;
+    // laisse le navigateur peindre l'état initial avant de lancer la transition
+    requestAnimationFrame(function () { overlay.classList.add('open'); });
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { champNom.focus(); }, 80);
+  }
+
+  function fermer() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () { overlay.hidden = true; }, 300);
+    if (declencheur) { declencheur.focus(); declencheur = null; }
+  }
+
+  function composerMessage() {
+    var profil = valeurRadio('qz-profil');
+    var lignes = [
+      'Bonjour Pharel,',
+      '',
+      'Je suis intéressé(e) par la formule ' + formuleCourante.nom +
+        (formuleCourante.prix ? ' (' + formuleCourante.prix + ')' : '') + '.',
+      '',
+      (profil === 'Particulier' ? 'Particulier : ' : 'Entreprise : ') + champNom.value.trim(),
+      'Type de site : ' + valeurRadio('qz-type'),
+    ];
+    if (champSecteur.value.trim()) lignes.push('Secteur : ' + champSecteur.value.trim());
+    lignes.push('', 'Mes attentes :', champAttentes.value.trim());
+    return lignes.join('\n');
+  }
+
+  document.querySelectorAll('.card-cta[data-formule]').forEach(function (lien) {
+    lien.addEventListener('click', function (e) {
+      e.preventDefault();
+      ouvrir(lien);
+    });
+  });
+
+  document.getElementById('qz-close').addEventListener('click', fermer);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) fermer(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) fermer();
+  });
+
+  // Le libellé du nom suit le profil choisi
+  form.querySelectorAll('input[name="qz-profil"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      var particulier = valeurRadio('qz-profil') === 'Particulier';
+      labelNom.textContent = particulier ? 'Votre nom' : "Nom de l'entreprise";
+      champNom.placeholder = particulier ? 'Ex. Pharel Happi' : 'Ex. Restaurant Le Bantou';
+      champNom.autocomplete = particulier ? 'name' : 'organization';
+    });
+  });
+
+  [champNom, champAttentes].forEach(function (champ) {
+    champ.addEventListener('input', function () {
+      if (champ.value.trim()) champ.closest('.qz-field').classList.remove('invalid');
+    });
+  });
+  form.querySelectorAll('input[name="qz-type"]').forEach(function (radio) {
+    radio.addEventListener('change', function () { marquer('qz-field-type', false); });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var sansNom = !champNom.value.trim();
+    var sansType = !valeurRadio('qz-type');
+    var sansAttentes = champAttentes.value.trim().length < 5;
+
+    marquer('qz-field-nom', sansNom);
+    marquer('qz-field-type', sansType);
+    marquer('qz-field-attentes', sansAttentes);
+
+    if (sansNom) { champNom.focus(); return; }
+    if (sansType) { document.getElementById('qz-type-v').focus(); return; }
+    if (sansAttentes) { champAttentes.focus(); return; }
+
+    window.open('https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(composerMessage()), '_blank', 'noopener');
+    fermer();
+  });
+})();
