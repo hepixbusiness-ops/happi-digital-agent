@@ -391,7 +391,7 @@
           <li><span class="fi">✓</span>Hébergement 1 an inclus</li>
           <li><span class="fi">✓</span>Livraison en 72h</li>
         </ul>
-        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Vitrine%20a%20252000%20FCFA" class="card-cta">Démarrer →</a>
+        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Vitrine%20a%20252000%20FCFA" class="card-cta" data-formule="Site Vitrine" data-prix="252 000 FCFA">Démarrer →</a>
       </div>
 
       <!-- POWER -->
@@ -414,7 +414,7 @@
           <li><span class="fi">✓</span>Formulaire de devis</li>
           <li><span class="fi">✓</span>Maintenance 3 mois</li>
         </ul>
-        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Pro%20a%20400000%20FCFA" class="card-cta">Démarrer →</a>
+        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Pro%20a%20400000%20FCFA" class="card-cta" data-formule="Site Professionnel" data-prix="400 000 FCFA">Démarrer →</a>
       </div>
 
       <!-- ELITE -->
@@ -436,7 +436,7 @@
           <li><span class="fi">✓</span>Tableau de bord admin</li>
           <li><span class="fi">✓</span>Maintenance 6 mois</li>
         </ul>
-        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Premium%20a%20partir%20de%20650000%20FCFA" class="card-cta">Démarrer →</a>
+        <a href="https://wa.me/237699179254?text=Je%20suis%20interesse%20par%20la%20formule%20Premium%20a%20partir%20de%20650000%20FCFA" class="card-cta" data-formule="E-commerce & IA" data-prix="à partir de 650 000 FCFA">Démarrer →</a>
       </div>
     </div>
   </div>
@@ -671,6 +671,72 @@
     .catch(fallback);
 })();
 </script>
+
+<!-- QUESTIONNAIRE DE PROJET -->
+<div class="qz-overlay" id="qz-overlay" role="dialog" aria-modal="true" aria-labelledby="qz-title" hidden>
+  <div class="qz-modal">
+    <button type="button" class="qz-close" id="qz-close" aria-label="Fermer">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="qz-formule">Formule choisie <span id="qz-formule-nom">—</span></div>
+    <h2 id="qz-title">Parlez-moi de votre projet.</h2>
+    <p class="qz-intro">Quatre questions, une minute. Vos réponses partent avec votre message WhatsApp : je peux vous répondre avec un vrai devis plutôt qu'un questionnaire de plus.</p>
+
+    <form id="qz-form" novalidate>
+      <fieldset class="qz-field">
+        <legend class="qz-legend">Vous êtes</legend>
+        <div class="qz-choices">
+          <input type="radio" name="qz-profil" id="qz-profil-e" value="Entreprise" checked>
+          <label for="qz-profil-e">Une entreprise</label>
+          <input type="radio" name="qz-profil" id="qz-profil-p" value="Particulier">
+          <label for="qz-profil-p">Un particulier</label>
+        </div>
+      </fieldset>
+
+      <div class="qz-field" id="qz-field-nom">
+        <label for="qz-nom" id="qz-nom-label">Nom de l'entreprise</label>
+        <input type="text" id="qz-nom" autocomplete="organization" placeholder="Ex. Restaurant Le Bantou">
+        <p class="qz-error">Indiquez un nom, pour que je sache à qui je réponds.</p>
+      </div>
+
+      <fieldset class="qz-field" id="qz-field-type">
+        <legend class="qz-legend">Quel type de site voulez-vous ?</legend>
+        <div class="qz-choices">
+          <input type="radio" name="qz-type" id="qz-type-v" value="Site vitrine">
+          <label for="qz-type-v">Site vitrine</label>
+          <input type="radio" name="qz-type" id="qz-type-e" value="Boutique en ligne">
+          <label for="qz-type-e">Boutique en ligne</label>
+          <input type="radio" name="qz-type" id="qz-type-b" value="Vitrine + boutique">
+          <label for="qz-type-b">Les deux</label>
+          <input type="radio" name="qz-type" id="qz-type-i" value="À définir ensemble">
+          <label for="qz-type-i">Je ne sais pas encore</label>
+        </div>
+        <p class="qz-hint">Un site vitrine présente votre activité. Une boutique vend en ligne, avec paiement MTN MoMo et Orange Money.</p>
+        <p class="qz-error">Choisissez une option, quitte à prendre « Je ne sais pas encore ».</p>
+      </fieldset>
+
+      <div class="qz-field">
+        <label for="qz-secteur">Votre secteur d'activité <span style="text-transform:none;letter-spacing:0">(optionnel)</span></label>
+        <input type="text" id="qz-secteur" placeholder="Ex. restauration, santé, BTP, école...">
+      </div>
+
+      <div class="qz-field" id="qz-field-attentes">
+        <label for="qz-attentes">Qu'attendez-vous de ce site ?</label>
+        <textarea id="qz-attentes" placeholder="Ex. être trouvé sur Google, montrer mes réalisations, recevoir des commandes, arrêter de répondre aux mêmes questions sur WhatsApp..."></textarea>
+        <p class="qz-error">Deux phrases suffisent. C'est ce qui me permet de chiffrer juste.</p>
+      </div>
+
+      <div class="qz-actions">
+        <button type="submit" class="btn-primary">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Envoyer sur WhatsApp
+        </button>
+        <p class="qz-note">WhatsApp s'ouvre avec votre message déjà rédigé. Vous le relisez avant d'envoyer.</p>
+      </div>
+    </form>
+  </div>
+</div>
 
 <!-- BOUTON WHATSAPP FLOTTANT -->
 <a href="https://wa.me/237699179254?text=Bonjour%20Pharel,%20je%20veux%20un%20site%20web" id="wa-float" aria-label="Discuter sur WhatsApp">
