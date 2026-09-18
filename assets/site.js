@@ -112,16 +112,32 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   });
 })();
 
-// État de scroll : ombre de la nav + bouton retour en haut
+// État de scroll : nav, bouton retour en haut, barre de progression, parallaxe
 (function () {
   var nav = document.querySelector('nav');
   var btn = document.getElementById('scroll-top');
   var ticking = false;
 
+  var barre = document.createElement('div');
+  barre.id = 'scroll-progress';
+  document.body.appendChild(barre);
+
+  // Le portrait suit le défilement d'une fraction de sa course.
+  // Désactivé sur mobile : la place manque et le gain est nul.
+  var portrait = document.querySelector('.hero .photo-frame');
+  var parallaxeActive = portrait && !prefersReducedMotion && window.matchMedia('(min-width: 901px)').matches;
+
   function update() {
     var y = window.scrollY;
     if (nav) nav.classList.toggle('scrolled', y > 20);
     if (btn) btn.classList.toggle('visible', y > 400);
+
+    var course = document.documentElement.scrollHeight - window.innerHeight;
+    barre.style.transform = 'scaleX(' + (course > 0 ? Math.min(y / course, 1) : 0) + ')';
+
+    if (parallaxeActive && y < window.innerHeight) {
+      portrait.style.transform = 'translate3d(0,' + (y * 0.08).toFixed(1) + 'px,0)';
+    }
     ticking = false;
   }
 

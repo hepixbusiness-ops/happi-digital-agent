@@ -780,3 +780,62 @@ button.creative-item:focus-visible { outline: none; border-color: var(--accent);
 }
 .qz-group + .qz-field { margin-top: 0; }
 .qz-field + .qz-group { margin-top: 2rem; }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────
+   Uniquement des transformations et des opacités : pas de filtre
+   ni d'ombre animée, qui font ramer les téléphones d'entrée de gamme.
+   La règle prefers-reduced-motion en tête de fichier neutralise tout. */
+
+/* Entrée du hero au chargement, en cascade. En CSS pur : si le
+   JavaScript ne s'exécute pas, le contenu reste visible. */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-eyebrow, .hero-name, .hero-role, .hero-bio, .hero-actions, .hero-tags {
+  animation: heroIn .9s var(--ease) both;
+}
+.hero-eyebrow { animation-delay: .05s; }
+.hero-name    { animation-delay: .14s; }
+.hero-role    { animation-delay: .22s; }
+.hero-bio     { animation-delay: .30s; }
+.hero-actions { animation-delay: .38s; }
+.hero-tags    { animation-delay: .46s; }
+.hero-right   { animation: heroIn 1.1s var(--ease) .18s both; }
+
+/* La ligne de la timeline se trace quand la section entre à l'écran */
+.process-timeline::before {
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 1.2s var(--ease) .25s;
+}
+.process-timeline.is-visible::before { transform: scaleX(1); }
+
+/* Barre de progression de lecture, utile surtout sur les articles */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 100%; z-index: 300;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform .1s linear; pointer-events: none;
+}
+
+/* La nav se resserre légèrement une fois le défilement engagé */
+nav { transition: box-shadow .3s var(--ease), padding .3s var(--ease); }
+nav.scrolled { padding-top: .75rem; padding-bottom: .75rem; }
+
+/* Reflet discret au survol des cartes d'offres. Posé dans le fond de la carte
+   et non en surcouche : une surcouche délavait le badge « Populaire ». */
+.offer-card {
+  background-image: radial-gradient(130% 90% at 50% 0%, var(--accent-wash) 0%, transparent 62%);
+  background-repeat: no-repeat;
+  background-size: 100% 0;
+}
+.offer-card:hover { background-size: 100% 100%; }
+
+/* L'icône accompagne le survol plutôt que de rester figée */
+.why-card:hover .why-icon-wrap { transform: translateY(-3px) rotate(-4deg); }
+.creative-item:hover .icon { transform: translateY(-2px); }
+.creative-item .icon { transition: transform .35s var(--ease); }
+
+/* Le portrait accompagne légèrement le défilement (desktop seulement) */
+@media (min-width: 901px) {
+  .photo-frame { will-change: transform; }
+}
