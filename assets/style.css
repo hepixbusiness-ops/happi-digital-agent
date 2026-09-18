@@ -541,10 +541,15 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
   100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
 }
 .work-stack { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.6rem; }
+/* Hashtags : pas de text-transform, la casse saisie fait partie du hashtag
+   (#MotionDesign se lit, #MOTIONDESIGN non). */
 .work-stack span {
-  font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--ink-soft); border: 1px solid var(--line-strong); border-radius: 6px; padding: 4px 9px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .01em;
+  color: var(--ink-soft); border: 1px solid var(--line-strong); border-radius: 999px; padding: 4px 11px;
+  transition: color .35s var(--ease), border-color .35s var(--ease);
 }
+.work-stack span::before { content: '#'; color: var(--accent); font-weight: 700; margin-right: 1px; }
+.work-card:hover .work-stack span { border-color: var(--accent); color: var(--ink); }
 /* Dégradés calés sur la charte réelle de chaque client */
 .work-thumb-1 { background: linear-gradient(135deg, #14361f, #2f7d32 55%, #62b544); }
 .work-thumb-2 { background: linear-gradient(135deg, #2b1b19, #8e2b23 55%, #cf3b2e); }

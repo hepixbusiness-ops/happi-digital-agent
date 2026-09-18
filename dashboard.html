@@ -257,11 +257,14 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
           </div>
           <div class="form-field"><label>Client (optionnel)</label><input type="text" id="r-client" placeholder="Nom de l'entreprise"></div>
           <div class="form-field"><label>Lien (optionnel)</label><input type="text" id="r-lien" placeholder="https://... ou lien de la vidéo"></div>
-          <div class="form-field"><label>Étiquettes, séparées par des virgules</label><input type="text" id="r-tags" placeholder="Énergie solaire, Boutique"></div>
+          <div class="form-field"><label>Hashtags</label><input type="text" id="r-tags" oninput="apercuHashtags()" placeholder="#MotionDesign, #Yaoundé, #Boutique"></div>
           <div class="form-field"><label>Ordre d'affichage</label><input type="number" id="r-ordre" value="0" title="Le plus grand nombre apparaît en premier"></div>
         </div>
 
-        <div class="form-field" style="margin-bottom:14px"><label>Description</label><textarea id="r-description" rows="3" placeholder="Ce que contient la réalisation, et ce qu'elle apporte au client."></textarea></div>
+        <div class="wa-meta" id="r-apercu-tags" style="margin:-4px 0 14px">Avec ou sans « # », séparés par des virgules ou des espaces. Ils s'affichent sur la carte publique.</div>
+
+        <div class="form-field" style="margin-bottom:6px"><label>Description</label><textarea id="r-description" rows="4" oninput="compterDescription()" maxlength="400" placeholder="Ce que contient la réalisation, et ce qu'elle apporte au client."></textarea></div>
+        <div class="wa-meta" id="r-compteur-desc" style="margin-bottom:14px">Visible sous le titre sur la page Réalisations. 400 caractères maximum.</div>
 
         <div class="form-grid">
           <div class="form-field"><label>Visuel principal</label><input type="file" id="r-image" accept="image/*"></div>
@@ -505,7 +508,11 @@ async function chargerRealisations() {
     return '<tr>' +
       '<td>' + r.ordre + '</td>' +
       '<td>' + vignette + '</td>' +
-      '<td><strong>' + echapper(r.titre) + '</strong></td>' +
+      '<td><strong>' + echapper(r.titre) + '</strong>' +
+        ((r.tags || []).length
+          ? '<div class="wa-meta" style="margin-top:3px">' + echapper((r.tags || []).map(function (t) { return '#' + t; }).join(' ')) + '</div>'
+          : '') +
+      '</td>' +
       '<td>' + echapper(TYPES_REALISATION[r.type] || r.type) + '</td>' +
       '<td>' + echapper(r.client || '—') + '</td>' +
       '<td>' + (r.publie ? 'Oui' : 'Non') + '</td>' +
@@ -528,6 +535,52 @@ async function televerserVisuel(idChamp, prefixe) {
   return sb.storage.from('realisations').getPublicUrl(chemin).data.publicUrl;
 }
 
+/* Un hashtag ne porte ni « # » ni espace : « Énergie solaire » devient
+   « ÉnergieSolaire ». On normalise à la saisie plutôt qu'à l'affichage, pour que
+   ce qui est stocké soit exactement ce qui sera publié. */
+function normaliserHashtag(brut) {
+  return brut
+    .replace(/^#+/, '')
+    .trim()
+    .replace(/[\s_'’.\-]+(.)/g, function (_, c) { return c.toUpperCase(); })
+    .replace(/[^\p{L}\p{N}]/gu, '')
+    .slice(0, 40);
+}
+
+/* Découpe sur les virgules, les retours à la ligne, et sur l'espace qui précède
+   un « # » : « #Logo #Pub » et « Logo, Pub » donnent tous deux deux hashtags. */
+function listeHashtags(saisie) {
+  var vus = {};
+  return String(saisie || '')
+    .split(/[,\n]+|\s+(?=#)/)
+    .map(normaliserHashtag)
+    .filter(function (t) {
+      if (!t) return false;
+      var cle = t.toLowerCase();
+      if (vus[cle]) return false;
+      vus[cle] = 1;
+      return true;
+    });
+}
+
+function apercuHashtags() {
+  var zone = document.getElementById('r-apercu-tags');
+  if (!zone) return;
+  var tags = listeHashtags(document.getElementById('r-tags').value);
+  zone.textContent = tags.length
+    ? 'Seront publiés : ' + tags.map(function (t) { return '#' + t; }).join('  ')
+    : 'Avec ou sans « # », séparés par des virgules ou des espaces. Ils s\'affichent sur la carte publique.';
+}
+
+function compterDescription() {
+  var zone = document.getElementById('r-compteur-desc');
+  if (!zone) return;
+  var n = document.getElementById('r-description').value.length;
+  zone.textContent = n
+    ? n + ' / 400 caractères. Visible sous le titre sur la page Réalisations.'
+    : 'Visible sous le titre sur la page Réalisations. 400 caractères maximum.';
+}
+
 function reinitialiserFormulaireRealisation() {
   ['r-titre', 'r-client', 'r-lien', 'r-tags', 'r-description', 'r-edit-id'].forEach(function (id) {
     document.getElementById(id).value = '';
@@ -542,6 +595,8 @@ function reinitialiserFormulaireRealisation() {
   document.getElementById('r-submit').textContent = 'Publier →';
   document.getElementById('r-cancel').style.display = 'none';
   majChampsRealisation();
+  apercuHashtags();
+  compterDescription();
   messageRealisation('');
 }
 
@@ -555,7 +610,7 @@ function modifierRealisation(id) {
   document.getElementById('r-type').value = r.type;
   document.getElementById('r-client').value = r.client || '';
   document.getElementById('r-lien').value = r.lien_url || '';
-  document.getElementById('r-tags').value = (r.tags || []).join(', ');
+  document.getElementById('r-tags').value = (r.tags || []).map(function (t) { return '#' + t; }).join(', ');
   document.getElementById('r-description').value = r.description || '';
   document.getElementById('r-ordre').value = r.ordre;
   document.getElementById('r-publie').checked = !!r.publie;
@@ -568,6 +623,8 @@ function modifierRealisation(id) {
   document.getElementById('r-submit').textContent = 'Enregistrer les modifications →';
   document.getElementById('r-cancel').style.display = '';
   majChampsRealisation();
+  apercuHashtags();
+  compterDescription();
   messageRealisation('');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -601,9 +658,7 @@ async function enregistrerRealisation() {
       lien_url: document.getElementById('r-lien').value.trim() || null,
       ordre: parseInt(document.getElementById('r-ordre').value, 10) || 0,
       publie: document.getElementById('r-publie').checked,
-      tags: document.getElementById('r-tags').value.split(',')
-              .map(function (t) { return t.trim(); })
-              .filter(function (t) { return t; })
+      tags: listeHashtags(document.getElementById('r-tags').value)
     };
 
     var image = await televerserVisuel('r-image', 'visuel');
