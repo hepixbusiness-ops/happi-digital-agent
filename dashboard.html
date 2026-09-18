@@ -247,22 +247,23 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
             <label>Numéro WhatsApp</label>
             <input type="tel" id="wa-numero" placeholder="699 179 254 ou +33 6 12 34 56 78" oninput="rafraichirWhatsApp()">
           </div>
-          <div class="form-field">
+          <div class="form-field" id="wa-champ-entreprise">
             <label>Entreprise (optionnel)</label>
             <input type="text" id="wa-entreprise" placeholder="Nom de l'entreprise" oninput="rafraichirWhatsApp()">
           </div>
-          <div class="form-field">
+          <div class="form-field" id="wa-champ-secteur">
             <label>Secteur (optionnel)</label>
             <input type="text" id="wa-secteur" placeholder="restaurant, clinique, école..." oninput="rafraichirWhatsApp()">
           </div>
-          <div class="form-field">
+          <div class="form-field" id="wa-champ-ville">
             <label>Ville (optionnel)</label>
             <input type="text" id="wa-ville" placeholder="Yaoundé" oninput="rafraichirWhatsApp()">
           </div>
           <div class="form-field">
             <label>Modèle</label>
             <select id="wa-modele" onchange="rafraichirWhatsApp(true)">
-              <option value="site">Pas encore de site web</option>
+              <option value="libre">Message libre</option>
+              <option value="site" selected>Pas encore de site web</option>
               <option value="design">Design &amp; contenu visuel</option>
               <option value="relance">Relance</option>
             </select>
@@ -270,7 +271,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
         </div>
 
         <div class="form-field" style="margin-bottom:6px">
-          <label>Message à envoyer (modifiable)</label>
+          <label id="wa-message-label">Message à envoyer (modifiable)</label>
           <textarea class="wa-preview" id="wa-message" rows="13" oninput="marquerMessageModifie()"></textarea>
         </div>
         <div class="wa-meta" id="wa-info">Saisissez un numéro pour activer l'envoi.</div>
@@ -278,7 +279,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:16px">
           <button class="btn btn-wa" id="wa-send" onclick="ouvrirWhatsApp()" disabled>Ouvrir WhatsApp →</button>
           <button class="btn btn-s" onclick="copierMessageWhatsApp()">Copier le message</button>
-          <button class="btn btn-s" onclick="rafraichirWhatsApp(true)">Régénérer le message</button>
+          <button class="btn btn-s" id="wa-regen" onclick="rafraichirWhatsApp(true)">Régénérer le message</button>
         </div>
       </div>
     </div>
@@ -591,6 +592,7 @@ function contexteProspect(ctx) {
 }
 
 function genererMessageWhatsApp(modele, ctx) {
+  if (modele === 'libre') return '';
   ctx = ctx || {};
   var entreprise = (ctx.entreprise || '').trim();
   var signature = '\n\nPharel Happi\n' + MON_NUMERO;
@@ -629,27 +631,46 @@ function contexteFormulaireWhatsApp() {
   };
 }
 
-function marquerMessageModifie() { waMessageModifie = true; }
+function marquerMessageModifie() { waMessageModifie = true; rafraichirWhatsApp(); }
 
 // forcer = true écrase le texte même s'il a été modifié à la main
 function rafraichirWhatsApp(forcer) {
   var champ = document.getElementById('wa-message');
+  var modele = document.getElementById('wa-modele').value;
+  var libre = modele === 'libre';
+
+  // En mode libre, les champs de personnalisation et la régénération
+  // n'ont pas d'objet : rien n'est composé à partir d'eux.
+  ['wa-champ-entreprise', 'wa-champ-secteur', 'wa-champ-ville'].forEach(function (id) {
+    document.getElementById(id).style.display = libre ? 'none' : '';
+  });
+  document.getElementById('wa-regen').style.display = libre ? 'none' : '';
+  document.getElementById('wa-message-label').textContent =
+    libre ? 'Votre message' : 'Message à envoyer (modifiable)';
+  champ.placeholder = libre ? 'Tapez votre message, il partira tel quel sur WhatsApp.' : '';
+
   if (forcer || !waMessageModifie) {
-    champ.value = genererMessageWhatsApp(document.getElementById('wa-modele').value, contexteFormulaireWhatsApp());
+    champ.value = genererMessageWhatsApp(modele, contexteFormulaireWhatsApp());
     waMessageModifie = false;
   }
 
   var tel = normaliserNumeroWhatsApp(document.getElementById('wa-numero').value);
+  var vide = !champ.value.trim();
   var info = document.getElementById('wa-info');
   var bouton = document.getElementById('wa-send');
-  if (tel.valide) {
-    info.className = 'wa-meta';
-    info.innerHTML = 'Sera envoyé au <strong>+' + tel.numero + '</strong>. WhatsApp s\'ouvre avec le message déjà rempli, il ne reste qu\'à appuyer sur envoyer.';
-    bouton.disabled = false;
-  } else {
+
+  if (!tel.valide) {
     info.className = 'wa-meta err';
     info.innerHTML = '<strong>' + tel.raison + '</strong>';
     bouton.disabled = true;
+  } else if (vide) {
+    info.className = 'wa-meta err';
+    info.innerHTML = '<strong>Écrivez un message avant d\'envoyer.</strong>';
+    bouton.disabled = true;
+  } else {
+    info.className = 'wa-meta';
+    info.innerHTML = 'Sera envoyé au <strong>+' + tel.numero + '</strong>. WhatsApp s\'ouvre avec le message déjà rempli, il ne reste qu\'à appuyer sur envoyer.';
+    bouton.disabled = false;
   }
 }
 
