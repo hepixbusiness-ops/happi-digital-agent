@@ -157,6 +157,7 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     '<p class="qz-intro" id="qz-intro"></p>',
     '<form id="qz-form" novalidate>',
 
+    '<p class="qz-group">Votre projet</p>',
     '<fieldset class="qz-field" id="qz-field-besoin">',
     '<legend class="qz-legend">De quoi avez-vous besoin ?</legend>',
     '<div class="qz-choices">',
@@ -167,20 +168,6 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     '</div>',
     '<p class="qz-error">Choisissez une option, quitte à prendre « Je ne sais pas encore ».</p>',
     '</fieldset>',
-
-    '<fieldset class="qz-field">',
-    '<legend class="qz-legend">Vous êtes</legend>',
-    '<div class="qz-choices">',
-    '<input type="radio" name="qz-profil" id="qz-profil-e" value="Entreprise" checked><label for="qz-profil-e">Une entreprise</label>',
-    '<input type="radio" name="qz-profil" id="qz-profil-p" value="Particulier"><label for="qz-profil-p">Un particulier</label>',
-    '</div>',
-    '</fieldset>',
-
-    '<div class="qz-field" id="qz-field-nom">',
-    '<label for="qz-nom" id="qz-nom-label">Nom de l\'entreprise</label>',
-    '<input type="text" id="qz-nom" autocomplete="organization" placeholder="Ex. Restaurant Le Bantou">',
-    '<p class="qz-error">Indiquez un nom, pour que je sache à qui je réponds.</p>',
-    '</div>',
 
     '<fieldset class="qz-field" id="qz-field-type" hidden>',
     '<legend class="qz-legend">Quel type de site voulez-vous ?</legend>',
@@ -217,15 +204,30 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     '<p class="qz-hint">Cela change le délai et le prix : si les rushes existent déjà, je monte directement.</p>',
     '</fieldset>',
 
-    '<div class="qz-field">',
-    '<label for="qz-secteur">Votre secteur d\'activité <span style="text-transform:none;letter-spacing:0">(optionnel)</span></label>',
-    '<input type="text" id="qz-secteur" placeholder="Ex. restauration, santé, BTP, école...">',
-    '</div>',
-
     '<div class="qz-field" id="qz-field-attentes">',
     '<label for="qz-attentes" id="qz-attentes-label">Qu\'attendez-vous de ce projet ?</label>',
     '<textarea id="qz-attentes"></textarea>',
     '<p class="qz-error">Deux phrases suffisent. C\'est ce qui me permet de chiffrer juste.</p>',
+    '</div>',
+
+    '<p class="qz-group">Vous</p>',
+    '<fieldset class="qz-field">',
+    '<legend class="qz-legend">Vous êtes</legend>',
+    '<div class="qz-choices">',
+    '<input type="radio" name="qz-profil" id="qz-profil-e" value="Entreprise" checked><label for="qz-profil-e">Une entreprise</label>',
+    '<input type="radio" name="qz-profil" id="qz-profil-p" value="Particulier"><label for="qz-profil-p">Un particulier</label>',
+    '</div>',
+    '</fieldset>',
+
+    '<div class="qz-field" id="qz-field-nom">',
+    '<label for="qz-nom" id="qz-nom-label">Nom de l\'entreprise</label>',
+    '<input type="text" id="qz-nom" autocomplete="organization" placeholder="Ex. Restaurant Le Bantou">',
+    '<p class="qz-error">Indiquez un nom, pour que je sache à qui je réponds.</p>',
+    '</div>',
+
+    '<div class="qz-field">',
+    '<label for="qz-secteur">Votre secteur d\'activité <span style="text-transform:none;letter-spacing:0">(optionnel)</span></label>',
+    '<input type="text" id="qz-secteur" placeholder="Ex. restauration, santé, BTP, école...">',
     '</div>',
 
     '<div class="qz-actions">',
@@ -339,7 +341,11 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     requestAnimationFrame(function () { overlay.classList.add('open'); });
     document.body.style.overflow = 'hidden';
     setTimeout(function () {
-      (blocBesoin.hidden ? champNom : document.getElementById('qz-b-site')).focus();
+      var premier = Array.prototype.filter.call(
+        form.querySelectorAll('input, textarea'),
+        function (el) { return el.offsetParent !== null; }
+      )[0];
+      (premier || champNom).focus();
     }, 80);
   }
 
@@ -437,10 +443,10 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     marquer(document.getElementById('qz-field-attentes'), sansAttentes);
 
     if (sansBesoin) { document.getElementById('qz-b-site').focus(); return; }
-    if (sansNom) { champNom.focus(); return; }
     if (sansType) { document.getElementById('qz-type-v').focus(); return; }
     if (sansPresta) { document.getElementById('qz-p1').focus(); return; }
     if (sansAttentes) { champAttentes.focus(); return; }
+    if (sansNom) { champNom.focus(); return; }
 
     window.open('https://wa.me/' + NUMERO + '?text=' + encodeURIComponent(composerMessage()), '_blank', 'noopener');
     fermer();

@@ -700,6 +700,9 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
 
 .qz-modal h2 { font-family: var(--font-display); font-size: 1.55rem; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin: .9rem 0 .5rem; }
 .qz-intro { font-size: .86rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 1.8rem; }
+/* `display` d'une classe l'emporte sur l'attribut hidden du navigateur :
+   sans cette règle, la pastille s'affiche vide quand aucune formule n'est choisie. */
+.qz-formule[hidden] { display: none; }
 .qz-formule {
   display: inline-flex; align-items: baseline; gap: 10px; padding: 8px 16px; border-radius: 100px;
   background: var(--accent-wash); border: 1px solid var(--accent-wash-2);
@@ -767,3 +770,13 @@ button.creative-item::after {
 }
 button.creative-item:hover::after, button.creative-item:focus-visible::after { opacity: 1; color: var(--accent-dark); transform: translateX(3px); }
 button.creative-item:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-wash); }
+
+/* Intertitres du questionnaire : sépare ce qui concerne le projet de ce qui
+   concerne la personne, pour que le formulaire se lise en deux temps. */
+.qz-group {
+  font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; color: var(--ink);
+  letter-spacing: -.01em; margin: 0 0 1.1rem; padding-bottom: .6rem;
+  border-bottom: 1px solid var(--line);
+}
+.qz-group + .qz-field { margin-top: 0; }
+.qz-field + .qz-group { margin-top: 2rem; }
