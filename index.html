@@ -453,35 +453,35 @@
       <p>Un site ne suffit pas à tenir une marque. Je produis aussi ce que vous publiez chaque semaine sur WhatsApp, Facebook et Instagram, dans la même direction visuelle que votre site.</p>
     </div>
     <div class="creative-grid" data-reveal-stagger>
-      <div class="creative-item">
+      <button type="button" class="creative-item" data-creatif="Affiches publicitaires">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-4.5-4.5L7 20"/></svg>
         <h3>Affiches publicitaires</h3>
         <p>Promotions, ouvertures, recrutements. Prêtes à imprimer et déclinées au format story pour vos réseaux.</p>
-      </div>
-      <div class="creative-item">
+      </button>
+      <button type="button" class="creative-item" data-creatif="Logos & identité">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.3 10a.7.7 0 0 1-.6-1.1L11.4 3a.7.7 0 0 1 1.2 0l3.7 5.9a.7.7 0 0 1-.6 1.1Z"/><rect x="3" y="14" width="7" height="7" rx="1"/><circle cx="17.5" cy="17.5" r="3.5"/></svg>
         <h3>Logos & identité</h3>
         <p>Un logo lisible en petit comme en grand, avec ses couleurs, ses polices et ses règles d'usage.</p>
-      </div>
-      <div class="creative-item">
+      </button>
+      <button type="button" class="creative-item" data-creatif="Bannières">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h6M6 14h9"/></svg>
         <h3>Bannières</h3>
         <p>Couvertures Facebook, en-têtes de site, visuels de campagne, calés aux bonnes dimensions dès le départ.</p>
-      </div>
-      <div class="creative-item">
+      </button>
+      <button type="button" class="creative-item" data-creatif="Montage vidéo">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="M7 3v18M17 3v18M2 9h5M2 15h5M17 9h5M17 15h5"/></svg>
         <h3>Montage vidéo</h3>
         <p>Vos rushes de chantier ou de boutique transformés en vidéos courtes, sous-titrées et pensées pour le mobile.</p>
-      </div>
-      <div class="creative-item">
+      </button>
+      <button type="button" class="creative-item" data-creatif="Motion design">
         <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.9 15.5A2 2 0 0 0 8.5 14.1l-6.1-1.6a.5.5 0 0 1 0-1l6.1-1.5A2 2 0 0 0 9.9 8.5l1.6-6.1a.5.5 0 0 1 1 0l1.5 6.1a2 2 0 0 0 1.5 1.4l6.1 1.6a.5.5 0 0 1 0 1l-6.1 1.5a2 2 0 0 0-1.5 1.5l-1.5 6.1a.5.5 0 0 1-1 0z"/></svg>
         <h3>Motion design</h3>
         <p>Logos animés, textes en mouvement, explications visuelles. De quoi retenir l'attention dans un fil d'actualité.</p>
-      </div>
+      </button>
     </div>
     <div class="creative-note" data-reveal>
       <p>Ces prestations se chiffrent <strong>à la pièce ou au forfait mensuel</strong>, et sont remisées lorsqu'elles accompagnent la création de votre site.</p>
-      <a href="https://wa.me/237699179254?text=Bonjour%20Pharel,%20je%20veux%20un%20devis%20pour%20du%20design%20(affiches,%20logo,%20montage%20video)" class="btn-primary">Demander un devis →</a>
+      <a href="https://wa.me/237699179254?text=Bonjour%20Pharel,%20je%20veux%20un%20devis%20pour%20du%20design%20(affiches,%20logo,%20montage%20video)" class="btn-primary" data-creatif="">Demander un devis →</a>
     </div>
   </div>
 </section>
@@ -679,9 +679,9 @@
       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
 
-    <div class="qz-formule">Formule choisie <span id="qz-formule-nom">—</span></div>
+    <div class="qz-formule"><span id="qz-formule-label">Formule choisie</span> <span id="qz-formule-nom">—</span></div>
     <h2 id="qz-title">Parlez-moi de votre projet.</h2>
-    <p class="qz-intro">Quatre questions, une minute. Vos réponses partent avec votre message WhatsApp : je peux vous répondre avec un vrai devis plutôt qu'un questionnaire de plus.</p>
+    <p class="qz-intro" id="qz-intro">Quatre questions, une minute. Vos réponses partent avec votre message WhatsApp : je peux vous répondre avec un vrai devis plutôt qu'un questionnaire de plus.</p>
 
     <form id="qz-form" novalidate>
       <fieldset class="qz-field">
@@ -716,13 +716,44 @@
         <p class="qz-error">Choisissez une option, quitte à prendre « Je ne sais pas encore ».</p>
       </fieldset>
 
+      <fieldset class="qz-field" id="qz-field-presta" hidden>
+        <legend class="qz-legend">Que voulez-vous faire réaliser ?</legend>
+        <div class="qz-choices">
+          <input type="checkbox" name="qz-presta" id="qz-p1" value="Affiches publicitaires">
+          <label for="qz-p1">Affiches publicitaires</label>
+          <input type="checkbox" name="qz-presta" id="qz-p2" value="Logo &amp; identité">
+          <label for="qz-p2">Logo &amp; identité</label>
+          <input type="checkbox" name="qz-presta" id="qz-p3" value="Bannières">
+          <label for="qz-p3">Bannières</label>
+          <input type="checkbox" name="qz-presta" id="qz-p4" value="Montage vidéo">
+          <label for="qz-p4">Montage vidéo</label>
+          <input type="checkbox" name="qz-presta" id="qz-p5" value="Motion design">
+          <label for="qz-p5">Motion design</label>
+        </div>
+        <p class="qz-hint">Plusieurs choix possibles.</p>
+        <p class="qz-error">Cochez au moins une prestation.</p>
+      </fieldset>
+
+      <fieldset class="qz-field" id="qz-field-fichiers" hidden>
+        <legend class="qz-legend">Avez-vous déjà les images ou les vidéos ?</legend>
+        <div class="qz-choices">
+          <input type="radio" name="qz-fichiers" id="qz-f1" value="Tous les fichiers sont prêts">
+          <label for="qz-f1">Oui, tout est prêt</label>
+          <input type="radio" name="qz-fichiers" id="qz-f2" value="Une partie des fichiers existe">
+          <label for="qz-f2">En partie</label>
+          <input type="radio" name="qz-fichiers" id="qz-f3" value="Rien encore, tout est à produire">
+          <label for="qz-f3">Rien encore</label>
+        </div>
+        <p class="qz-hint">Cela change le délai et le prix : si les rushes existent déjà, je monte directement.</p>
+      </fieldset>
+
       <div class="qz-field">
         <label for="qz-secteur">Votre secteur d'activité <span style="text-transform:none;letter-spacing:0">(optionnel)</span></label>
         <input type="text" id="qz-secteur" placeholder="Ex. restauration, santé, BTP, école...">
       </div>
 
       <div class="qz-field" id="qz-field-attentes">
-        <label for="qz-attentes">Qu'attendez-vous de ce site ?</label>
+        <label for="qz-attentes" id="qz-attentes-label">Qu'attendez-vous de ce site ?</label>
         <textarea id="qz-attentes" placeholder="Ex. être trouvé sur Google, montrer mes réalisations, recevoir des commandes, arrêter de répondre aux mêmes questions sur WhatsApp..."></textarea>
         <p class="qz-error">Deux phrases suffisent. C'est ce qui me permet de chiffrer juste.</p>
       </div>

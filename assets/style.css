@@ -570,6 +570,7 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
 .creative-header > p { font-size: .87rem; color: var(--ink-soft); max-width: 380px; line-height: 1.75; text-align: right; }
 .creative-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.1rem; }
 .creative-item {
+  position: relative;
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm);
   padding: 1.8rem 1.4rem; transition: all .35s var(--ease);
 }
@@ -750,3 +751,19 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
   .qz-actions .btn-primary { width: 100%; justify-content: center; }
   .qz-formule { flex-direction: column; align-items: flex-start; gap: 2px; border-radius: 14px; padding: 10px 16px; }
 }
+
+/* Les prestations créatives sont cliquables : elles ouvrent le questionnaire */
+/* Chromium centre verticalement le contenu d'un bouton. Les cartes étant
+   étirées à la même hauteur par la grille, celles qui ont une ligne de texte
+   de moins voyaient leur contenu descendre de 10 px. flex remet à plat. */
+button.creative-item {
+  display: flex; flex-direction: column; align-items: flex-start;
+  width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
+}
+button.creative-item::after {
+  content: '\2192'; position: absolute; top: 1.5rem; right: 1.3rem;
+  font-size: 1.05rem; color: var(--muted); opacity: .4;
+  transition: opacity .25s var(--ease), transform .25s var(--ease), color .25s var(--ease);
+}
+button.creative-item:hover::after, button.creative-item:focus-visible::after { opacity: 1; color: var(--accent-dark); transform: translateX(3px); }
+button.creative-item:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-wash); }
