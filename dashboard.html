@@ -32,6 +32,12 @@ h1,h2,.fig { font-family:'Fraunces',serif; }
 .lock-btn:hover { background:var(--accent-l); }
 .lock-btn:disabled { opacity:.6; cursor:default; }
 .lock-error { color:var(--red); font-size:.8rem; margin-top:.9rem; display:none; }
+.lock-ok { color:var(--green); font-size:.8rem; margin-top:.9rem; display:none; }
+#pwd-modal { position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:9998; padding:1.5rem; }
+#pwd-modal.open { display:flex; }
+#pwd-modal .lock-box { position:relative; }
+.pwd-close { position:absolute; top:14px; right:16px; background:none; border:none; color:var(--muted); font-size:1.3rem; line-height:1; cursor:pointer; }
+.pwd-close:hover { color:var(--text); }
 
 /* HEADER + TABS */
 .header { background:linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%); padding:20px 28px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
@@ -332,8 +338,28 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
     <button class="btn btn-g" onclick="window.open('https://mail.google.com/mail/#drafts','_blank')">Gmail — Brouillons</button>
     <button class="btn btn-s" onclick="window.open('https://supabase.com/dashboard/project/vuzjrsgobeevfqjmsgsm','_blank')">Base de données</button>
     <button class="btn btn-s" onclick="loadAll()">Actualiser</button>
+    <button class="btn btn-s" onclick="ouvrirMotDePasse()">Changer le mot de passe</button>
     <button class="btn btn-r" onclick="logout()">Déconnexion</button>
     <span class="mj">pharel.cloud</span>
+  </div>
+</div>
+
+<div id="pwd-modal">
+  <div class="lock-box">
+    <button class="pwd-close" onclick="fermerMotDePasse()" aria-label="Fermer">&times;</button>
+    <h2>Changer le mot de passe</h2>
+    <p>Il remplace immédiatement l'ancien. Notez-le avant de valider.</p>
+    <div class="lock-field">
+      <label for="pwd-new">Nouveau mot de passe</label>
+      <input class="lock-input" type="password" id="pwd-new" autocomplete="new-password" placeholder="8 caractères minimum">
+    </div>
+    <div class="lock-field">
+      <label for="pwd-confirm">Confirmer</label>
+      <input class="lock-input" type="password" id="pwd-confirm" autocomplete="new-password" placeholder="Retapez le même">
+    </div>
+    <button class="lock-btn" id="pwd-submit" onclick="changerMotDePasse()">Enregistrer</button>
+    <div class="lock-error" id="pwd-modal-error"></div>
+    <div class="lock-ok" id="pwd-modal-ok"></div>
   </div>
 </div>
 
@@ -368,6 +394,50 @@ async function login() {
     return;
   }
   showApp();
+}
+
+// ── CHANGEMENT DE MOT DE PASSE ───────────────────────────
+function ouvrirMotDePasse() {
+  document.getElementById('pwd-new').value = '';
+  document.getElementById('pwd-confirm').value = '';
+  document.getElementById('pwd-modal-error').style.display = 'none';
+  document.getElementById('pwd-modal-ok').style.display = 'none';
+  document.getElementById('pwd-modal').classList.add('open');
+  document.getElementById('pwd-new').focus();
+}
+
+function fermerMotDePasse() {
+  document.getElementById('pwd-modal').classList.remove('open');
+}
+
+async function changerMotDePasse() {
+  var nouveau = document.getElementById('pwd-new').value;
+  var confirme = document.getElementById('pwd-confirm').value;
+  var erreur = document.getElementById('pwd-modal-error');
+  var ok = document.getElementById('pwd-modal-ok');
+  var btn = document.getElementById('pwd-submit');
+
+  function echec(message) {
+    ok.style.display = 'none';
+    erreur.textContent = message;
+    erreur.style.display = 'block';
+  }
+
+  if (nouveau.length < 8) return echec('8 caractères minimum.');
+  if (nouveau !== confirme) return echec('Les deux mots de passe ne correspondent pas.');
+
+  btn.disabled = true; btn.textContent = 'Enregistrement...';
+  var { error } = await sb.auth.updateUser({ password: nouveau });
+  btn.disabled = false; btn.textContent = 'Enregistrer';
+
+  if (error) return echec(error.message);
+
+  erreur.style.display = 'none';
+  ok.textContent = 'Mot de passe changé. Il sera demandé à votre prochaine connexion.';
+  ok.style.display = 'block';
+  document.getElementById('pwd-new').value = '';
+  document.getElementById('pwd-confirm').value = '';
+  setTimeout(fermerMotDePasse, 2600);
 }
 
 async function logout() {
