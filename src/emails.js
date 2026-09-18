@@ -24,7 +24,7 @@ Ce que je peux faire pour ${nom} :
 ✓ Site avec votre menu, photos et horaires
 ✓ Bouton WhatsApp pour les reservations
 ✓ Visible sur Google en 7 jours
-✓ Livre en 72h a partir de 252 000 FCFA
+✓ Livre en 7 a 15 jours a partir de 252 000 FCFA
 
 Je peux vous envoyer une maquette gratuite de votre futur site aujourd'hui, sans engagement.
 
@@ -49,7 +49,7 @@ Ce que je propose :
 ✓ Site avec vos specialites et vos medecins
 ✓ Formulaire de prise de rendez-vous en ligne
 ✓ Horaires et localisation GPS
-✓ Livre en 72h a partir de 252 000 FCFA
+✓ Livre en 7 a 15 jours a partir de 252 000 FCFA
 
 Maquette gratuite disponible sous 24h.
 
@@ -70,13 +70,13 @@ Ce que je cree pour vous :
 ✓ Site avec votre programme et vos frais
 ✓ Inscription en ligne
 ✓ Galerie photos
-✓ Livre en 72h a partir de 252 000 FCFA
+✓ Livre en 7 a 15 jours a partir de 252 000 FCFA
 
 Pharel Happi - Happi Digital | +237 699 179 254`,
   },
 
   'default': {
-    sujet: (nom) => `${nom} - Site web professionnel livre en 72h`,
+    sujet: (nom) => `${nom} - Site web professionnel livre en 7 a 15 jours`,
     corps: (nom, ville) => `Bonjour,
 
 Je m'appelle Pharel, fondateur de Happi Digital a Yaounde.
@@ -91,7 +91,7 @@ Ce que je propose :
 ✓ Fonctionne sur telephone et ordinateur
 ✓ WhatsApp et localisation integres
 ✓ Visible sur Google
-✓ Livre en 72h - a partir de 252 000 FCFA
+✓ Livre en 7 a 15 jours - a partir de 252 000 FCFA
 ✓ Paiement MTN MoMo ou Orange Money
 
 Je peux vous montrer une maquette gratuite en 24h, sans engagement.
