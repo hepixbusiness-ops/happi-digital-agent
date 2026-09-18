@@ -839,3 +839,7 @@ nav.scrolled { padding-top: .75rem; padding-bottom: .75rem; }
 @media (min-width: 901px) {
   .photo-frame { will-change: transform; }
 }
+
+/* Le point clignotant « en ligne » ne concerne que les sites web */
+.work-live.sans-point::before { display: none; }
+.work-live.sans-point { padding-left: 12px; }

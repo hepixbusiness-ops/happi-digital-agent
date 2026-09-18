@@ -182,6 +182,7 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
     <button class="tab-btn active" data-tab="overview">Vue d'ensemble</button>
     <button class="tab-btn" data-tab="prospects">Prospects</button>
     <button class="tab-btn" data-tab="clients">Clients</button>
+    <button class="tab-btn" data-tab="realisations">Réalisations</button>
     <button class="tab-btn" data-tab="whatsapp">Message WhatsApp</button>
   </div>
 
@@ -232,6 +233,65 @@ select.mini:focus, input.mini:focus { outline:none; border-color:var(--accent); 
         <table>
           <thead><tr><th>Score</th><th>Entreprise</th><th>Secteur</th><th>Ville</th><th>Téléphone</th><th>Maps</th><th>Note (avis)</th><th>Accroche d'appel</th><th>Statut</th><th>Notes</th><th></th></tr></thead>
           <tbody id="leads-tbody"><tr class="empty-row"><td colspan="11">Chargement...</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- REALISATIONS -->
+  <div class="tab-panel" id="tab-realisations">
+    <div class="section">
+      <div class="section-title" id="r-form-title">Publier une réalisation</div>
+      <div class="box">
+        <div class="form-grid">
+          <div class="form-field"><label>Titre</label><input type="text" id="r-titre" placeholder="Ex. Affiche promo Ramadan"></div>
+          <div class="form-field"><label>Type</label>
+            <select id="r-type" onchange="majChampsRealisation()">
+              <option value="site_web">Site web</option>
+              <option value="logo">Logo & identité</option>
+              <option value="affiche">Affiche publicitaire</option>
+              <option value="flyer">Flyer</option>
+              <option value="montage_video">Montage vidéo</option>
+              <option value="motion_design">Motion design</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Client (optionnel)</label><input type="text" id="r-client" placeholder="Nom de l'entreprise"></div>
+          <div class="form-field"><label>Lien (optionnel)</label><input type="text" id="r-lien" placeholder="https://... ou lien de la vidéo"></div>
+          <div class="form-field"><label>Étiquettes, séparées par des virgules</label><input type="text" id="r-tags" placeholder="Énergie solaire, Boutique"></div>
+          <div class="form-field"><label>Ordre d'affichage</label><input type="number" id="r-ordre" value="0" title="Le plus grand nombre apparaît en premier"></div>
+        </div>
+
+        <div class="form-field" style="margin-bottom:14px"><label>Description</label><textarea id="r-description" rows="3" placeholder="Ce que contient la réalisation, et ce qu'elle apporte au client."></textarea></div>
+
+        <div class="form-grid">
+          <div class="form-field"><label>Visuel principal</label><input type="file" id="r-image" accept="image/*"></div>
+          <div class="form-field" id="r-champ-mobile"><label>Visuel mobile (sites web)</label><input type="file" id="r-image-mobile" accept="image/*"></div>
+        </div>
+        <div class="wa-meta" id="r-visuels-actuels"></div>
+
+        <div class="form-field" style="margin:14px 0">
+          <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:.85rem">
+            <input type="checkbox" id="r-publie" checked style="width:auto"> Visible sur le site
+          </label>
+        </div>
+
+        <input type="hidden" id="r-edit-id">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-g" id="r-submit" onclick="enregistrerRealisation()">Publier →</button>
+          <button class="btn btn-s" id="r-cancel" onclick="annulerEditionRealisation()" style="display:none">Annuler</button>
+          <button class="btn btn-s" onclick="window.open('https://pharel.cloud/realisations.html','_blank')">Voir la page publique</button>
+        </div>
+        <div class="lock-error" id="r-error"></div>
+        <div class="lock-ok" id="r-ok"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Réalisations publiées <span style="color:var(--text)"><span id="r-count">--</span> au total</span></div>
+      <div class="box table-wrap" style="padding:0">
+        <table>
+          <thead><tr><th>Ordre</th><th>Visuel</th><th>Titre</th><th>Type</th><th>Client</th><th>Visible</th><th></th></tr></thead>
+          <tbody id="r-tbody"><tr class="empty-row"><td colspan="7">Chargement...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -397,6 +457,180 @@ async function login() {
   showApp();
 }
 
+// ── RÉALISATIONS ─────────────────────────────────────────
+var TYPES_REALISATION = {
+  site_web: 'Site web', logo: 'Logo & identité', affiche: 'Affiche publicitaire',
+  flyer: 'Flyer', montage_video: 'Montage vidéo', motion_design: 'Motion design'
+};
+var realisationsChargees = [];
+
+function echapper(v) {
+  return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+// Le visuel mobile n'a de sens que pour un site web
+function majChampsRealisation() {
+  var site = document.getElementById('r-type').value === 'site_web';
+  document.getElementById('r-champ-mobile').style.display = site ? '' : 'none';
+}
+
+function messageRealisation(texte, estErreur) {
+  var err = document.getElementById('r-error');
+  var ok = document.getElementById('r-ok');
+  err.style.display = 'none'; ok.style.display = 'none';
+  if (!texte) return;
+  var cible = estErreur ? err : ok;
+  cible.textContent = texte;
+  cible.style.display = 'block';
+}
+
+async function chargerRealisations() {
+  if (!sb) return;
+  var res = await sb.from('realisations').select('*').order('ordre', { ascending: false }).order('created_at', { ascending: false });
+  var liste = res.data || [];
+  realisationsChargees = liste;
+  document.getElementById('r-count').textContent = liste.length;
+
+  var tbody = document.getElementById('r-tbody');
+  if (!liste.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="7">Aucune réalisation publiée pour le moment</td></tr>';
+    return;
+  }
+  tbody.innerHTML = liste.map(function (r) {
+    var vignette = r.image_url
+      ? '<img src="' + echapper(r.image_url) + '" alt="" style="width:54px;height:36px;object-fit:cover;border-radius:5px">'
+      : '&mdash;';
+    return '<tr>' +
+      '<td>' + r.ordre + '</td>' +
+      '<td>' + vignette + '</td>' +
+      '<td><strong>' + echapper(r.titre) + '</strong></td>' +
+      '<td>' + echapper(TYPES_REALISATION[r.type] || r.type) + '</td>' +
+      '<td>' + echapper(r.client || '—') + '</td>' +
+      '<td>' + (r.publie ? 'Oui' : 'Non') + '</td>' +
+      '<td style="white-space:nowrap">' +
+        '<button class="btn btn-s btn-xs" onclick="modifierRealisation(\'' + r.id + '\')">Modifier</button> ' +
+        '<button class="btn btn-r btn-xs" onclick="supprimerRealisation(\'' + r.id + '\')">Supprimer</button>' +
+      '</td></tr>';
+  }).join('');
+}
+
+// Dépose un fichier dans le bucket et renvoie son URL publique
+async function televerserVisuel(idChamp, prefixe) {
+  var input = document.getElementById(idChamp);
+  var fichier = input.files && input.files[0];
+  if (!fichier) return null;
+  var ext = (fichier.name.split('.').pop() || 'jpg').toLowerCase();
+  var chemin = prefixe + '-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8) + '.' + ext;
+  var up = await sb.storage.from('realisations').upload(chemin, fichier, { cacheControl: '31536000' });
+  if (up.error) throw up.error;
+  return sb.storage.from('realisations').getPublicUrl(chemin).data.publicUrl;
+}
+
+function reinitialiserFormulaireRealisation() {
+  ['r-titre', 'r-client', 'r-lien', 'r-tags', 'r-description', 'r-edit-id'].forEach(function (id) {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('r-type').value = 'site_web';
+  document.getElementById('r-ordre').value = '0';
+  document.getElementById('r-publie').checked = true;
+  document.getElementById('r-image').value = '';
+  document.getElementById('r-image-mobile').value = '';
+  document.getElementById('r-visuels-actuels').textContent = '';
+  document.getElementById('r-form-title').textContent = 'Publier une réalisation';
+  document.getElementById('r-submit').textContent = 'Publier →';
+  document.getElementById('r-cancel').style.display = 'none';
+  majChampsRealisation();
+  messageRealisation('');
+}
+
+function annulerEditionRealisation() { reinitialiserFormulaireRealisation(); }
+
+function modifierRealisation(id) {
+  var r = realisationsChargees.filter(function (x) { return String(x.id) === String(id); })[0];
+  if (!r) return;
+  document.getElementById('r-edit-id').value = r.id;
+  document.getElementById('r-titre').value = r.titre || '';
+  document.getElementById('r-type').value = r.type;
+  document.getElementById('r-client').value = r.client || '';
+  document.getElementById('r-lien').value = r.lien_url || '';
+  document.getElementById('r-tags').value = (r.tags || []).join(', ');
+  document.getElementById('r-description').value = r.description || '';
+  document.getElementById('r-ordre').value = r.ordre;
+  document.getElementById('r-publie').checked = !!r.publie;
+  document.getElementById('r-image').value = '';
+  document.getElementById('r-image-mobile').value = '';
+  document.getElementById('r-visuels-actuels').textContent = r.image_url
+    ? 'Visuel déjà en place. Laissez les champs fichier vides pour le conserver.'
+    : 'Aucun visuel pour l\'instant.';
+  document.getElementById('r-form-title').textContent = 'Modifier : ' + r.titre;
+  document.getElementById('r-submit').textContent = 'Enregistrer les modifications →';
+  document.getElementById('r-cancel').style.display = '';
+  majChampsRealisation();
+  messageRealisation('');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function supprimerRealisation(id) {
+  var r = realisationsChargees.filter(function (x) { return String(x.id) === String(id); })[0];
+  if (!r) return;
+  if (!confirm('Supprimer définitivement « ' + r.titre + ' » ? Elle disparaîtra du site.')) return;
+  var res = await sb.from('realisations').delete().eq('id', id);
+  if (res.error) return messageRealisation(res.error.message, true);
+  await chargerRealisations();
+  messageRealisation('Réalisation supprimée.', false);
+}
+
+async function enregistrerRealisation() {
+  var btn = document.getElementById('r-submit');
+  var titre = document.getElementById('r-titre').value.trim();
+  if (!titre) return messageRealisation('Donnez un titre à la réalisation.', true);
+
+  var libelle = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Envoi en cours...';
+  messageRealisation('');
+
+  try {
+    var id = document.getElementById('r-edit-id').value;
+    var donnees = {
+      titre: titre,
+      type: document.getElementById('r-type').value,
+      client: document.getElementById('r-client').value.trim() || null,
+      description: document.getElementById('r-description').value.trim() || null,
+      lien_url: document.getElementById('r-lien').value.trim() || null,
+      ordre: parseInt(document.getElementById('r-ordre').value, 10) || 0,
+      publie: document.getElementById('r-publie').checked,
+      tags: document.getElementById('r-tags').value.split(',')
+              .map(function (t) { return t.trim(); })
+              .filter(function (t) { return t; })
+    };
+
+    var image = await televerserVisuel('r-image', 'visuel');
+    if (image) donnees.image_url = image;
+    var mobile = await televerserVisuel('r-image-mobile', 'mobile');
+    if (mobile) donnees.image_mobile_url = mobile;
+
+    // Sans visuel, la carte publique tombe sur son repli : on prévient plutôt que d'échouer.
+    if (!id && !image) messageRealisation('Publiée sans visuel : la vignette affichera les initiales.', false);
+
+    var res = id
+      ? await sb.from('realisations').update(donnees).eq('id', id)
+      : await sb.from('realisations').insert(donnees);
+    if (res.error) throw res.error;
+
+    await chargerRealisations();
+    var etaitEdition = !!id;
+    reinitialiserFormulaireRealisation();
+    messageRealisation(etaitEdition ? 'Modifications enregistrées.' : 'Réalisation publiée. Elle est déjà visible sur le site.', false);
+  } catch (e) {
+    messageRealisation(e.message || 'Échec de l\'enregistrement.', true);
+  } finally {
+    btn.disabled = false;
+    if (btn.textContent === 'Envoi en cours...') btn.textContent = libelle;
+  }
+}
+
 // ── CHANGEMENT DE MOT DE PASSE ───────────────────────────
 function ouvrirMotDePasse() {
   document.getElementById('pwd-new').value = '';
@@ -474,6 +708,7 @@ document.querySelectorAll('.tab-btn').forEach(function (btn) {
 function loadAll() {
   loadOverviewAndProspects();
   loadClients();
+  chargerRealisations();
   rafraichirWhatsApp(true);
   document.getElementById('mj').textContent = new Date().toLocaleTimeString('fr-FR');
 }
