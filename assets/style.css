@@ -749,8 +749,58 @@ footer { padding: 3rem 5rem; border-top: 1px solid var(--line); display: flex; j
 .qz-field.invalid input[type="text"], .qz-field.invalid textarea { border-color: #a6392f; }
 
 .qz-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
-.qz-actions .btn-primary { background: var(--whatsapp); color: #06301a; }
-.qz-actions .btn-primary:hover { background: #1fbb5a; }
+/* Le bouton ne passe au vert WhatsApp qu'à la dernière étape : sur les deux
+   premières il fait « Continuer » et ne doit rien promettre. */
+.qz-actions .btn-primary.qz-vert { background: var(--whatsapp); color: #06301a; }
+.qz-actions .btn-primary.qz-vert:hover { background: #1fbb5a; }
+.qz-back {
+  display: inline-flex; align-items: center; gap: 6px; padding: 11px 18px;
+  border: 1px solid var(--line-strong); border-radius: 10px; background: none;
+  font: inherit; font-size: .82rem; font-weight: 600; color: var(--ink-soft); cursor: pointer;
+  transition: border-color .3s var(--ease), color .3s var(--ease);
+}
+.qz-back:hover { border-color: var(--accent); color: var(--accent-dark); }
+.qz-back[hidden] { display: none; }
+
+/* ── Progression en trois étapes ─────────────────────────────── */
+.qz-steps { display: flex; gap: .4rem; list-style: none; margin: 0 0 1.9rem; padding: 0; }
+.qz-step-dot {
+  flex: 1 1 0; display: flex; align-items: center; gap: 8px; min-width: 0;
+  padding-top: .55rem; border-top: 2px solid var(--line);
+  transition: border-color .4s var(--ease);
+}
+.qz-step-dot.is-active, .qz-step-dot.is-done { border-top-color: var(--accent); }
+.qz-step-num {
+  flex: none; width: 21px; height: 21px; border-radius: 50%;
+  display: grid; place-items: center;
+  font-size: .68rem; font-weight: 700; color: var(--muted);
+  border: 1px solid var(--line-strong);
+  transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+}
+.qz-step-dot.is-active .qz-step-num { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.qz-step-dot.is-done .qz-step-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+.qz-step-nom {
+  font-size: .69rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: color .4s var(--ease);
+}
+.qz-step-dot.is-active .qz-step-nom { color: var(--ink); }
+
+.qz-step[hidden] { display: none; }
+.qz-step.qz-avant { animation: qzEntreeAvant .42s var(--ease) both; }
+.qz-step.qz-arriere { animation: qzEntreeArriere .42s var(--ease) both; }
+@keyframes qzEntreeAvant { from { opacity: 0; transform: translateX(14px); } to { opacity: 1; transform: none; } }
+@keyframes qzEntreeArriere { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
+
+/* Le « (optionnel) » reprend la casse du texte courant au milieu d'un label en capitales */
+.qz-opt { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--muted); }
+
+@media (max-width: 560px) {
+  /* Le nom de l'étape ne tient plus à trois de front : les pastilles chiffrées suffisent,
+     le nom complet reste lisible dans la note sous le bouton. */
+  .qz-step-nom { display: none; }
+  .qz-step-dot { justify-content: center; }
+}
 .qz-note { font-size: .74rem; color: var(--muted); line-height: 1.6; flex: 1 1 200px; }
 
 @media (max-width: 600px) {
