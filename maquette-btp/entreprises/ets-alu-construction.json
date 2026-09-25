@@ -56,6 +56,12 @@
         "detail": "Villa · Photo de votre ouvrage à fournir"
       },
       {
+        "image": "alu-fenetres.webp",
+        "alt": "Photo d'illustration : grandes fenêtres fixes à cadre aluminium noir donnant sur un jardin",
+        "titre": "Fenêtres d'angle",
+        "detail": "Maison · Photo à fournir"
+      },
+      {
         "image": "alu-vitrine-facade.webp",
         "alt": "Photo d'illustration : façade vitrée à montants aluminium",
         "titre": "Façade vitrée",
@@ -66,12 +72,6 @@
         "alt": "Photo d'illustration : table à cadre métallique et plateau vitré, avec chaise en métal",
         "titre": "Mobilier métal et verre",
         "detail": "Table et chaise · Photo à fournir"
-      },
-      {
-        "image": "alu-cloisons-bureaux.webp",
-        "alt": "Photo d'illustration : cloisons vitrées à profilés aluminium dans des bureaux",
-        "titre": "Cloisons de bureaux",
-        "detail": "Open space · Photo à fournir"
       }
     ]
   },
@@ -127,7 +127,7 @@
       {
         "titre": "Fenêtres et baies vitrées",
         "texte": "Coulissantes, battantes, oscillo-battantes ou fixes, fabriquées aux cotes exactes de vos ouvertures.",
-        "image": "alu-baies-coulissantes.webp"
+        "image": "alu-fenetres.webp"
       },
       {
         "titre": "Portes et portails",
