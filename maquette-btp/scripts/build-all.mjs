@@ -14,7 +14,10 @@ const JS = tpl("script.js");
 // ---------------------------------------------------------------- utilitaires
 const esc = (v) =>
   String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-const img = (n) => `img/${String(n).padStart(2, "0")}.webp`;
+// Chemins absolus (/maquettes/<slug>/img/…) : la page s'affiche correctement même
+// ouverte sans « / » final, quel que soit l'hébergeur.
+let BASE = "";
+const img = (n) => `${BASE}img/${String(n).padStart(2, "0")}.webp`;
 const num = (tel) => tel.replace(/\D/g, "");
 const wa = (e, texte) => `https://wa.me/${num(e.telephone)}${texte ? `?text=${encodeURIComponent(texte)}` : ""}`;
 const pad = (i) => String(i + 1).padStart(2, "0");
@@ -390,7 +393,7 @@ ${e.maquette ? '<meta name="robots" content="noindex, nofollow">\n' : ""}<link r
 <meta property="og:image" content="${esc(e.siteUrl)}og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#1F2225">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${BASE}favicon.svg" type="image/svg+xml">
 <link rel="preload" as="image" href="${img(e.hero.image)}" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -432,6 +435,7 @@ const favicon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><re
 
 for (const slug of slugs) {
   const e = JSON.parse(readFileSync(path.join(racine, "entreprises", `${slug}.json`), "utf8"));
+  BASE = new URL(e.siteUrl).pathname;
   const cible = path.join(racine, "dist", slug);
   rmSync(cible, { recursive: true, force: true });
   mkdirSync(cible, { recursive: true });

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo \"Dépendances installées par scripts/build-site.mjs\"",
+  "buildCommand": "node scripts/build-site.mjs",
+  "outputDirectory": "_site",
+  "cleanUrls": false
+}
