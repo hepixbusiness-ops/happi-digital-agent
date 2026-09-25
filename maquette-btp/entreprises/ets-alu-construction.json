@@ -1,44 +1,182 @@
 {
-  "slug": "ets-alu-construction",
-  "nom": "ETS ALU CONSTRUCTION",
-  "activite": "Menuiserie aluminium et construction",
   "ville": "Yaoundé",
-  "telephone": "+237 6 99 49 38 38",
-  "promesse": "Fenêtres, baies vitrées, portes et façades en aluminium posées sur mesure, du particulier au chantier d'immeuble.",
-  "presentation": "Nous fabriquons et posons vos ouvrages en aluminium et en verre à Yaoundé : prise de cotes sur place, fabrication sur mesure, pose soignée.",
-  "chiffres": [],
-  "services": [
-    {
-      "titre": "Fenêtres et baies",
-      "description": "Coulissantes, battantes ou fixes, en aluminium, fabriquées aux cotes exactes de vos ouvertures."
-    },
-    {
-      "titre": "Portes aluminium",
-      "description": "Portes d'entrée, portes de service et portes vitrées pour maisons, bureaux et commerces."
-    },
-    {
-      "titre": "Vitrerie et façades",
-      "description": "Vitrines, cloisons vitrées et façades pour immeubles et locaux professionnels."
-    },
-    {
-      "titre": "Construction",
-      "description": "Accompagnement de vos chantiers de construction, de la structure aux finitions."
-    }
-  ],
-  "realisations": [],
   "zones": [
-    "Bastos",
-    "Odza",
-    "Nkolbisson",
-    "Mimboman",
-    "Emana",
-    "Nsam",
-    "Biyem-Assi",
-    "Mendong",
-    "Ekounou",
-    "Soa"
+    "Yaoundé",
+    "Mfou",
+    "Soa",
+    "Obala"
   ],
   "maquette": true,
-  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "mentionMaquette": "maquette de travail : textes et photos d'illustration à remplacer par les vôtres",
+  "garanties": [
+    "Visite du site avant devis",
+    "Devis détaillé poste par poste",
+    "Paiement par étapes",
+    "Un interlocuteur unique",
+    "Chantier rendu propre"
+  ],
+  "processus": {
+    "titre": "Vos menuiseries en 6 étapes.",
+    "etapes": [
+      {
+        "titre": "Premier échange",
+        "texte": "Vous nous décrivez vos besoins par téléphone ou sur WhatsApp."
+      },
+      {
+        "titre": "Prise de cotes",
+        "texte": "Nous venons mesurer chaque ouverture sur place."
+      },
+      {
+        "titre": "Devis détaillé",
+        "texte": "Chaque menuiserie est chiffrée : dimensions, profilés, vitrage."
+      },
+      {
+        "titre": "Fabrication",
+        "texte": "Vos menuiseries sont fabriquées sur mesure."
+      },
+      {
+        "titre": "Pose",
+        "texte": "Pose, réglages et finitions des joints."
+      },
+      {
+        "titre": "Réception",
+        "texte": "Vérification ensemble du fonctionnement de chaque ouvrant."
+      }
+    ]
+  },
+  "realisations": {
+    "titre": "Nos chantiers.",
+    "lede": "Cet espace présentera vos propres chantiers, avec le lieu et la nature des travaux. Les photos ci-dessous sont des illustrations.",
+    "avantApres": false,
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Photo d'illustration : maison livrée avec jardin",
+        "titre": "Votre chantier phare",
+        "detail": "Lieu et nature des travaux à compléter"
+      },
+      {
+        "image": 9,
+        "alt": "Photo d'illustration : façade en finitions",
+        "titre": "Un chantier livré",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 5,
+        "alt": "Photo d'illustration : coffrage de dalle",
+        "titre": "Un chantier en cours",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 11,
+        "alt": "Photo d'illustration : intérieur livré",
+        "titre": "Finitions intérieures",
+        "detail": "Photo à fournir"
+      }
+    ]
+  },
+  "pourquoi": {
+    "titre": "Un chantier, c'est d'abord une question de confiance.",
+    "points": [
+      {
+        "titre": "Des prix clairs",
+        "texte": "Un devis détaillé avant le démarrage, sans mauvaise surprise en cours de route."
+      },
+      {
+        "titre": "Un suivi sérieux",
+        "texte": "Un responsable de chantier joignable, qui vous tient informé."
+      },
+      {
+        "titre": "Du travail propre",
+        "texte": "Des finitions soignées et un chantier rendu propre."
+      },
+      {
+        "titre": "Des délais tenus",
+        "texte": "Le planning est fixé avec vous avant le démarrage."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Menuiserie aluminium et construction à Yaoundé."
+  },
+  "slug": "ets-alu-construction",
+  "nom": "ETS ALU CONSTRUCTION",
+  "logo": [
+    "ETS ALU",
+    "Construction"
+  ],
+  "activite": "Menuiserie aluminium et construction",
+  "telephone": "+237 6 99 49 38 38",
+  "description": "ETS ALU CONSTRUCTION, menuiserie aluminium à Yaoundé : fenêtres, baies vitrées, portes et façades fabriquées sur mesure et posées.",
+  "hero": {
+    "image": 11,
+    "alt": "Photo d'illustration : séjour lumineux ouvert par de grandes baies vitrées",
+    "eyebrow": "Menuiserie aluminium · Vitrerie · Yaoundé",
+    "titre": [
+      "L'aluminium sur mesure.",
+      "Posé proprement."
+    ],
+    "lede": "Fenêtres, baies vitrées, portes et façades en aluminium, fabriquées aux cotes exactes de vos ouvertures et posées avec soin, du particulier au chantier d'immeuble."
+  },
+  "services": {
+    "titre": "Vos ouvertures, de la prise de cotes à la pose.",
+    "lede": "Nous mesurons sur place, fabriquons sur mesure et posons nous-mêmes vos menuiseries.",
+    "liste": [
+      {
+        "titre": "Fenêtres et baies vitrées",
+        "texte": "Coulissantes, battantes ou fixes, fabriquées aux cotes exactes de vos ouvertures.",
+        "image": 11
+      },
+      {
+        "titre": "Portes aluminium",
+        "texte": "Portes d'entrée, de service et portes vitrées pour maisons, bureaux et commerces.",
+        "image": 10
+      },
+      {
+        "titre": "Vitrerie et façades",
+        "texte": "Vitrines, cloisons vitrées et façades pour immeubles et locaux professionnels.",
+        "image": 9
+      },
+      {
+        "titre": "Construction",
+        "texte": "Accompagnement de vos chantiers, de la structure aux finitions.",
+        "image": 6
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Faites-vous des menuiseries sur mesure ?",
+      "r": "Oui, chaque menuiserie est fabriquée aux cotes exactes relevées sur place."
+    },
+    {
+      "q": "Combien coûte une fenêtre ou une baie vitrée ?",
+      "r": "Le prix dépend des dimensions, du type d'ouverture et du vitrage. Nous chiffrons après la prise de cotes."
+    },
+    {
+      "q": "Intervenez-vous sur les chantiers neufs ?",
+      "r": "Oui, pour les particuliers comme pour les chantiers d'immeubles."
+    },
+    {
+      "q": "Comment se passe le paiement ?",
+      "r": "Un acompte à la commande et le solde à la pose."
+    }
+  ],
+  "contact": {
+    "titre": "Parlons de vos ouvertures.",
+    "lede": "Décrivez-nous votre projet : nous passons prendre les cotes.",
+    "formTitre": "Demander un devis",
+    "cta": "Envoyer ma demande",
+    "lieuPlaceholder": "Quartier, ville",
+    "projets": [
+      "Fenêtres / baies vitrées",
+      "Portes",
+      "Vitrerie / façade",
+      "Construction",
+      "Autre"
+    ],
+    "messagePlaceholder": "Nombre d'ouvertures, dimensions approximatives, délai",
+    "meta": "Sans engagement · Réponse sur WhatsApp"
+  },
   "siteUrl": "https://pharel.cloud/maquettes/ets-alu-construction/"
 }

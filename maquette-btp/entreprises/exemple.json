@@ -1,83 +1,326 @@
 {
   "slug": "exemple",
-  "nom": "Atelier Bâtir",
-  "activite": "Entreprise de construction",
+  "nom": "Kaeso Bâtiment",
+  "logo": [
+    "Kaeso",
+    "Bâtiment"
+  ],
+  "activite": "Construction de maisons clé en main",
   "ville": "Yaoundé",
-  "adresse": "Quartier Odza, Yaoundé",
+  "title": "Kaeso Bâtiment | Construction de maisons clé en main à Yaoundé",
+  "description": "Entreprise de BTP à Yaoundé : maisons clé en main à prix ferme, délais écrits au contrat et suivi de chantier photo chaque semaine, même depuis l'étranger.",
+  "adresse": "Bastos, Yaoundé",
   "telephone": "+237 699 179 254",
-  "promesse": "Villas, immeubles et petits ouvrages livrés dans les délais, avec un devis détaillé lot par lot avant le premier coup de pioche.",
-  "presentation": "Nous construisons à Yaoundé depuis nos propres chantiers : fondations, gros œuvre, finitions. Un seul interlocuteur du terrassement à la remise des clés.",
-  "chiffres": [
-    {
-      "valeur": "12",
-      "label": "Années d'activité"
-    },
-    {
-      "valeur": "85",
-      "label": "Chantiers livrés"
-    },
-    {
-      "valeur": "40",
-      "label": "Ouvriers qualifiés"
-    },
-    {
-      "valeur": "7j/7",
-      "label": "Suivi de chantier"
-    }
-  ],
-  "services": [
-    {
-      "titre": "Gros œuvre",
-      "description": "Fondations, élévation, dalles et charpente béton pour villas et immeubles R+4."
-    },
-    {
-      "titre": "Rénovation",
-      "description": "Reprise de structure, extension, mise aux normes électriques et plomberie."
-    },
-    {
-      "titre": "Finitions",
-      "description": "Carrelage, enduits, peinture, faux plafonds et menuiserie aluminium."
-    },
-    {
-      "titre": "Voirie et réseaux",
-      "description": "Pavage, caniveaux, clôtures et raccordements pour lotissements."
-    }
-  ],
-  "realisations": [
-    {
-      "titre": "Immeuble R+4",
-      "lieu": "Bastos",
-      "annee": "2025",
-      "nature": "Gros œuvre et finitions",
-      "gabarit": "immeuble"
-    },
-    {
-      "titre": "Villa duplex",
-      "lieu": "Odza",
-      "annee": "2025",
-      "nature": "Construction clé en main",
-      "gabarit": "villa"
-    },
-    {
-      "titre": "Passerelle piétonne",
-      "lieu": "Nkolbisson",
-      "annee": "2024",
-      "nature": "Ouvrage béton armé",
-      "gabarit": "ouvrage"
-    }
-  ],
+  "horaires": "Lundi au samedi, 8 h à 18 h",
   "zones": [
-    "Bastos",
-    "Odza",
-    "Nkolbisson",
-    "Mimboman",
-    "Emana",
-    "Nsam",
-    "Biyem-Assi",
-    "Mendong",
-    "Ekounou",
-    "Soa"
+    "Yaoundé",
+    "Douala",
+    "Cameroun"
   ],
+  "hero": {
+    "image": 10,
+    "alt": "Villa moderne à étage livrée clé en main à Yaoundé, avec piscine et jardin, au coucher du soleil",
+    "eyebrow": "BTP · Construction clé en main · Yaoundé et Douala",
+    "titre": [
+      "Nous bâtissons.",
+      "Vous emménagez."
+    ],
+    "lede": "Du terrain à la remise des clés, Kaeso Bâtiment conçoit et construit votre maison avec un budget fixé à l'avance, des délais tenus et un chantier que vous suivez où que vous soyez.",
+    "cta": "Estimer mon projet"
+  },
+  "stats": [
+    {
+      "valeur": "12 ans",
+      "label": "d'expérience sur les chantiers"
+    },
+    {
+      "valeur": "140",
+      "label": "maisons livrées"
+    },
+    {
+      "valeur": "9",
+      "label": "chantiers en cours"
+    },
+    {
+      "valeur": "94 %",
+      "label": "livrés dans les délais"
+    }
+  ],
+  "garanties": [
+    "Titre foncier vérifié avant travaux",
+    "Permis de bâtir pris en charge",
+    "Devis ferme et détaillé",
+    "Paiement par tranches",
+    "Garantie décennale",
+    "Suivi photo chaque semaine"
+  ],
+  "chantier": {
+    "etapes": [
+      {
+        "eyebrow": "Semaines 1 à 3 · Terrain",
+        "titre": "Regardez votre maison sortir de terre.",
+        "texte": "Implantation au cordeau, puis fouilles à la pelle mécanique, exactement aux cotes du plan que vous avez validé."
+      },
+      {
+        "eyebrow": "Semaines 5 à 8 · Fondations et élévation",
+        "titre": "Des fondations calculées pour votre sol.",
+        "texte": "Semelles en béton armé, attentes des poteaux, puis les murs montent rang après rang."
+      },
+      {
+        "eyebrow": "Semaines 11 à 14 · Dalle et étage",
+        "titre": "La dalle, l'étape qui ne pardonne pas.",
+        "texte": "Coffrage, étaiement et ferraillage vérifiés avant chaque coulage. Puis l'étage s'élève."
+      },
+      {
+        "eyebrow": "Semaines 18 à 22 · Hors d'eau",
+        "titre": "Structure fermée, enduits posés.",
+        "texte": "Acrotère, étanchéité de la toiture-terrasse et enduits : la maison est protégée avant la saison des pluies."
+      },
+      {
+        "eyebrow": "Semaines 28 à 34 · Finitions",
+        "titre": "Puis la maison prend son vrai visage.",
+        "texte": "Menuiseries, peinture, clôture et aménagements extérieurs. Nous rendons un chantier propre."
+      },
+      {
+        "eyebrow": "Semaine 34 · Remise des clés",
+        "titre": "Vous poussez la porte. Vous êtes chez vous.",
+        "texte": "Visite finale ensemble, levée des réserves et remise des clés."
+      }
+    ]
+  },
+  "services": {
+    "titre": "Un seul interlocuteur, du plan au dernier coup de pinceau.",
+    "lede": "Nous réunissons en interne les métiers d'un chantier complet. Moins d'intermédiaires, moins de retards, et une seule entreprise responsable du résultat.",
+    "liste": [
+      {
+        "titre": "Études et conception",
+        "texte": "Relevé du terrain, plans architecturaux, plans 3D, étude de sol et calcul de structure. Vous voyez votre maison avant de poser la première pierre.",
+        "image": 1
+      },
+      {
+        "titre": "Gros œuvre",
+        "texte": "Terrassement, fondations, élévation, chaînages, dalles et toiture. La structure qui porte votre maison pour des décennies.",
+        "image": 5
+      },
+      {
+        "titre": "Second œuvre et finitions",
+        "texte": "Électricité, plomberie, menuiserie, carrelage, plafonds, peinture. Les finitions qui font la différence au quotidien.",
+        "image": 11
+      },
+      {
+        "titre": "Génie civil et VRD",
+        "texte": "Voiries, réseaux d'eau et d'assainissement, clôtures, murs de soutènement et aménagements extérieurs.",
+        "image": 2
+      },
+      {
+        "titre": "Rénovation et extension",
+        "texte": "Ajout d'un niveau, agrandissement, réhabilitation d'un bâtiment existant, reprise de chantier abandonné.",
+        "image": 7
+      }
+    ]
+  },
+  "cleEnMain": {
+    "nav": "Maisons clés en main",
+    "image": 11,
+    "alt": "Séjour double hauteur d'une maison livrée clé en main, ouvert sur la piscine",
+    "eyebrow": "Clé en main",
+    "titre": "Vous avez le terrain. Nous livrons la maison.",
+    "lede": "Un seul contrat, un seul prix, une seule date de livraison. Nous gérons les plans, les autorisations, les matériaux, les ouvriers et les contrôles. Vous recevez une maison habitable, raccordée et nettoyée.",
+    "points": [
+      "Prix ferme fixé avant le démarrage",
+      "Délai de livraison écrit dans le contrat",
+      "Aucun frais caché, chaque tranche justifiée"
+    ],
+    "cta": "Découvrir la formule clé en main"
+  },
+  "processus": {
+    "titre": "De votre terrain à vos clés, en 6 étapes claires.",
+    "etapes": [
+      {
+        "titre": "Visite et vérification du terrain",
+        "texte": "Titre foncier, topographie et accès vérifiés. Gratuit et sans engagement."
+      },
+      {
+        "titre": "Conception et plans 3D",
+        "texte": "Notre architecte dessine votre maison selon vos besoins et votre budget."
+      },
+      {
+        "titre": "Devis ferme et contrat",
+        "texte": "Détaillé poste par poste. Prix et délai fixés dans le contrat."
+      },
+      {
+        "titre": "Permis de bâtir",
+        "texte": "Nous montons le dossier et le déposons pour vous en mairie."
+      },
+      {
+        "titre": "Construction et suivi",
+        "texte": "Photos et vidéos de l'avancement chaque semaine sur WhatsApp."
+      },
+      {
+        "titre": "Réception et remise des clés",
+        "texte": "Visite finale, levée des réserves, clés et documents de garantie."
+      }
+    ]
+  },
+  "modeles": {
+    "titre": "Des maisons pensées pour être vécues.",
+    "lede": "Choisissez un modèle de base, puis adaptez-le. Chaque plan est personnalisable.",
+    "note": "Prix indicatifs hors terrain, variables selon la nature du sol et les finitions choisies. Le prix définitif est fixé dans votre devis.",
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Villa R+1 avec piscine, modèle le plus demandé",
+        "tag": "Le plus demandé",
+        "titre": "Villa R+1 Horizon",
+        "spec": "4 chambres · 3 salles de bain · salon et cuisine ouverte · 220 m²",
+        "prix": "65 000 000 FCFA",
+        "delai": "Délai indicatif : 9 mois"
+      },
+      {
+        "image": 9,
+        "alt": "Maison F3 à étage, façade moderne",
+        "titre": "Maison F3 Essentielle",
+        "spec": "3 chambres · 120 m²",
+        "prix": "32 000 000 FCFA"
+      },
+      {
+        "image": 11,
+        "alt": "Intérieur du duplex R+1, séjour double hauteur",
+        "titre": "Duplex R+1 Prestige",
+        "spec": "5 chambres · 260 m²",
+        "prix": "85 000 000 FCFA"
+      }
+    ]
+  },
+  "realisations": {
+    "titre": "Ce que nous avons déjà construit.",
+    "avantApres": true,
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Villa Bastos livrée",
+        "titre": "Villa Bastos",
+        "detail": "Bastos, Yaoundé · Clé en main · 9 mois"
+      },
+      {
+        "image": 9,
+        "alt": "Maison Odza en finitions",
+        "titre": "Maison Odza",
+        "detail": "Odza, Yaoundé · Clé en main · 7 mois"
+      },
+      {
+        "image": 5,
+        "alt": "Chantier Bonamoussadi, coffrage de dalle",
+        "titre": "Résidence Bonamoussadi",
+        "detail": "Douala · Gros œuvre · en cours"
+      },
+      {
+        "image": 11,
+        "alt": "Intérieur de la villa Santa Barbara",
+        "titre": "Villa Santa Barbara",
+        "detail": "Yaoundé · Second œuvre et finitions · 4 mois"
+      }
+    ]
+  },
+  "diaspora": {
+    "titre": "Construisez au pays sans être sur place.",
+    "lede": "Construire à distance fait peur : fonds détournés, chantiers arrêtés, mauvaises surprises. Notre méthode est pensée pour que vous gardiez le contrôle, de Paris, Montréal ou Bruxelles.",
+    "points": [
+      "Rapport photo et vidéo chaque semaine",
+      "Paiement par tranches, uniquement après validation de l'étape précédente",
+      "Appels vidéo en direct depuis le chantier sur demande",
+      "Un chef de projet dédié, joignable sur WhatsApp"
+    ]
+  },
+  "pourquoi": {
+    "titre": "Un chantier, c'est d'abord une question de confiance.",
+    "points": [
+      {
+        "titre": "Transparence sur les prix",
+        "texte": "Chaque poste de votre devis est détaillé. Vous savez ce que vous payez, et pourquoi."
+      },
+      {
+        "titre": "Matériaux contrôlés",
+        "texte": "Ciment, fer et agrégats achetés auprès de fournisseurs identifiés, avec des dosages respectés et vérifiables."
+      },
+      {
+        "titre": "Des équipes à nous",
+        "texte": "Maçons, ferrailleurs, électriciens et plombiers encadrés par un ingénieur, pas une sous-traitance en cascade."
+      },
+      {
+        "titre": "Des délais écrits",
+        "texte": "La date de livraison figure dans le contrat. Nous nous engageons dessus."
+      }
+    ]
+  },
+  "temoignages": [
+    {
+      "t": "J'avais peur de construire depuis Paris. Chaque vendredi je recevais les photos du chantier, et je ne payais la tranche suivante qu'après avoir vu l'étape terminée.",
+      "n": "Arlette M.",
+      "w": "Paris, France · Villa clé en main à Yaoundé"
+    },
+    {
+      "t": "Le devis était détaillé ligne par ligne, et le prix final est resté celui du contrat. Ma maison a été livrée avec deux semaines d'avance.",
+      "n": "Serge N.",
+      "w": "Douala · Maison F3"
+    },
+    {
+      "t": "Ils ont repris mon chantier abandonné depuis trois ans. L'ingénieur a tout contrôlé avant de continuer, et la dalle a été refaite proprement.",
+      "n": "Joël T.",
+      "w": "Montréal, Canada · Reprise de chantier"
+    }
+  ],
+  "faq": [
+    {
+      "q": "Combien coûte la construction d'une maison ?",
+      "r": "Cela dépend de la surface, du terrain et des finitions. Nos modèles démarrent à 32 000 000 FCFA. Après la visite du terrain, nous vous remettons un devis ferme et détaillé."
+    },
+    {
+      "q": "Faut-il déjà avoir un terrain ?",
+      "r": "Oui, pour la formule clé en main, le terrain vous appartient. Nous vérifions son titre foncier avant tout engagement."
+    },
+    {
+      "q": "Combien de temps dure la construction ?",
+      "r": "En moyenne 6 à 9 mois selon le modèle et la saison. Le délai exact figure dans votre contrat."
+    },
+    {
+      "q": "Comment se passe le paiement ?",
+      "r": "Par tranches liées à l'avancement : fondations, élévation, toiture, finitions. Vous ne payez une étape qu'après avoir vu la précédente terminée."
+    },
+    {
+      "q": "Vous occupez-vous du permis de bâtir ?",
+      "r": "Oui. Nous préparons et déposons le dossier pour vous."
+    },
+    {
+      "q": "Quelle garantie après la livraison ?",
+      "r": "Garantie décennale sur le gros œuvre et garantie de parfait achèvement d'un an sur les finitions."
+    }
+  ],
+  "contact": {
+    "titre": "Votre maison commence par une conversation.",
+    "lede": "Parlez-nous de votre projet. Nous vous rappelons sous 24 heures et la visite de terrain est offerte.",
+    "formTitre": "Recevoir mon estimation",
+    "cta": "Recevoir mon estimation",
+    "lieuPlaceholder": "Yaoundé, Douala…",
+    "projets": [
+      "Maison clé en main",
+      "Gros œuvre",
+      "Rénovation",
+      "Autre"
+    ],
+    "budgets": [
+      "Moins de 30 millions FCFA",
+      "30 à 50 millions FCFA",
+      "50 à 80 millions FCFA",
+      "Plus de 80 millions FCFA",
+      "Je ne sais pas encore"
+    ],
+    "messagePlaceholder": "Surface du terrain, nombre de chambres, délai souhaité",
+    "meta": "Réponse sous 24 h · Sans engagement · Vos données restent confidentielles"
+  },
+  "footer": {
+    "description": "Entreprise de BTP et de construction clé en main à Yaoundé."
+  },
   "maquette": true,
   "mentionMaquette": "entreprise fictive, site d'exemple",
   "siteUrl": "https://pharel.cloud/maquettes/exemple/"

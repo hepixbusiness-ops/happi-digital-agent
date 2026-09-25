@@ -45,9 +45,7 @@ jobs:
 
       - name: Build les maquettes BTP (maquette-btp)
         working-directory: maquette-btp
-        run: |
-          npm ci
-          npm run build:all
+        run: node scripts/build-all.mjs
 
       - name: Préparer le contenu public (exclure les apps non déployées ici)
         run: |
