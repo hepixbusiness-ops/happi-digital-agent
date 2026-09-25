@@ -251,10 +251,16 @@
     });
   }
 
+  // Tous les sites livrés ne sont pas publiés dans la galerie (clients qui
+  // préfèrent rester discrets) : le compteur part donc du nombre réel de sites
+  // livrés, et ne suit la table que si elle finit par le dépasser.
+  var SITES_LIVRES = 50;
+
   function statistiques() {
-    document.getElementById('stat-total').textContent = toutes.length;
-    document.getElementById('stat-sites').textContent =
-      toutes.filter(function (r) { return r.type === 'site_web'; }).length;
+    var sitesPublies = toutes.filter(function (r) { return r.type === 'site_web'; }).length;
+    var sites = Math.max(SITES_LIVRES, sitesPublies);
+    document.getElementById('stat-sites').textContent = sites;
+    document.getElementById('stat-total').textContent = toutes.length - sitesPublies + sites;
   }
 
   fetch(API + '?select=*&publie=eq.true&order=ordre.desc,created_at.desc', {

@@ -11,6 +11,8 @@ sur les connexions mobiles camerounaises.
 | `sapres-mobile.jpg` | Accueil sapressarl.com sur téléphone | 440 px max |
 | `net-desktop.jpg` | Accueil newenergytechnology.sarl sur ordinateur | 1600 px |
 | `net-mobile.jpg` | Accueil newenergytechnology.sarl sur téléphone | 440 px max |
+| `prordv-desktop.jpg` | Accueil prordv.app/pro sur ordinateur | 1600 px |
+| `prordv-mobile.jpg` | Accueil prordv.app/pro sur téléphone | 440 px max |
 
 Pour remplacer une capture, gardez le même nom de fichier. Si un fichier est
 absent, la vignette de repli aux couleurs du client s'affiche à la place :
