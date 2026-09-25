@@ -106,7 +106,7 @@
     "Building"
   ],
   "activite": "Entreprise de génie civil",
-  "adresse": "Nsam, Yaoundé",
+  "adresse": "Nsam, près du Safari Hotel, Yaoundé",
   "telephone": "+237 6 70 33 11 81",
   "description": "DREAMS BUILDING SARL, génie civil et construction à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un suivi rigoureux.",
   "hero": {
@@ -213,5 +213,6 @@
     "messagePlaceholder": "Nature de l'ouvrage, surface, délai souhaité",
     "meta": "Sans engagement · Réponse sur WhatsApp"
   },
-  "siteUrl": "https://pharel.cloud/maquettes/dreams-building/"
+  "siteUrl": "https://pharel.cloud/maquettes/dreams-building/",
+  "lienMaps": "https://www.google.com/maps/place/DREAMS+BUILDING+SARL/data=!4m7!3m6!1s0x108bcf2ff82c10b1:0x9b964e8e5558a388!8m2!3d3.8311387!4d11.5103335!16s%2Fg%2F11ygk51v9r!19sChIJsRAs-C_PixARiKNYVY5Olps"
 }

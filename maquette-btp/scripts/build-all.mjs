@@ -2,7 +2,7 @@
 // sur la base du modèle Kaeso (template/). Aucune dépendance : Node 18+ suffit.
 // Usage : node scripts/build-all.mjs            (toutes)
 //         node scripts/build-all.mjs alsi-sarl  (une seule)
-import { cpSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 const racine = path.resolve(import.meta.dirname, "..");
@@ -17,7 +17,9 @@ const esc = (v) =>
 // Chemins absolus (/maquettes/<slug>/img/…) : la page s'affiche correctement même
 // ouverte sans « / » final, quel que soit l'hébergeur.
 let BASE = "";
-const img = (n) => `${BASE}img/${String(n).padStart(2, "0")}.webp`;
+// Un numéro désigne une photo du modèle (template/img/NN.webp) ; un nom de fichier
+// désigne une photo propre à l'entreprise (entreprises/<slug>/img/…).
+const img = (n) => (typeof n === "string" ? `${BASE}img/${n}` : `${BASE}img/${String(n).padStart(2, "0")}.webp`);
 const num = (tel) => tel.replace(/\D/g, "");
 const wa = (e, texte) => `https://wa.me/${num(e.telephone)}${texte ? `?text=${encodeURIComponent(texte)}` : ""}`;
 const pad = (i) => String(i + 1).padStart(2, "0");
@@ -303,7 +305,8 @@ function contact(e) {
       <p class="eyebrow">Parlons de votre projet</p>
       <h2 id="ct-title">${esc(c.titre)}</h2>
       <p class="lede">${esc(c.lede)}</p>
-      <p class="wa-alt"><a class="link" href="${wa(e)}">${ico("wa")}Pressé ? Écrivez-nous directement sur WhatsApp</a></p>
+      <p class="wa-alt"><a class="link" href="${wa(e)}">${ico("wa")}Pressé ? Écrivez-nous directement sur WhatsApp</a></p>${e.lienMaps ? `
+      <p class="wa-alt"><a class="link" href="${esc(e.lienMaps)}" target="_blank" rel="noopener">${ico("arrow")}Nous trouver sur Google Maps${e.adresse ? ` · ${esc(e.adresse)}` : ""}</a></p>` : ""}
     </div>
     <form class="form" id="quoteForm" novalidate>
       <h3>${esc(c.formTitre)}</h3>
@@ -440,6 +443,8 @@ for (const slug of slugs) {
   rmSync(cible, { recursive: true, force: true });
   mkdirSync(cible, { recursive: true });
   cpSync(path.join(racine, "template", "img"), path.join(cible, "img"), { recursive: true });
+  const propres = path.join(racine, "entreprises", slug, "img");
+  if (existsSync(propres)) cpSync(propres, path.join(cible, "img"), { recursive: true });
   cpSync(path.join(racine, "template", "og.jpg"), path.join(cible, "og.jpg"));
   writeFileSync(path.join(cible, "favicon.svg"), favicon);
   writeFileSync(path.join(cible, "index.html"), page(e));
