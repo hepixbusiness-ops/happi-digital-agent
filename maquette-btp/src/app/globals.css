@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/*
+  Famille : industriel technique (plan d'exécution).
+  Graphite froid + blanc béton, un seul accent : orange sécurité.
+  Le trait de plan (grille, cotes, silhouettes dessinées) remplace les photos
+  tant que l'entreprise n'a pas fourni ses chantiers.
+*/
+:root {
+  --bg-base: #0f1113;
+  --bg-raised: #16191c;
+  --bg-sunken: #0a0b0c;
+  --text-primary: #ecede9;
+  --text-muted: #9aa1a6;
+  --text-faint: #636a70;
+  --accent: #ff5a1f;
+  --accent-ink: #160800;
+  --line: rgba(236, 237, 233, 0.1);
+  --line-strong: rgba(236, 237, 233, 0.22);
+  --error: #ff8a65;
+  /* Ombres calées sur le fond : un liseré clair et un halo d'accent, jamais du noir sur noir. */
+  --shadow-raised: inset 0 1px 0 rgba(236, 237, 233, 0.06), 0 0 0 1px var(--line);
+  --shadow-accent: 0 8px 32px -8px rgba(255, 90, 31, 0.45);
+}
+
+@theme inline {
+  --color-bg-base: var(--bg-base);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-ink: var(--text-primary);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-error: var(--error);
+
+  --font-display: var(--font-display-loaded), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-sans-loaded), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-loaded), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-raised: var(--shadow-raised);
+  --shadow-accent: var(--shadow-accent);
+}
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility blueprint-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    linear-gradient(rgba(236, 237, 233, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 237, 233, 0.035) 1px, transparent 1px);
+  background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+}
+
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
