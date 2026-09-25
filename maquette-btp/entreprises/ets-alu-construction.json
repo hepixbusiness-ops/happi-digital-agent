@@ -1,0 +1,44 @@
+{
+  "slug": "ets-alu-construction",
+  "nom": "ETS ALU CONSTRUCTION",
+  "activite": "Menuiserie aluminium et construction",
+  "ville": "Yaoundé",
+  "telephone": "+237 6 99 49 38 38",
+  "promesse": "Fenêtres, baies vitrées, portes et façades en aluminium posées sur mesure, du particulier au chantier d'immeuble.",
+  "presentation": "Nous fabriquons et posons vos ouvrages en aluminium et en verre à Yaoundé : prise de cotes sur place, fabrication sur mesure, pose soignée.",
+  "chiffres": [],
+  "services": [
+    {
+      "titre": "Fenêtres et baies",
+      "description": "Coulissantes, battantes ou fixes, en aluminium, fabriquées aux cotes exactes de vos ouvertures."
+    },
+    {
+      "titre": "Portes aluminium",
+      "description": "Portes d'entrée, portes de service et portes vitrées pour maisons, bureaux et commerces."
+    },
+    {
+      "titre": "Vitrerie et façades",
+      "description": "Vitrines, cloisons vitrées et façades pour immeubles et locaux professionnels."
+    },
+    {
+      "titre": "Construction",
+      "description": "Accompagnement de vos chantiers de construction, de la structure aux finitions."
+    }
+  ],
+  "realisations": [],
+  "zones": [
+    "Bastos",
+    "Odza",
+    "Nkolbisson",
+    "Mimboman",
+    "Emana",
+    "Nsam",
+    "Biyem-Assi",
+    "Mendong",
+    "Ekounou",
+    "Soa"
+  ],
+  "maquette": true,
+  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "siteUrl": "https://pharel.cloud/maquettes/ets-alu-construction/"
+}

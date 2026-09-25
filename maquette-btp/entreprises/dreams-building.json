@@ -1,0 +1,45 @@
+{
+  "slug": "dreams-building",
+  "nom": "DREAMS BUILDING SARL",
+  "activite": "Entreprise de génie civil",
+  "ville": "Yaoundé",
+  "adresse": "Nsam, Yaoundé",
+  "telephone": "+237 6 70 33 11 81",
+  "promesse": "Des bâtiments et des ouvrages solides, conduits de l'étude à la réception avec un interlocuteur unique.",
+  "presentation": "Nous réalisons vos projets de génie civil à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un suivi rigoureux à chaque étape.",
+  "chiffres": [],
+  "services": [
+    {
+      "titre": "Génie civil",
+      "description": "Fondations, structures en béton armé et ouvrages techniques."
+    },
+    {
+      "titre": "Construction de bâtiments",
+      "description": "Villas, immeubles et locaux professionnels, du gros œuvre aux finitions."
+    },
+    {
+      "titre": "Rénovation",
+      "description": "Reprise de structure, extension et remise à neuf de bâtiments existants."
+    },
+    {
+      "titre": "Voirie et réseaux",
+      "description": "Pavage, caniveaux, clôtures et raccordements."
+    }
+  ],
+  "realisations": [],
+  "zones": [
+    "Bastos",
+    "Odza",
+    "Nkolbisson",
+    "Mimboman",
+    "Emana",
+    "Nsam",
+    "Biyem-Assi",
+    "Mendong",
+    "Ekounou",
+    "Soa"
+  ],
+  "maquette": true,
+  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "siteUrl": "https://pharel.cloud/maquettes/dreams-building/"
+}

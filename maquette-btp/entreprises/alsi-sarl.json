@@ -1,0 +1,45 @@
+{
+  "slug": "alsi-sarl",
+  "nom": "ALSI SARL",
+  "activite": "Entreprise de construction",
+  "ville": "Yaoundé",
+  "adresse": "Rue Montée Hôpital Jamot, Yaoundé",
+  "telephone": "+237 6 79 13 56 26",
+  "promesse": "Des constructions livrées dans les règles de l'art, avec un devis clair et un suivi de chantier du début à la fin.",
+  "presentation": "ALSI SARL construit et rénove à Yaoundé : maisons, immeubles et locaux professionnels, avec une équipe qui suit chaque chantier de près.",
+  "chiffres": [],
+  "services": [
+    {
+      "titre": "Construction neuve",
+      "description": "Villas et immeubles, des fondations à la remise des clés."
+    },
+    {
+      "titre": "Rénovation",
+      "description": "Extension, reprise de structure et remise à neuf."
+    },
+    {
+      "titre": "Finitions",
+      "description": "Carrelage, enduits, peinture, faux plafonds."
+    },
+    {
+      "titre": "Suivi de chantier",
+      "description": "Un responsable unique vous informe à chaque étape."
+    }
+  ],
+  "realisations": [],
+  "zones": [
+    "Bastos",
+    "Odza",
+    "Nkolbisson",
+    "Mimboman",
+    "Emana",
+    "Nsam",
+    "Biyem-Assi",
+    "Mendong",
+    "Ekounou",
+    "Soa"
+  ],
+  "maquette": true,
+  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "siteUrl": "https://pharel.cloud/maquettes/alsi-sarl/"
+}

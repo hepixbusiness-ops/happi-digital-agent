@@ -1,0 +1,84 @@
+{
+  "slug": "exemple",
+  "nom": "Atelier Bâtir",
+  "activite": "Entreprise de construction",
+  "ville": "Yaoundé",
+  "adresse": "Quartier Odza, Yaoundé",
+  "telephone": "+237 699 179 254",
+  "promesse": "Villas, immeubles et petits ouvrages livrés dans les délais, avec un devis détaillé lot par lot avant le premier coup de pioche.",
+  "presentation": "Nous construisons à Yaoundé depuis nos propres chantiers : fondations, gros œuvre, finitions. Un seul interlocuteur du terrassement à la remise des clés.",
+  "chiffres": [
+    {
+      "valeur": "12",
+      "label": "Années d'activité"
+    },
+    {
+      "valeur": "85",
+      "label": "Chantiers livrés"
+    },
+    {
+      "valeur": "40",
+      "label": "Ouvriers qualifiés"
+    },
+    {
+      "valeur": "7j/7",
+      "label": "Suivi de chantier"
+    }
+  ],
+  "services": [
+    {
+      "titre": "Gros œuvre",
+      "description": "Fondations, élévation, dalles et charpente béton pour villas et immeubles R+4."
+    },
+    {
+      "titre": "Rénovation",
+      "description": "Reprise de structure, extension, mise aux normes électriques et plomberie."
+    },
+    {
+      "titre": "Finitions",
+      "description": "Carrelage, enduits, peinture, faux plafonds et menuiserie aluminium."
+    },
+    {
+      "titre": "Voirie et réseaux",
+      "description": "Pavage, caniveaux, clôtures et raccordements pour lotissements."
+    }
+  ],
+  "realisations": [
+    {
+      "titre": "Immeuble R+4",
+      "lieu": "Bastos",
+      "annee": "2025",
+      "nature": "Gros œuvre et finitions",
+      "gabarit": "immeuble"
+    },
+    {
+      "titre": "Villa duplex",
+      "lieu": "Odza",
+      "annee": "2025",
+      "nature": "Construction clé en main",
+      "gabarit": "villa"
+    },
+    {
+      "titre": "Passerelle piétonne",
+      "lieu": "Nkolbisson",
+      "annee": "2024",
+      "nature": "Ouvrage béton armé",
+      "gabarit": "ouvrage"
+    }
+  ],
+  "zones": [
+    "Bastos",
+    "Odza",
+    "Nkolbisson",
+    "Mimboman",
+    "Emana",
+    "Nsam",
+    "Biyem-Assi",
+    "Mendong",
+    "Ekounou",
+    "Soa"
+  ],
+  "maquette": true,
+  "mentionMaquette": "entreprise fictive, site d'exemple",
+  "siteUrl": "https://pharel.cloud/maquettes/exemple/"
+}
