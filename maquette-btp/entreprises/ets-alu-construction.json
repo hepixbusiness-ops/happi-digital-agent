@@ -50,28 +50,28 @@
     "lede": "Cet espace présentera vos propres ouvrages : fenêtres, vitrines, portes, mobilier. Les photos ci-dessous sont des illustrations.",
     "liste": [
       {
-        "image": 11,
-        "alt": "Photo d'illustration : baies vitrées en aluminium",
-        "titre": "Baies vitrées",
-        "detail": "Photo de votre ouvrage à fournir"
+        "image": "alu-baies-coulissantes.webp",
+        "alt": "Photo d'illustration : baies vitrées coulissantes à cadre aluminium",
+        "titre": "Baies vitrées coulissantes",
+        "detail": "Villa · Photo de votre ouvrage à fournir"
       },
       {
-        "image": 10,
-        "alt": "Photo d'illustration : portail et menuiseries en aluminium",
-        "titre": "Portail et menuiseries",
-        "detail": "Photo à fournir"
+        "image": "alu-vitrine-facade.webp",
+        "alt": "Photo d'illustration : façade vitrée à montants aluminium",
+        "titre": "Façade vitrée",
+        "detail": "Commerce ou bureau · Photo à fournir"
       },
       {
-        "image": 9,
-        "alt": "Photo d'illustration : fenêtres en façade",
-        "titre": "Fenêtres en façade",
-        "detail": "Photo à fournir"
+        "image": "alu-table-metal.webp",
+        "alt": "Photo d'illustration : table à cadre métallique et plateau vitré, avec chaise en métal",
+        "titre": "Mobilier métal et verre",
+        "detail": "Table et chaise · Photo à fournir"
       },
       {
-        "image": 8,
-        "alt": "Photo d'illustration : ouvertures d'une maison",
-        "titre": "Menuiseries d'une villa",
-        "detail": "Photo à fournir"
+        "image": "alu-cloisons-bureaux.webp",
+        "alt": "Photo d'illustration : cloisons vitrées à profilés aluminium dans des bureaux",
+        "titre": "Cloisons de bureaux",
+        "detail": "Open space · Photo à fournir"
       }
     ]
   },
@@ -94,7 +94,9 @@
         "titre": "Une pose soignée",
         "texte": "Des joints propres, des ouvrants bien réglés, un chantier laissé net."
       }
-    ]
+    ],
+    "image": "alu-table-bois.webp",
+    "alt": "Photo d'illustration : table en bois sur piétement métallique"
   },
   "footer": {
     "description": "Menuiserie aluminium sur mesure à Yaoundé : fenêtres, portes, vitrines, garde-corps, cloisons et mobilier."
@@ -109,8 +111,8 @@
   "telephone": "+237 6 99 49 38 38",
   "description": "ETS ALU CONSTRUCTION fabrique et pose à Yaoundé tout ce qui se construit en aluminium : fenêtres, baies vitrées, portes, vitrines, garde-corps, cloisons et mobilier sur mesure.",
   "hero": {
-    "image": 11,
-    "alt": "Photo d'illustration : séjour ouvert par de grandes baies vitrées en aluminium",
+    "image": "alu-baies-coulissantes.webp",
+    "alt": "Photo d'illustration : grandes baies vitrées coulissantes à cadre aluminium noir, ouvertes sur une terrasse avec piscine",
     "eyebrow": "Menuiserie aluminium · Vitrerie · Mobilier alu · Yaoundé",
     "titre": [
       "Tout ce qui se construit",
@@ -125,32 +127,32 @@
       {
         "titre": "Fenêtres et baies vitrées",
         "texte": "Coulissantes, battantes, oscillo-battantes ou fixes, fabriquées aux cotes exactes de vos ouvertures.",
-        "image": 11
+        "image": "alu-baies-coulissantes.webp"
       },
       {
         "titre": "Portes et portails",
         "texte": "Portes d'entrée, portes de service, portes vitrées et portails en aluminium pour maisons, bureaux et commerces.",
-        "image": 10
+        "image": "alu-vitrine-facade.webp"
       },
       {
         "titre": "Vitrines et devantures",
         "texte": "Façades vitrées de boutiques, de pharmacies et d'agences : votre commerce visible depuis la rue.",
-        "image": 9
+        "image": "alu-vitrine-facade.webp"
       },
       {
         "titre": "Garde-corps et rampes",
         "texte": "Balcons, escaliers et terrasses sécurisés, en aluminium seul ou associé au verre.",
-        "image": 8
+        "image": "alu-baies-coulissantes.webp"
       },
       {
         "titre": "Cloisons et bureaux",
         "texte": "Cloisons vitrées, séparations d'open space et faux plafonds pour aménager vos locaux.",
-        "image": 6
+        "image": "alu-cloisons-bureaux.webp"
       },
       {
         "titre": "Mobilier en aluminium",
         "texte": "Tables, comptoirs, étagères et présentoirs sur mesure, pour la maison comme pour le commerce.",
-        "image": 11
+        "image": "alu-table-metal.webp"
       }
     ]
   },
@@ -188,7 +190,8 @@
       "Autre"
     ],
     "messagePlaceholder": "Type d'ouvrage, dimensions approximatives, délai",
-    "meta": "Sans engagement · Réponse sur WhatsApp"
+    "meta": "Sans engagement · Réponse sur WhatsApp",
+    "image": "alu-baies-coulissantes.webp"
   },
   "siteUrl": "https://pharel.cloud/maquettes/ets-alu-construction/",
   "lienMaps": "https://www.google.com/maps/place/ETS+ALU+CONSTRUCTION/data=!4m7!3m6!1s0x108bd121b596e037:0x40cb6128e7a2374a!8m2!3d3.8201891!4d11.5224108!16s%2Fg%2F11swtd8c2d!19sChIJN-CWtSHRixARSjei5yhhy0A",

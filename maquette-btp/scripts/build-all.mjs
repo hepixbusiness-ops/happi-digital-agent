@@ -257,7 +257,7 @@ function pourquoi(e) {
   <div class="wrap">
     <p class="eyebrow">Notre différence</p>
     <h2 id="wh-title">${esc(w.titre)}</h2>
-    <div class="band"><img src="${img(6)}" alt="Chantier en cours : dalle coulée et étage en élévation" loading="lazy">${badgeIllus(e)}</div>
+    <div class="band"><img src="${img(w.image ?? 6)}" alt="${esc(w.alt || "Chantier en cours : dalle coulée et étage en élévation")}" loading="lazy">${badgeIllus(e)}</div>
     <div class="why">
       ${w.points.map((p) => `<article><span class="k"></span><h3>${esc(p.titre)}</h3><p>${esc(p.texte)}</p></article>`).join("\n      ")}
     </div>
@@ -299,7 +299,7 @@ function contact(e) {
   const c = e.contact;
   const options = (l) => l.map((o) => `<option>${esc(o)}</option>`).join("");
   return `<section class="cta on-photo" id="contact" aria-labelledby="ct-title">
-  <div class="cta-bg"><img src="${img(10)}" alt="" loading="lazy"></div>
+  <div class="cta-bg"><img src="${img(c.image ?? 10)}" alt="" loading="lazy"></div>
   <div class="wrap two">
     <div>
       <p class="eyebrow">Parlons de votre projet</p>
