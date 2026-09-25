@@ -37,25 +37,8 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build le portail de brief (brief-portal)
-        working-directory: brief-portal
-        run: |
-          npm ci
-          npm run build
-
-      - name: Build les maquettes BTP (maquette-btp)
-        working-directory: maquette-btp
-        run: node scripts/build-all.mjs
-
-      - name: Préparer le contenu public (exclure les apps non déployées ici)
-        run: |
-          mkdir -p _site
-          rsync -a --exclude='_site' --exclude='.git' --exclude='.github' \
-            --exclude='.claude' --exclude='brief-portal' --exclude='maquette-btp' ./ _site/
-          mkdir -p _site/brief
-          cp -r brief-portal/out/. _site/brief/
-          mkdir -p _site/maquettes
-          cp -r maquette-btp/dist/. _site/maquettes/
+      - name: Construire le site (racine + /brief + /maquettes)
+        run: node scripts/build-site.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
