@@ -1,37 +1,52 @@
 # Maquettes BTP
 
-Générateur de sites vitrines pour les entreprises du BTP prospectées à Yaoundé.
-Un fichier JSON par entreprise, une maquette statique par fichier, publiée sous
-`pharel.cloud/maquettes/<slug>/`.
+Générateur de sites vitrines pour les entreprises du BTP prospectées à Yaoundé,
+construit sur le modèle **Kaeso Bâtiment** (`template/`). Un fichier JSON par
+entreprise, une page statique par fichier, publiée sous `pharel.cloud/maquettes/<slug>/`.
 
-**Direction** : industriel technique (plan d'exécution). Fond graphite, texte blanc
-béton, un seul accent orange sécurité. Tant que l'entreprise n'a pas envoyé ses
-photos, les chantiers sont des silhouettes dessinées au trait avec la mention
-« photo à fournir » : jamais de fausse photo ni de faux chantier.
+Aucune dépendance : `node scripts/build-all.mjs` (Node 18+).
 
-Stack : Next.js (export statique), Tailwind v4, motion, Phosphor.
+## Structure
+
+| Chemin | Rôle |
+|---|---|
+| `template/style.css` | CSS du modèle Kaeso, inchangé |
+| `template/script.js` | JS du modèle, lit ses données dans `#site-data` (numéro WhatsApp, nom, témoignages) |
+| `template/icons.svg` | Sprite d'icônes |
+| `template/img/` | Les 11 photos du chantier en accéléré, réutilisées dans toutes les sections |
+| `scripts/build-all.mjs` | Assemble les sections à partir du JSON |
+| `entreprises/*.json` | Contenu de chaque maquette |
+
+## Sections
+
+Toujours présentes : hero, services, processus, réalisations, « notre différence », FAQ, contact.
+Facultatives (clé absente = section absente) : `stats`, `garanties`, `chantier`
+(chantier en accéléré), `cleEnMain`, `modeles`, `diaspora`, `temoignages`,
+`realisations.avantApres`.
 
 ## Créer la maquette d'un prospect
 
-1. Copier `entreprises/exemple.json` en `entreprises/<slug>.json`.
-2. Remplir les champs (voir `src/lib/types.ts`). Règles :
-   - `chiffres`, `noteGoogle`, `realisations` : **uniquement des données réelles**.
-     Laisser vide si on ne sait pas : la section s'adapte.
-   - `maquette: true` tant que le client n'a pas validé (bandeau + `noindex`).
-   - Photos : les mettre dans `public/chantiers/` et renseigner `"photo": "/chantiers/xxx.jpg"`.
-3. Prévisualiser : `MAQUETTE=<slug> npm run dev`
-4. Construire : `npm run build:all -- <slug>` → `dist/<slug>/`
+1. Copier `entreprises/alsi-sarl.json` en `entreprises/<slug>.json` et adapter.
+2. `node scripts/build-all.mjs <slug>` puis ouvrir `dist/<slug>/index.html` via un petit serveur
+   (`npx serve dist` ou `python3 -m http.server -d dist`).
 
-Au merge sur `main`, le workflow Pages construit toutes les maquettes et les publie.
+Règles :
+- **Pas de chiffres, d'avis ni de garanties inventés** pour une vraie entreprise :
+  `stats`, `temoignages`, `modeles` (prix) et `diaspora` restent absents tant que le client
+  ne les a pas fournis ou validés.
+- Avec `maquette: true` : bandeau « Maquette proposée par pharel.cloud », `noindex`, et
+  badge « Photo d'illustration » sur chaque photo du modèle.
+- Quand le client envoie ses photos : les ajouter dans `template/img/` (ou prévoir un dossier
+  par client) et référencer leur numéro dans le JSON.
 
 ## Maquettes présentes
 
 | Fichier | Statut |
 |---|---|
-| `exemple.json` | Entreprise fictive, sert de démo dans les messages WhatsApp |
-| `ets-alu-construction.json` | RDV du 26/09, services supposés d'après le nom : à valider |
-| `dreams-building.json` | RDV du 26/09, services supposés (génie civil) : à valider |
-| `alsi-sarl.json` | Proposition chiffrée envoyée, services supposés : à valider |
+| `exemple.json` | Kaeso Bâtiment, le modèle d'origine (entreprise fictive), sert de démo |
+| `ets-alu-construction.json` | RDV du 26/09, services déduits du nom, à valider |
+| `dreams-building.json` | RDV du 26/09, services déduits du nom, à valider |
+| `alsi-sarl.json` | Proposition chiffrée envoyée, services déduits du nom, à valider |
 
-Les fichiers ne contiennent que des informations publiques de la fiche Google Maps
-(nom, téléphone, adresse). Aucune note d'appel ne doit être commitée ici : le dépôt est public.
+Les JSON ne contiennent que les informations publiques des fiches Google Maps.
+Aucune note d'appel ne doit être commitée ici : le dépôt est public.

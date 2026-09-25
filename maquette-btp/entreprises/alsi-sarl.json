@@ -1,45 +1,230 @@
 {
-  "slug": "alsi-sarl",
-  "nom": "ALSI SARL",
-  "activite": "Entreprise de construction",
   "ville": "Yaoundé",
-  "adresse": "Rue Montée Hôpital Jamot, Yaoundé",
-  "telephone": "+237 6 79 13 56 26",
-  "promesse": "Des constructions livrées dans les règles de l'art, avec un devis clair et un suivi de chantier du début à la fin.",
-  "presentation": "ALSI SARL construit et rénove à Yaoundé : maisons, immeubles et locaux professionnels, avec une équipe qui suit chaque chantier de près.",
-  "chiffres": [],
-  "services": [
-    {
-      "titre": "Construction neuve",
-      "description": "Villas et immeubles, des fondations à la remise des clés."
-    },
-    {
-      "titre": "Rénovation",
-      "description": "Extension, reprise de structure et remise à neuf."
-    },
-    {
-      "titre": "Finitions",
-      "description": "Carrelage, enduits, peinture, faux plafonds."
-    },
-    {
-      "titre": "Suivi de chantier",
-      "description": "Un responsable unique vous informe à chaque étape."
-    }
-  ],
-  "realisations": [],
   "zones": [
-    "Bastos",
-    "Odza",
-    "Nkolbisson",
-    "Mimboman",
-    "Emana",
-    "Nsam",
-    "Biyem-Assi",
-    "Mendong",
-    "Ekounou",
-    "Soa"
+    "Yaoundé",
+    "Mfou",
+    "Soa",
+    "Obala"
   ],
   "maquette": true,
-  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "mentionMaquette": "maquette de travail : textes et photos d'illustration à remplacer par les vôtres",
+  "garanties": [
+    "Visite du site avant devis",
+    "Devis détaillé poste par poste",
+    "Paiement par étapes",
+    "Un interlocuteur unique",
+    "Chantier rendu propre"
+  ],
+  "processus": {
+    "titre": "Votre projet en 6 étapes claires.",
+    "etapes": [
+      {
+        "titre": "Premier échange",
+        "texte": "Vous nous décrivez votre projet par téléphone ou sur WhatsApp."
+      },
+      {
+        "titre": "Visite du site",
+        "texte": "Nous venons voir le terrain ou le bâtiment et prendre les mesures."
+      },
+      {
+        "titre": "Devis détaillé",
+        "texte": "Chaque poste est chiffré : vous savez ce que vous payez."
+      },
+      {
+        "titre": "Planning",
+        "texte": "Les étapes et les délais sont fixés ensemble avant le démarrage."
+      },
+      {
+        "titre": "Travaux et suivi",
+        "texte": "Vous êtes tenu informé de l'avancement à chaque étape."
+      },
+      {
+        "titre": "Réception",
+        "texte": "Visite finale ensemble et levée des éventuelles réserves."
+      }
+    ]
+  },
+  "realisations": {
+    "titre": "Nos chantiers.",
+    "lede": "Cet espace présentera vos propres chantiers, avec le lieu et la nature des travaux. Les photos ci-dessous sont des illustrations.",
+    "avantApres": false,
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Photo d'illustration : maison livrée avec jardin",
+        "titre": "Votre chantier phare",
+        "detail": "Lieu et nature des travaux à compléter"
+      },
+      {
+        "image": 9,
+        "alt": "Photo d'illustration : façade en finitions",
+        "titre": "Un chantier livré",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 5,
+        "alt": "Photo d'illustration : coffrage de dalle",
+        "titre": "Un chantier en cours",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 11,
+        "alt": "Photo d'illustration : intérieur livré",
+        "titre": "Finitions intérieures",
+        "detail": "Photo à fournir"
+      }
+    ]
+  },
+  "pourquoi": {
+    "titre": "Un chantier, c'est d'abord une question de confiance.",
+    "points": [
+      {
+        "titre": "Des prix clairs",
+        "texte": "Un devis détaillé avant le démarrage, sans mauvaise surprise en cours de route."
+      },
+      {
+        "titre": "Un suivi sérieux",
+        "texte": "Un responsable de chantier joignable, qui vous tient informé."
+      },
+      {
+        "titre": "Du travail propre",
+        "texte": "Des finitions soignées et un chantier rendu propre."
+      },
+      {
+        "titre": "Des délais tenus",
+        "texte": "Le planning est fixé avec vous avant le démarrage."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Entreprise de construction à Yaoundé."
+  },
+  "slug": "alsi-sarl",
+  "nom": "ALSI SARL",
+  "logo": [
+    "ALSI",
+    "SARL"
+  ],
+  "activite": "Entreprise de construction",
+  "adresse": "Rue Montée Hôpital Jamot, Yaoundé",
+  "telephone": "+237 6 79 13 56 26",
+  "description": "ALSI SARL, entreprise de construction à Yaoundé : construction neuve, rénovation et finitions, avec devis détaillé et suivi de chantier.",
+  "hero": {
+    "image": 10,
+    "alt": "Photo d'illustration : maison à étage livrée, avec jardin, au coucher du soleil",
+    "eyebrow": "Construction · Rénovation · Yaoundé",
+    "titre": [
+      "Construire solide.",
+      "Livrer à temps."
+    ],
+    "lede": "ALSI SARL construit et rénove vos maisons, immeubles et locaux professionnels à Yaoundé, avec un devis clair et un suivi de chantier du début à la fin."
+  },
+  "chantier": {
+    "etapes": [
+      {
+        "eyebrow": "Semaines 1 à 3 · Terrain",
+        "titre": "Regardez votre maison sortir de terre.",
+        "texte": "Implantation au cordeau, puis fouilles à la pelle mécanique, exactement aux cotes du plan que vous avez validé."
+      },
+      {
+        "eyebrow": "Semaines 5 à 8 · Fondations et élévation",
+        "titre": "Des fondations calculées pour votre sol.",
+        "texte": "Semelles en béton armé, attentes des poteaux, puis les murs montent rang après rang."
+      },
+      {
+        "eyebrow": "Semaines 11 à 14 · Dalle et étage",
+        "titre": "La dalle, l'étape qui ne pardonne pas.",
+        "texte": "Coffrage, étaiement et ferraillage vérifiés avant chaque coulage. Puis l'étage s'élève."
+      },
+      {
+        "eyebrow": "Semaines 18 à 22 · Hors d'eau",
+        "titre": "Structure fermée, enduits posés.",
+        "texte": "Acrotère, étanchéité de la toiture-terrasse et enduits : la maison est protégée avant la saison des pluies."
+      },
+      {
+        "eyebrow": "Semaines 28 à 34 · Finitions",
+        "titre": "Puis la maison prend son vrai visage.",
+        "texte": "Menuiseries, peinture, clôture et aménagements extérieurs. Nous rendons un chantier propre."
+      },
+      {
+        "eyebrow": "Semaine 34 · Remise des clés",
+        "titre": "Vous poussez la porte. Vous êtes chez vous.",
+        "texte": "Visite finale ensemble, levée des réserves et remise des clés."
+      }
+    ]
+  },
+  "services": {
+    "titre": "Un seul interlocuteur, des fondations aux finitions.",
+    "lede": "Nous suivons votre chantier de bout en bout, pour qu'une seule entreprise soit responsable du résultat.",
+    "liste": [
+      {
+        "titre": "Construction neuve",
+        "texte": "Villas et immeubles, des fondations à la remise des clés.",
+        "image": 5
+      },
+      {
+        "titre": "Gros œuvre",
+        "texte": "Terrassement, fondations, élévation, dalles et toiture.",
+        "image": 3
+      },
+      {
+        "titre": "Rénovation et extension",
+        "texte": "Ajout d'un niveau, agrandissement, remise à neuf d'un bâtiment existant.",
+        "image": 7
+      },
+      {
+        "titre": "Finitions",
+        "texte": "Carrelage, enduits, peinture, plafonds et menuiseries.",
+        "image": 11
+      }
+    ]
+  },
+  "cleEnMain": {
+    "nav": "Clé en main",
+    "image": 11,
+    "alt": "Photo d'illustration : séjour d'une maison livrée",
+    "eyebrow": "Clé en main",
+    "titre": "Vous avez le terrain. Nous livrons la maison.",
+    "lede": "Un seul interlocuteur pour les plans, les matériaux, les ouvriers et les contrôles. Vous recevez une maison prête à habiter.",
+    "points": [
+      "Devis détaillé avant le démarrage",
+      "Planning fixé ensemble",
+      "Paiement par étapes"
+    ]
+  },
+  "faq": [
+    {
+      "q": "Combien coûte une construction ?",
+      "r": "Cela dépend de la surface, du terrain et des finitions. Après la visite du site, nous vous remettons un devis détaillé."
+    },
+    {
+      "q": "Combien de temps durent les travaux ?",
+      "r": "Le délai dépend du projet. Il est fixé avec vous avant le démarrage."
+    },
+    {
+      "q": "Comment se passe le paiement ?",
+      "r": "Par étapes, liées à l'avancement du chantier."
+    },
+    {
+      "q": "Intervenez-vous hors de Yaoundé ?",
+      "r": "Contactez-nous : nous étudions chaque projet selon sa localisation."
+    }
+  ],
+  "contact": {
+    "titre": "Votre projet commence par une conversation.",
+    "lede": "Décrivez-nous vos travaux : nous vous rappelons pour organiser une visite.",
+    "formTitre": "Demander un devis",
+    "cta": "Envoyer ma demande",
+    "lieuPlaceholder": "Quartier, ville",
+    "projets": [
+      "Construction neuve",
+      "Rénovation / extension",
+      "Gros œuvre",
+      "Finitions",
+      "Autre"
+    ],
+    "messagePlaceholder": "Surface, type de bâtiment, délai souhaité",
+    "meta": "Sans engagement · Réponse sur WhatsApp"
+  },
   "siteUrl": "https://pharel.cloud/maquettes/alsi-sarl/"
 }

@@ -1,45 +1,217 @@
 {
-  "slug": "dreams-building",
-  "nom": "DREAMS BUILDING SARL",
-  "activite": "Entreprise de génie civil",
   "ville": "Yaoundé",
-  "adresse": "Nsam, Yaoundé",
-  "telephone": "+237 6 70 33 11 81",
-  "promesse": "Des bâtiments et des ouvrages solides, conduits de l'étude à la réception avec un interlocuteur unique.",
-  "presentation": "Nous réalisons vos projets de génie civil à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un suivi rigoureux à chaque étape.",
-  "chiffres": [],
-  "services": [
-    {
-      "titre": "Génie civil",
-      "description": "Fondations, structures en béton armé et ouvrages techniques."
-    },
-    {
-      "titre": "Construction de bâtiments",
-      "description": "Villas, immeubles et locaux professionnels, du gros œuvre aux finitions."
-    },
-    {
-      "titre": "Rénovation",
-      "description": "Reprise de structure, extension et remise à neuf de bâtiments existants."
-    },
-    {
-      "titre": "Voirie et réseaux",
-      "description": "Pavage, caniveaux, clôtures et raccordements."
-    }
-  ],
-  "realisations": [],
   "zones": [
-    "Bastos",
-    "Odza",
-    "Nkolbisson",
-    "Mimboman",
-    "Emana",
-    "Nsam",
-    "Biyem-Assi",
-    "Mendong",
-    "Ekounou",
-    "Soa"
+    "Yaoundé",
+    "Mfou",
+    "Soa",
+    "Obala"
   ],
   "maquette": true,
-  "mentionMaquette": "maquette de travail, contenu à valider ensemble",
+  "mentionMaquette": "maquette de travail : textes et photos d'illustration à remplacer par les vôtres",
+  "garanties": [
+    "Visite du site avant devis",
+    "Devis détaillé poste par poste",
+    "Paiement par étapes",
+    "Un interlocuteur unique",
+    "Chantier rendu propre"
+  ],
+  "processus": {
+    "titre": "Votre projet en 6 étapes claires.",
+    "etapes": [
+      {
+        "titre": "Premier échange",
+        "texte": "Vous nous décrivez votre projet par téléphone ou sur WhatsApp."
+      },
+      {
+        "titre": "Visite du site",
+        "texte": "Nous venons voir le terrain ou le bâtiment et prendre les mesures."
+      },
+      {
+        "titre": "Devis détaillé",
+        "texte": "Chaque poste est chiffré : vous savez ce que vous payez."
+      },
+      {
+        "titre": "Planning",
+        "texte": "Les étapes et les délais sont fixés ensemble avant le démarrage."
+      },
+      {
+        "titre": "Travaux et suivi",
+        "texte": "Vous êtes tenu informé de l'avancement à chaque étape."
+      },
+      {
+        "titre": "Réception",
+        "texte": "Visite finale ensemble et levée des éventuelles réserves."
+      }
+    ]
+  },
+  "realisations": {
+    "titre": "Nos chantiers.",
+    "lede": "Cet espace présentera vos propres chantiers, avec le lieu et la nature des travaux. Les photos ci-dessous sont des illustrations.",
+    "avantApres": false,
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Photo d'illustration : maison livrée avec jardin",
+        "titre": "Votre chantier phare",
+        "detail": "Lieu et nature des travaux à compléter"
+      },
+      {
+        "image": 9,
+        "alt": "Photo d'illustration : façade en finitions",
+        "titre": "Un chantier livré",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 5,
+        "alt": "Photo d'illustration : coffrage de dalle",
+        "titre": "Un chantier en cours",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 11,
+        "alt": "Photo d'illustration : intérieur livré",
+        "titre": "Finitions intérieures",
+        "detail": "Photo à fournir"
+      }
+    ]
+  },
+  "pourquoi": {
+    "titre": "Un chantier, c'est d'abord une question de confiance.",
+    "points": [
+      {
+        "titre": "Des prix clairs",
+        "texte": "Un devis détaillé avant le démarrage, sans mauvaise surprise en cours de route."
+      },
+      {
+        "titre": "Un suivi sérieux",
+        "texte": "Un responsable de chantier joignable, qui vous tient informé."
+      },
+      {
+        "titre": "Du travail propre",
+        "texte": "Des finitions soignées et un chantier rendu propre."
+      },
+      {
+        "titre": "Des délais tenus",
+        "texte": "Le planning est fixé avec vous avant le démarrage."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Entreprise de génie civil à Yaoundé."
+  },
+  "slug": "dreams-building",
+  "nom": "DREAMS BUILDING SARL",
+  "logo": [
+    "Dreams",
+    "Building"
+  ],
+  "activite": "Entreprise de génie civil",
+  "adresse": "Nsam, Yaoundé",
+  "telephone": "+237 6 70 33 11 81",
+  "description": "DREAMS BUILDING SARL, génie civil et construction à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un suivi rigoureux.",
+  "hero": {
+    "image": 7,
+    "alt": "Photo d'illustration : structure en béton armé d'un bâtiment à étage",
+    "eyebrow": "Génie civil · Construction · Yaoundé",
+    "titre": [
+      "Des ouvrages solides.",
+      "Du plan à la réception."
+    ],
+    "lede": "DREAMS BUILDING SARL réalise vos projets de génie civil à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un interlocuteur unique."
+  },
+  "chantier": {
+    "etapes": [
+      {
+        "eyebrow": "Semaines 1 à 3 · Terrain",
+        "titre": "Regardez votre maison sortir de terre.",
+        "texte": "Implantation au cordeau, puis fouilles à la pelle mécanique, exactement aux cotes du plan que vous avez validé."
+      },
+      {
+        "eyebrow": "Semaines 5 à 8 · Fondations et élévation",
+        "titre": "Des fondations calculées pour votre sol.",
+        "texte": "Semelles en béton armé, attentes des poteaux, puis les murs montent rang après rang."
+      },
+      {
+        "eyebrow": "Semaines 11 à 14 · Dalle et étage",
+        "titre": "La dalle, l'étape qui ne pardonne pas.",
+        "texte": "Coffrage, étaiement et ferraillage vérifiés avant chaque coulage. Puis l'étage s'élève."
+      },
+      {
+        "eyebrow": "Semaines 18 à 22 · Hors d'eau",
+        "titre": "Structure fermée, enduits posés.",
+        "texte": "Acrotère, étanchéité de la toiture-terrasse et enduits : la maison est protégée avant la saison des pluies."
+      },
+      {
+        "eyebrow": "Semaines 28 à 34 · Finitions",
+        "titre": "Puis la maison prend son vrai visage.",
+        "texte": "Menuiseries, peinture, clôture et aménagements extérieurs. Nous rendons un chantier propre."
+      },
+      {
+        "eyebrow": "Semaine 34 · Remise des clés",
+        "titre": "Vous poussez la porte. Vous êtes chez vous.",
+        "texte": "Visite finale ensemble, levée des réserves et remise des clés."
+      }
+    ]
+  },
+  "services": {
+    "titre": "Le génie civil, de l'étude à la réception.",
+    "lede": "Nous prenons en charge vos ouvrages de bout en bout, avec un suivi rigoureux à chaque étape.",
+    "liste": [
+      {
+        "titre": "Génie civil",
+        "texte": "Fondations, structures en béton armé et ouvrages techniques.",
+        "image": 3
+      },
+      {
+        "titre": "Construction de bâtiments",
+        "texte": "Villas, immeubles et locaux professionnels, du gros œuvre aux finitions.",
+        "image": 6
+      },
+      {
+        "titre": "Rénovation",
+        "texte": "Reprise de structure, extension et remise à neuf de bâtiments existants.",
+        "image": 7
+      },
+      {
+        "titre": "Voirie et réseaux",
+        "texte": "Pavage, caniveaux, clôtures et raccordements.",
+        "image": 2
+      }
+    ]
+  },
+  "faq": [
+    {
+      "q": "Quels types d'ouvrages réalisez-vous ?",
+      "r": "Bâtiments, structures en béton armé, rénovations et travaux de voirie et réseaux."
+    },
+    {
+      "q": "Combien coûtent les travaux ?",
+      "r": "Chaque projet est chiffré après visite du site, avec un devis détaillé."
+    },
+    {
+      "q": "Comment se passe le paiement ?",
+      "r": "Par étapes, liées à l'avancement du chantier."
+    },
+    {
+      "q": "Travaillez-vous pour les entreprises ?",
+      "r": "Oui, pour les particuliers comme pour les entreprises."
+    }
+  ],
+  "contact": {
+    "titre": "Parlons de votre ouvrage.",
+    "lede": "Décrivez-nous vos travaux : nous vous rappelons pour organiser une visite du site.",
+    "formTitre": "Demander un devis",
+    "cta": "Envoyer ma demande",
+    "lieuPlaceholder": "Quartier, ville",
+    "projets": [
+      "Bâtiment",
+      "Génie civil / structure",
+      "Rénovation",
+      "Voirie et réseaux",
+      "Autre"
+    ],
+    "messagePlaceholder": "Nature de l'ouvrage, surface, délai souhaité",
+    "meta": "Sans engagement · Réponse sur WhatsApp"
+  },
   "siteUrl": "https://pharel.cloud/maquettes/dreams-building/"
 }

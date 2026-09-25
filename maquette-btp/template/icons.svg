@@ -1,0 +1,11 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 256 256"><path d="M40 128h176M144 56l72 72-72 72" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 256 256"><path d="M40 136l56 56L216 72" fill="none" stroke="currentColor" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 256 256"><path d="M128 32a96 96 0 0 0-83.2 144L32 224l49.4-12.6A96 96 0 1 0 128 32Z" fill="none" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/><path d="M96 88c-8 0-16 8-16 20 0 32 36 68 68 68 12 0 20-8 20-16l-4-12-24-8-10 10c-12-4-24-16-28-28l10-10-8-24Z" fill="currentColor"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 256 256"><path d="M40 80h176M40 128h176M40 176h176" stroke="currentColor" stroke-width="16" stroke-linecap="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 256 256"><path d="M64 64l128 128M192 64L64 192" stroke="currentColor" stroke-width="16" stroke-linecap="round"/></symbol>
+  <symbol id="i-left" viewBox="0 0 256 256"><path d="M160 48l-80 80 80 80" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-right" viewBox="0 0 256 256"><path d="M96 48l80 80-80 80" fill="none" stroke="currentColor" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lr" viewBox="0 0 256 256"><path d="M96 64l-64 64 64 64M160 64l64 64-64 64" fill="none" stroke="currentColor" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 256 256"><path d="M128 24l80 32v64c0 56-40 96-80 112-40-16-80-56-80-112V56Z" fill="none" stroke="currentColor" stroke-width="16" stroke-linejoin="round"/><path d="M92 128l24 24 48-48" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
