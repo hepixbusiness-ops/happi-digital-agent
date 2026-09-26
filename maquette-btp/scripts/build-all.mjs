@@ -188,11 +188,11 @@ function modeles(e) {
   if (!m) return "";
   const carte = (x, i) => `<a class="model${i === 0 ? " feat" : ""}" href="#contact">
         <div class="ph"><img src="${img(x.image)}" alt="${esc(x.alt)}" loading="lazy">${x.tag ? `<span class="tag">${esc(x.tag)}</span>` : ""}</div>
-        <div class="body"><h3>${esc(x.titre)}</h3><p class="spec">${esc(x.spec)}</p><p class="price">À partir de<b>${esc(x.prix)}</b>${x.delai ? esc(x.delai) : ""}</p>${i === 0 ? `<span class="btn btn-accent">Voir le modèle${ico("arrow")}</span>` : ""}</div>
+        <div class="body"><h3>${esc(x.titre)}</h3><p class="spec">${esc(x.spec)}</p><p class="price">${esc(x.prefixe ?? "À partir de")}<b>${esc(x.prix)}</b>${x.delai ? esc(x.delai) : ""}</p>${i === 0 ? `<span class="btn btn-accent">${esc(x.cta ?? "Voir le modèle")}${ico("arrow")}</span>` : ""}</div>
       </a>`;
   return `<section class="sec dark" id="modeles" aria-labelledby="md-title">
   <div class="wrap">
-    <p class="eyebrow">Nos modèles</p>
+    <p class="eyebrow">${esc(m.eyebrow ?? "Nos modèles")}</p>
     <h2 id="md-title">${esc(m.titre)}</h2>
     <p class="lede">${esc(m.lede)}</p>
     <div class="models">
@@ -335,7 +335,7 @@ function pied(e) {
       <div>${logo(e)}<p>${esc(f.description)}</p>${f.mentions ? `<p class="small">${esc(f.mentions)}</p>` : ""}</div>
       <div><h4>Services</h4><ul>${e.services.liste.slice(0, 5).map((s) => `<li><a href="#services">${esc(s.titre)}</a></li>`).join("")}</ul></div>
       <div><h4>Entreprise</h4><ul>${liens(e).slice(2).map(([id, l]) => `<li><a href="#${id}">${esc(l)}</a></li>`).join("")}</ul></div>
-      <div><h4>Contact</h4><ul>${e.adresse ? `<li>${esc(e.adresse)}</li>` : ""}<li><a href="tel:+${num(e.telephone)}">${esc(e.telephone)}</a></li><li><a href="${wa(e)}">WhatsApp</a></li>${e.email ? `<li><a href="mailto:${esc(e.email)}">${esc(e.email)}</a></li>` : ""}${e.horaires ? `<li>${esc(e.horaires)}</li>` : ""}</ul></div>
+      <div><h4>Contact</h4><ul>${e.adresse ? `<li>${esc(e.adresse)}</li>` : ""}<li><a href="tel:+${num(e.telephone)}">${esc(e.telephone)}</a></li>${e.telephone2 ? `<li><a href="tel:+${num(e.telephone2)}">${esc(e.telephone2)}</a></li>` : ""}<li><a href="${wa(e)}">WhatsApp</a></li>${e.email ? `<li><a href="mailto:${esc(e.email)}">${esc(e.email)}</a></li>` : ""}${e.horaires ? `<li>${esc(e.horaires)}</li>` : ""}${(e.reseaux || []).map((r) => `<li><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.nom)}</a></li>`).join("")}</ul></div>
     </div>
     <div class="ftr-bot"><span>© ${annee} ${esc(e.nom)}. Tous droits réservés</span><span>Site réalisé par <a href="https://pharel.cloud">pharel.cloud</a></span></div>
   </div>

@@ -9,38 +9,38 @@
   "maquette": true,
   "mentionMaquette": "maquette de travail : textes et photos d'illustration à remplacer par les vôtres",
   "garanties": [
-    "Visite du site avant devis",
-    "Devis détaillé poste par poste",
-    "Paiement par étapes",
-    "Un interlocuteur unique",
-    "Chantier rendu propre"
+    "Étude géophysique au résistivimètre",
+    "Essai de débit avant équipement",
+    "Pompage solaire",
+    "Fourniture des matériaux",
+    "Installation électrique"
   ],
   "processus": {
-    "titre": "Votre projet en 6 étapes claires.",
+    "titre": "Votre forage en 6 étapes.",
     "etapes": [
       {
         "titre": "Premier échange",
-        "texte": "Vous nous décrivez votre projet par téléphone ou sur WhatsApp."
+        "texte": "Vous nous décrivez votre terrain et votre besoin en eau."
       },
       {
-        "titre": "Visite du site",
-        "texte": "Nous venons voir le terrain ou le bâtiment et prendre les mesures."
+        "titre": "Recherche d'eau",
+        "texte": "Étude géophysique au résistivimètre ou passage du sourcier."
       },
       {
-        "titre": "Devis détaillé",
-        "texte": "Chaque poste est chiffré : vous savez ce que vous payez."
+        "titre": "Devis",
+        "texte": "Profondeur estimée, équipement et prix : tout est écrit avant le forage."
       },
       {
-        "titre": "Planning",
-        "texte": "Les étapes et les délais sont fixés ensemble avant le démarrage."
+        "titre": "Forage",
+        "texte": "Forage au point retenu par l'étude."
       },
       {
-        "titre": "Travaux et suivi",
-        "texte": "Vous êtes tenu informé de l'avancement à chaque étape."
+        "titre": "Essai de débit",
+        "texte": "On mesure ce que le forage peut donner, pour choisir la bonne pompe."
       },
       {
-        "titre": "Réception",
-        "texte": "Visite finale ensemble et levée des éventuelles réserves."
+        "titre": "Équipement",
+        "texte": "Pompe solaire, cubitainer et plomberie : l'eau arrive au robinet."
       }
     ]
   },
@@ -50,10 +50,10 @@
     "avantApres": false,
     "liste": [
       {
-        "image": 10,
-        "alt": "Photo d'illustration : maison livrée avec jardin",
-        "titre": "Votre chantier phare",
-        "detail": "Lieu et nature des travaux à compléter"
+        "image": "dreams-essai-debit.webp",
+        "alt": "Essai de débit sur un forage réalisé par DREAMS BUILDING",
+        "titre": "Essai de débit sur forage",
+        "detail": "Photo issue de la plaquette DREAMS BUILDING"
       },
       {
         "image": 9,
@@ -97,7 +97,7 @@
     ]
   },
   "footer": {
-    "description": "Entreprise de génie civil à Yaoundé."
+    "description": "Entreprise de construction, BTP, installation électrique et fourniture de matériaux, à Nsam (Yaoundé). Forages, piscines, carrelage, étanchéité, bâtiment."
   },
   "slug": "dreams-building",
   "nom": "DREAMS BUILDING SARL",
@@ -105,19 +105,19 @@
     "Dreams",
     "Building"
   ],
-  "activite": "Entreprise de génie civil",
-  "adresse": "Nsam, près du Safari Hotel, Yaoundé",
-  "telephone": "+237 6 70 33 11 81",
-  "description": "DREAMS BUILDING SARL, génie civil et construction à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un suivi rigoureux.",
+  "activite": "Forages et construction",
+  "adresse": "Nsam, à côté du Safari Hôtel, Yaoundé",
+  "telephone": "+237 670 331 181",
+  "description": "DREAMS BUILDING SARL à Nsam, Yaoundé : forages avec pompage solaire, études géophysiques, essais de débit, piscines, carrelage, étanchéité, bâtiment, installation électrique et fourniture de matériaux.",
   "hero": {
     "image": 7,
     "alt": "Photo d'illustration : structure en béton armé d'un bâtiment à étage",
-    "eyebrow": "Génie civil · Construction · Yaoundé",
+    "eyebrow": "Forages · Piscines · Bâtiment · Nsam, Yaoundé",
     "titre": [
-      "Des ouvrages solides.",
-      "Du plan à la réception."
+      "De l'eau à la maison,",
+      "on construit tout."
     ],
-    "lede": "DREAMS BUILDING SARL réalise vos projets de génie civil à Yaoundé : bâtiments, rénovations et travaux de voirie, avec un interlocuteur unique."
+    "lede": "DREAMS BUILDING SARL réalise vos forages avec pompage solaire, de l'étude du sol jusqu'à l'eau au robinet, ainsi que vos piscines, carrelages, étanchéités et bâtiments. Nous fournissons aussi les matériaux."
   },
   "chantier": {
     "etapes": [
@@ -154,65 +154,138 @@
     ]
   },
   "services": {
-    "titre": "Le génie civil, de l'étude à la réception.",
-    "lede": "Nous prenons en charge vos ouvrages de bout en bout, avec un suivi rigoureux à chaque étape.",
+    "titre": "Un seul interlocuteur, du forage au bâtiment.",
+    "lede": "Entreprise de construction, de BTP et d'installation électrique, DREAMS BUILDING fournit aussi les matériaux de vos chantiers.",
     "liste": [
       {
-        "titre": "Génie civil",
-        "texte": "Fondations, structures en béton armé et ouvrages techniques.",
-        "image": 3
+        "titre": "Forages",
+        "texte": "Étude géophysique et hydrogéologique, sourcier, forage, essai de débit et équipement en pompage solaire.",
+        "image": "dreams-essai-debit.webp"
       },
       {
-        "titre": "Construction de bâtiments",
-        "texte": "Villas, immeubles et locaux professionnels, du gros œuvre aux finitions.",
+        "titre": "Piscines",
+        "texte": "Construction de piscines, de la fouille à la mise en eau.",
+        "image": 10
+      },
+      {
+        "titre": "Carrelage",
+        "texte": "Pose de carrelage intérieur et extérieur, sols et murs.",
+        "image": 11
+      },
+      {
+        "titre": "Étanchéité",
+        "texte": "Toitures-terrasses, dalles et réservoirs protégés contre les infiltrations.",
+        "image": 8
+      },
+      {
+        "titre": "Bâtiment",
+        "texte": "Construction de bâtiments, du gros œuvre aux finitions.",
         "image": 6
       },
       {
-        "titre": "Rénovation",
-        "texte": "Reprise de structure, extension et remise à neuf de bâtiments existants.",
-        "image": 7
-      },
-      {
-        "titre": "Voirie et réseaux",
-        "texte": "Pavage, caniveaux, clôtures et raccordements.",
-        "image": 2
+        "titre": "Électricité et matériaux",
+        "texte": "Installation électrique de vos bâtiments et fourniture des matériaux de construction.",
+        "image": 5
       }
     ]
   },
   "faq": [
     {
-      "q": "Quels types d'ouvrages réalisez-vous ?",
-      "r": "Bâtiments, structures en béton armé, rénovations et travaux de voirie et réseaux."
+      "q": "Combien coûte un forage avec pompage solaire ?",
+      "r": "Notre forfait forage à pompage solaire, avec kit plomberie, cubitainer de 3 000 L et pompe solaire de 5 m³, est à 3 500 000 FCFA. Le devis précis dépend de votre terrain."
     },
     {
-      "q": "Combien coûtent les travaux ?",
-      "r": "Chaque projet est chiffré après visite du site, avec un devis détaillé."
+      "q": "Pourquoi faire une étude avant de forer ?",
+      "r": "L'étude géophysique au résistivimètre (200 000 FCFA) repère où se trouve l'eau. Elle évite de forer au mauvais endroit."
     },
     {
-      "q": "Comment se passe le paiement ?",
-      "r": "Par étapes, liées à l'avancement du chantier."
+      "q": "À quoi sert l'essai de débit ?",
+      "r": "Il mesure la quantité d'eau que votre forage peut fournir, pour choisir une pompe adaptée. Courte durée : 200 000 FCFA. Longue durée avec interprétation : 700 000 FCFA."
     },
     {
-      "q": "Travaillez-vous pour les entreprises ?",
-      "r": "Oui, pour les particuliers comme pour les entreprises."
+      "q": "Faites-vous autre chose que des forages ?",
+      "r": "Oui : piscines, carrelage, étanchéité, bâtiment, installation électrique et fourniture de matériaux."
     }
   ],
   "contact": {
-    "titre": "Parlons de votre ouvrage.",
-    "lede": "Décrivez-nous vos travaux : nous vous rappelons pour organiser une visite du site.",
+    "titre": "Parlons de votre projet.",
+    "lede": "Forage, piscine ou bâtiment : décrivez-nous votre projet, nous vous rappelons.",
     "formTitre": "Demander un devis",
     "cta": "Envoyer ma demande",
     "lieuPlaceholder": "Quartier, ville",
     "projets": [
+      "Forage à pompage solaire",
+      "Étude géophysique / sourcier",
+      "Essai de débit",
+      "Piscine",
+      "Carrelage",
+      "Étanchéité",
       "Bâtiment",
-      "Génie civil / structure",
-      "Rénovation",
-      "Voirie et réseaux",
+      "Électricité / matériaux",
       "Autre"
     ],
-    "messagePlaceholder": "Nature de l'ouvrage, surface, délai souhaité",
+    "messagePlaceholder": "Surface du terrain, besoin en eau, délai souhaité",
     "meta": "Sans engagement · Réponse sur WhatsApp"
   },
   "siteUrl": "https://pharel.cloud/maquettes/dreams-building/",
-  "lienMaps": "https://www.google.com/maps/place/DREAMS+BUILDING+SARL/data=!4m7!3m6!1s0x108bcf2ff82c10b1:0x9b964e8e5558a388!8m2!3d3.8311387!4d11.5103335!16s%2Fg%2F11ygk51v9r!19sChIJsRAs-C_PixARiKNYVY5Olps"
+  "lienMaps": "https://www.google.com/maps/place/DREAMS+BUILDING+SARL/data=!4m7!3m6!1s0x108bcf2ff82c10b1:0x9b964e8e5558a388!8m2!3d3.8311387!4d11.5103335!16s%2Fg%2F11ygk51v9r!19sChIJsRAs-C_PixARiKNYVY5Olps",
+  "title": "DREAMS BUILDING SARL | Forages, piscines et construction à Yaoundé",
+  "telephone2": "+237 655 768 820",
+  "email": "dreamsbuilding.cmr@gmail.com",
+  "reseaux": [
+    {
+      "nom": "Instagram : dreams_building_cmr",
+      "url": "https://www.instagram.com/dreams_building_cmr/"
+    }
+  ],
+  "modeles": {
+    "titre": "Nos forfaits eau.",
+    "lede": "Avant de forer, on vérifie qu'il y a de l'eau et combien. Voici nos prestations et leurs tarifs.",
+    "note": "Tarifs indiqués par DREAMS BUILDING SARL. Le devis définitif dépend du terrain et de la profondeur du forage.",
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Photo d'illustration : maison avec jardin alimentée en eau",
+        "tag": "Clé en main",
+        "titre": "Forage à pompage solaire",
+        "spec": "Kit plomberie · cubitainer 3 000 L · pompe solaire 5 m³",
+        "prefixe": "Forfait",
+        "prix": "3 500 000 FCFA",
+        "cta": "Demander ce forfait"
+      },
+      {
+        "image": "dreams-resistivimetre.webp",
+        "alt": "Résistivimètre et bobines de câble pour l'étude géophysique",
+        "titre": "Étude géophysique et hydrogéologique",
+        "spec": "Essai de nappe au résistivimètre",
+        "prefixe": "Tarif",
+        "prix": "200 000 FCFA"
+      },
+      {
+        "image": "dreams-essai-debit.webp",
+        "alt": "Essai de débit sur un forage, pompe et tuyaux en place",
+        "titre": "Essai de débit courte durée",
+        "spec": "4 h de pompage · 1 h de remontée",
+        "prefixe": "Tarif",
+        "prix": "200 000 FCFA"
+      },
+      {
+        "image": "dreams-essai-debit.webp",
+        "alt": "Essai de débit sur un forage",
+        "titre": "Essai de débit longue durée",
+        "spec": "Avec interprétation · 72 h maximum",
+        "prefixe": "Tarif",
+        "prix": "700 000 FCFA"
+      },
+      {
+        "image": "dreams-sourcier.webp",
+        "alt": "Sourcier tenant des baguettes de détection",
+        "titre": "Sourcier",
+        "spec": "Recherche d'eau sur votre terrain",
+        "prefixe": "Tarif",
+        "prix": "100 000 FCFA"
+      }
+    ],
+    "eyebrow": "Nos tarifs"
+  }
 }
