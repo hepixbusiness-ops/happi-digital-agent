@@ -1,0 +1,240 @@
+{
+  "ville": "Yaoundé",
+  "zones": [
+    "Yaoundé",
+    "Mfou",
+    "Soa",
+    "Obala"
+  ],
+  "maquette": true,
+  "mentionMaquette": "maquette de travail : textes et photos d'illustration à remplacer par les vôtres",
+  "garanties": [
+    "Visite du site avant devis",
+    "Devis détaillé poste par poste",
+    "Paiement par étapes",
+    "Un interlocuteur unique",
+    "Chantier rendu propre"
+  ],
+  "processus": {
+    "titre": "Votre projet en 6 étapes claires.",
+    "etapes": [
+      {
+        "titre": "Premier échange",
+        "texte": "Vous nous décrivez votre projet par téléphone ou sur WhatsApp."
+      },
+      {
+        "titre": "Visite du site",
+        "texte": "Nous venons voir le terrain ou le bâtiment et prendre les mesures."
+      },
+      {
+        "titre": "Devis détaillé",
+        "texte": "Chaque poste est chiffré : vous savez ce que vous payez."
+      },
+      {
+        "titre": "Planning",
+        "texte": "Les étapes et les délais sont fixés ensemble avant le démarrage."
+      },
+      {
+        "titre": "Travaux et suivi",
+        "texte": "Vous êtes tenu informé de l'avancement à chaque étape."
+      },
+      {
+        "titre": "Réception",
+        "texte": "Visite finale ensemble et levée des éventuelles réserves."
+      }
+    ]
+  },
+  "realisations": {
+    "titre": "Nos chantiers.",
+    "lede": "Cet espace présentera vos propres chantiers, avec le lieu et la nature des travaux. Les photos ci-dessous sont des illustrations.",
+    "avantApres": false,
+    "liste": [
+      {
+        "image": 10,
+        "alt": "Photo d'illustration : maison livrée avec jardin",
+        "titre": "Votre chantier phare",
+        "detail": "Lieu et nature des travaux à compléter"
+      },
+      {
+        "image": 9,
+        "alt": "Photo d'illustration : façade en finitions",
+        "titre": "Un chantier livré",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 5,
+        "alt": "Photo d'illustration : coffrage de dalle",
+        "titre": "Un chantier en cours",
+        "detail": "Photo à fournir"
+      },
+      {
+        "image": 11,
+        "alt": "Photo d'illustration : intérieur livré",
+        "titre": "Finitions intérieures",
+        "detail": "Photo à fournir"
+      }
+    ]
+  },
+  "pourquoi": {
+    "titre": "Pourquoi nos clients nous recommandent.",
+    "points": [
+      {
+        "titre": "Noté 4,5/5 sur Google",
+        "texte": "Nos clients témoignent de la qualité du travail et du sérieux du suivi."
+      },
+      {
+        "titre": "Un suivi sérieux",
+        "texte": "Un responsable de chantier joignable, qui vous tient informé."
+      },
+      {
+        "titre": "Du travail propre",
+        "texte": "Des finitions soignées et un chantier rendu propre."
+      },
+      {
+        "titre": "Des délais tenus",
+        "texte": "Le planning est fixé avec vous avant le démarrage."
+      }
+    ]
+  },
+  "footer": {
+    "description": "Innov Global Services SARL · Construction et rénovation à Yaoundé."
+  },
+  "slug": "innov-global-services",
+  "nom": "Innov Global Services SARL",
+  "logo": [
+    "IGS",
+    "SARL"
+  ],
+  "activite": "Entreprise de construction",
+  "adresse": "Yaoundé, Cameroun",
+  "telephone": "+237 6 55 51 02 18",
+  "description": "Innov Global Services SARL (IGS), entreprise de construction à Yaoundé : bâtiments neufs, gros œuvre, rénovation et finitions, avec devis détaillé et suivi de chantier.",
+  "hero": {
+    "image": 9,
+    "alt": "Photo d'illustration : façade de bâtiment en finitions",
+    "eyebrow": "Construction · Gros œuvre · Rénovation · Yaoundé",
+    "titre": [
+      "Des bâtiments solides,",
+      "bien pensés."
+    ],
+    "lede": "IGS construit et rénove vos maisons, immeubles et locaux professionnels à Yaoundé. Un devis clair, un chantier suivi, des clients satisfaits : 4,5/5 sur Google."
+  },
+  "chantier": {
+    "etapes": [
+      {
+        "eyebrow": "Semaines 1 à 3 · Terrain",
+        "titre": "Regardez votre maison sortir de terre.",
+        "texte": "Implantation au cordeau, puis fouilles à la pelle mécanique, exactement aux cotes du plan que vous avez validé."
+      },
+      {
+        "eyebrow": "Semaines 5 à 8 · Fondations et élévation",
+        "titre": "Des fondations calculées pour votre sol.",
+        "texte": "Semelles en béton armé, attentes des poteaux, puis les murs montent rang après rang."
+      },
+      {
+        "eyebrow": "Semaines 11 à 14 · Dalle et étage",
+        "titre": "La dalle, l'étape qui ne pardonne pas.",
+        "texte": "Coffrage, étaiement et ferraillage vérifiés avant chaque coulage. Puis l'étage s'élève."
+      },
+      {
+        "eyebrow": "Semaines 18 à 22 · Hors d'eau",
+        "titre": "Structure fermée, enduits posés.",
+        "texte": "Acrotère, étanchéité de la toiture-terrasse et enduits : la maison est protégée avant la saison des pluies."
+      },
+      {
+        "eyebrow": "Semaines 28 à 34 · Finitions",
+        "titre": "Puis la maison prend son vrai visage.",
+        "texte": "Menuiseries, peinture, clôture et aménagements extérieurs. Nous rendons un chantier propre."
+      },
+      {
+        "eyebrow": "Semaine 34 · Remise des clés",
+        "titre": "Vous poussez la porte. Vous êtes chez vous.",
+        "texte": "Visite finale ensemble, levée des réserves et remise des clés."
+      }
+    ]
+  },
+  "services": {
+    "titre": "Tous vos travaux de construction, avec une seule entreprise.",
+    "lede": "Nous suivons votre chantier de bout en bout, pour qu'une seule entreprise soit responsable du résultat.",
+    "liste": [
+      {
+        "titre": "Construction neuve",
+        "texte": "Villas et immeubles, des fondations à la remise des clés.",
+        "image": 5
+      },
+      {
+        "titre": "Gros œuvre",
+        "texte": "Terrassement, fondations, élévation, dalles et toiture.",
+        "image": 3
+      },
+      {
+        "titre": "Rénovation et extension",
+        "texte": "Ajout d'un niveau, agrandissement, remise à neuf d'un bâtiment existant.",
+        "image": 7
+      },
+      {
+        "titre": "Finitions",
+        "texte": "Carrelage, enduits, peinture, plafonds et menuiseries.",
+        "image": 11
+      },
+      {
+        "titre": "Études et plans",
+        "texte": "Conception, plans et estimation du budget avant de lancer les travaux.",
+        "image": 1
+      }
+    ]
+  },
+  "cleEnMain": {
+    "nav": "Clé en main",
+    "image": 11,
+    "alt": "Photo d'illustration : séjour d'une maison livrée",
+    "eyebrow": "Clé en main",
+    "titre": "Vous avez le terrain. IGS livre le bâtiment.",
+    "lede": "Un seul interlocuteur pour les plans, les matériaux, les ouvriers et les contrôles. Vous recevez une maison prête à habiter.",
+    "points": [
+      "Devis détaillé avant le démarrage",
+      "Planning fixé ensemble",
+      "Paiement par étapes"
+    ]
+  },
+  "faq": [
+    {
+      "q": "Que signifie IGS ?",
+      "r": "IGS, c'est Innov Global Services SARL, entreprise de construction basée à Yaoundé."
+    },
+    {
+      "q": "Combien coûte une construction ?",
+      "r": "Cela dépend de la surface, du terrain et des finitions. Après la visite du site, nous vous remettons un devis détaillé."
+    },
+    {
+      "q": "Combien de temps durent les travaux ?",
+      "r": "Le délai dépend du projet. Il est fixé avec vous avant le démarrage."
+    },
+    {
+      "q": "Comment se passe le paiement ?",
+      "r": "Par étapes, liées à l'avancement du chantier."
+    },
+    {
+      "q": "Intervenez-vous hors de Yaoundé ?",
+      "r": "Contactez-nous : nous étudions chaque projet selon sa localisation."
+    }
+  ],
+  "contact": {
+    "titre": "Votre projet commence par une conversation.",
+    "lede": "Décrivez-nous vos travaux : nous vous rappelons pour organiser une visite.",
+    "formTitre": "Demander un devis",
+    "cta": "Envoyer ma demande",
+    "lieuPlaceholder": "Quartier, ville",
+    "projets": [
+      "Construction neuve",
+      "Gros œuvre",
+      "Rénovation / extension",
+      "Finitions",
+      "Études et plans",
+      "Autre"
+    ],
+    "messagePlaceholder": "Surface, type de bâtiment, délai souhaité",
+    "meta": "Sans engagement · Réponse sur WhatsApp"
+  },
+  "siteUrl": "https://pharel.cloud/maquettes/innov-global-services/"
+}
