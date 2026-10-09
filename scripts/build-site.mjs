@@ -13,7 +13,7 @@ const run = (cmd, cwd) => execSync(cmd, { cwd: path.join(racine, cwd), stdio: "i
 // Tout ce qui n'est pas du contenu public reste hors de _site.
 const EXCLUS = new Set([
   "_site", ".git", ".github", ".claude", ".vercel", "node_modules",
-  "brief-portal", "maquette-btp", "scripts", "vercel.json", "tiktok",
+  "brief-portal", "maquette-btp", "scripts", "vercel.json",
 ]);
 
 console.log("▸ Portail de brief");

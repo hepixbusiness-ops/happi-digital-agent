@@ -45,8 +45,8 @@
       zone.querySelector('.maj').textContent = (erreur || 'aucun code') + ' ' + (p.get('error_description') || '');
       return;
     }
-    var commande = 'node tiktok/auth.js code ' + compte + ' ' + encodeURIComponent(code);
-    zone.innerHTML = '<p>Autorisation reçue pour le compte <strong></strong>. Lance cette commande dans les 5 minutes (le code expire vite) :</p>' +
+    var commande = 'node auth.js code ' + compte + ' ' + encodeURIComponent(code);
+    zone.innerHTML = '<p>Autorisation reçue pour le compte <strong></strong>. Lance cette commande dans le dossier tiktok-agent, dans les 5 minutes (le code expire vite) :</p>' +
       '<pre style="white-space:pre-wrap;word-break:break-all;background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:1rem;font-size:.9rem"></pre>' +
       '<button class="btn-primary" type="button">Copier la commande</button>';
     zone.querySelector('strong').textContent = compte;
