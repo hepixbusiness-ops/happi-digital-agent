@@ -1,3 +1,4 @@
 _site/
 .vercel/
 node_modules/
+tiktok/out/

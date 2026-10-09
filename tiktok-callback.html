@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion TikTok | Pharel Happi</title>
+<meta name="description" content="Page de retour de l'autorisation TikTok de l'outil de publication Happi Digital.">
+<meta property="og:title" content="Connexion TikTok | Pharel Happi">
+<meta property="og:description" content="Page de retour de l'autorisation TikTok de l'outil de publication Happi Digital.">
+<meta property="og:url" content="https://pharel.cloud/tiktok-callback.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pharel.cloud/assets/photo.jpg">
+<meta property="og:locale" content="fr_CM">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1c1917">
+<link rel="canonical" href="https://pharel.cloud/tiktok-callback.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=20260919a">
+<style>
+  .doc { max-width: 760px; margin: 0 auto; padding: 6rem 1.5rem 5rem; color: var(--ink); }
+  .doc h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 1rem; }
+  .doc h2 { font-family: var(--font-display); font-size: 1.35rem; margin: 2.5rem 0 .75rem; }
+  .doc p, .doc li { color: var(--ink-soft); line-height: 1.7; }
+  .doc ul { padding-left: 1.25rem; }
+  .doc .maj { color: var(--muted); font-size: .9rem; }
+  .doc a { color: var(--accent-dark); }
+</style>
+</head>
+<body>
+<main class="doc">
+<h1>Connexion TikTok</h1>
+<div id="resultat"><p>Lecture de la réponse TikTok…</p></div>
+<script>
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var zone = document.getElementById('resultat');
+    var erreur = p.get('error');
+    var code = p.get('code');
+    var compte = (p.get('state') || '').split('.')[0];
+    if (erreur || !code) {
+      zone.innerHTML = '<p>TikTok n\'a pas donné son accord.</p><p class="maj"></p>';
+      zone.querySelector('.maj').textContent = (erreur || 'aucun code') + ' ' + (p.get('error_description') || '');
+      return;
+    }
+    var commande = 'node tiktok/auth.js code ' + compte + ' ' + encodeURIComponent(code);
+    zone.innerHTML = '<p>Autorisation reçue pour le compte <strong></strong>. Lance cette commande dans les 5 minutes (le code expire vite) :</p>' +
+      '<pre style="white-space:pre-wrap;word-break:break-all;background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:1rem;font-size:.9rem"></pre>' +
+      '<button class="btn-primary" type="button">Copier la commande</button>';
+    zone.querySelector('strong').textContent = compte;
+    zone.querySelector('pre').textContent = commande;
+    var bouton = zone.querySelector('button');
+    bouton.addEventListener('click', function () {
+      navigator.clipboard.writeText(commande).then(function () { bouton.textContent = 'Copié'; });
+    });
+  })();
+</script>
+</main>
+<footer>
+  <span class="footer-logo">Pharel<span>.</span>cloud</span>
+  <div class="footer-links">
+    <a href="/">Accueil</a>
+    <a href="/confidentialite.html">Confidentialité</a>
+    <a href="/conditions.html">Conditions</a>
+  </div>
+  <span class="footer-copy">© 2026 Pharel Happi, Yaoundé, Cameroun</span>
+</footer>
+</body>
+</html>
