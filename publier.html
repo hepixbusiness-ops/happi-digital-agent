@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publier sur TikTok | Pharel Happi</title>
+<meta name="description" content="Validation des vidéos de l'outil de publication TikTok de Happi Digital.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1c1917">
+<link rel="canonical" href="https://pharel.cloud/publier.html">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css?v=20260919a">
+<style>
+  body { background: var(--bg); }
+  .app { max-width: 560px; margin: 0 auto; padding: 32px 16px 96px; color: var(--ink); }
+  .app h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 7vw, 2.6rem); letter-spacing: -.02em; line-height: 1.1; }
+  .sous { color: var(--muted); margin: 8px 0 24px; }
+  .carte { background: var(--surface); border-radius: 24px; box-shadow: var(--shadow-md); padding: 16px; margin-bottom: 24px; border: 1px solid var(--line); }
+  .createur { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 600; }
+  .createur img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--bg-alt); }
+  .createur small { display: block; color: var(--muted); font-weight: 500; }
+  video { width: 100%; max-height: 70vh; border-radius: 16px; background: #000; display: block; }
+  label.champ { display: block; font-weight: 600; font-size: .92rem; margin: 16px 0 8px; }
+  textarea, select, input[type=password] { width: 100%; font: 500 1rem/1.4 var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line-strong); border-radius: 12px; padding: 12px; }
+  textarea { min-height: 112px; resize: vertical; }
+  textarea:focus, select:focus, input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .bascules { display: grid; gap: 8px; margin-top: 8px; }
+  .bascule { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-weight: 500; }
+  .bascule input { width: 22px; height: 22px; accent-color: var(--accent); }
+  .bascule.off { color: var(--muted); }
+  .note { font-size: .85rem; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+  .note a { color: var(--accent-dark); }
+  .actions { display: flex; gap: 8px; margin-top: 16px; }
+  .btn { flex: 1; border: 0; border-radius: 14px; padding: 16px; font: 700 1rem var(--font-body); cursor: pointer; transition: transform .2s var(--ease), opacity .2s; }
+  .btn:active { transform: scale(.98); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-pub { background: var(--ink); color: #fff; }
+  .btn-pub:hover:not(:disabled) { background: #000; }
+  .btn-ecart { flex: 0 0 auto; background: var(--bg-alt); color: var(--ink); }
+  .etat { margin-top: 12px; padding: 12px; border-radius: 12px; font-weight: 600; font-size: .92rem; }
+  .etat.ok { background: var(--green-wash); color: var(--green); }
+  .etat.err { background: rgba(200, 40, 40, .08); color: #a32020; }
+  .etat.info { background: var(--accent-wash); color: var(--accent-dark); }
+  .vide { text-align: center; color: var(--muted); padding: 48px 16px; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  @media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+<main class="app">
+  <h1>Vidéos à publier</h1>
+  <p class="sous">Regarde, ajuste la légende, choisis qui peut voir, puis publie sur TikTok.</p>
+  <div id="cle" hidden class="carte">
+    <label class="champ" for="cleInput">Clé d'accès</label>
+    <input type="password" id="cleInput" autocomplete="current-password">
+    <div class="actions"><button class="btn btn-pub" id="cleOk" type="button">Ouvrir</button></div>
+    <p class="note">La clé reste enregistrée sur ce téléphone uniquement.</p>
+  </div>
+  <div id="liste" aria-live="polite"></div>
+</main>
+<script>
+(function () {
+  var API = 'https://xtnroafkontdxzctehzg.supabase.co/functions/v1/tiktok-publier';
+  var CONF = { PUBLIC_TO_EVERYONE: 'Tout le monde', MUTUAL_FOLLOW_FRIENDS: 'Amis', FOLLOWER_OF_CREATOR: 'Abonnés', SELF_ONLY: 'Moi uniquement' };
+  var liste = document.getElementById('liste');
+  function lireCle() { try { return localStorage.getItem('cleTiktok') || ''; } catch (e) { return ''; } }
+  function ecrireCle(v) { try { localStorage.setItem('cleTiktok', v); } catch (e) {} }
+  function appel(corps) {
+    corps.cle = lireCle();
+    return fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corps) })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error(j.erreur || ('Erreur ' + r.status)); e.code = r.status; throw e; } return j; }); });
+  }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+  function etat(zone, cls, txt) { zone.className = 'etat ' + cls; zone.textContent = txt; zone.hidden = false; }
+
+  function carte(v, cr) {
+    var c = el('article', 'carte');
+    var tete = el('div', 'createur');
+    if (cr && cr.creator_avatar_url) { var a = el('img'); a.src = cr.creator_avatar_url; a.alt = ''; tete.appendChild(a); }
+    var n = el('div', null, cr && cr.creator_nickname ? cr.creator_nickname : v.account_id);
+    n.appendChild(el('small', null, cr && cr.creator_username ? '@' + cr.creator_username : 'Compte ' + v.account_id));
+    tete.appendChild(n); c.appendChild(tete);
+    var vid = el('video'); vid.src = v.url; vid.controls = true; vid.playsInline = true; vid.preload = 'metadata';
+    vid.setAttribute('aria-label', 'Aperçu : ' + (v.sujet || 'vidéo'));
+    c.appendChild(vid);
+
+    var zEtat = el('div', 'etat'); zEtat.hidden = true;
+    if (cr && cr.erreur) { etat(zEtat, 'err', 'Compte TikTok indisponible : ' + cr.erreur); c.appendChild(zEtat); return c; }
+
+    c.appendChild(el('label', 'champ', 'Légende'));
+    var leg = el('textarea'); leg.value = v.legende || ''; leg.maxLength = 2200; leg.id = 'leg-' + v.id; c.lastChild.htmlFor = leg.id; c.appendChild(leg);
+
+    c.appendChild(el('label', 'champ', 'Qui peut voir cette vidéo ?'));
+    var sel = el('select'); sel.id = 'conf-' + v.id; c.lastChild.htmlFor = sel.id;
+    var vide = el('option', null, 'Choisir…'); vide.value = ''; vide.disabled = true; vide.selected = true; sel.appendChild(vide);
+    ((cr && cr.privacy_level_options) || []).forEach(function (p) { var o = el('option', null, CONF[p] || p); o.value = p; sel.appendChild(o); });
+    c.appendChild(sel);
+
+    var bs = el('div', 'bascules');
+    function bascule(lib, desactive) {
+      var l = el('label', 'bascule' + (desactive ? ' off' : ''));
+      l.appendChild(el('span', null, lib + (desactive ? ' (désactivé sur ton compte)' : '')));
+      var i = el('input'); i.type = 'checkbox'; i.disabled = !!desactive; l.appendChild(i); bs.appendChild(l); return i;
+    }
+    var bCom = bascule('Autoriser les commentaires', cr && cr.comment_disabled);
+    var bDuo = bascule('Autoriser les duos', cr && cr.duet_disabled);
+    var bSti = bascule('Autoriser les collages', cr && cr.stitch_disabled);
+    var bCom2 = bascule('Contenu commercial (promotion)');
+    c.appendChild(bs);
+    var sousCom = el('div', 'bascules'); sousCom.hidden = true;
+    var lp = el('label', 'bascule'); lp.appendChild(el('span', null, 'Ma propre marque')); var bPropre = el('input'); bPropre.type = 'checkbox'; lp.appendChild(bPropre); sousCom.appendChild(lp);
+    var lm = el('label', 'bascule'); lm.appendChild(el('span', null, 'Contenu de marque (partenariat payé)')); var bMarque = el('input'); bMarque.type = 'checkbox'; lm.appendChild(bMarque); sousCom.appendChild(lm);
+    c.appendChild(sousCom);
+
+    var note = el('p', 'note');
+    function majNote() {
+      var txt = 'En publiant, tu acceptes la <a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank" rel="noopener">Music Usage Confirmation</a> de TikTok';
+      if (bMarque.checked) txt += ' et la <a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank" rel="noopener">Branded Content Policy</a>';
+      note.innerHTML = txt + '. La vidéo est publiée avec l’étiquette « Contenu généré par l’IA ». Le traitement par TikTok peut prendre quelques minutes.';
+    }
+    majNote(); c.appendChild(note);
+
+    var act = el('div', 'actions');
+    var pub = el('button', 'btn btn-pub', 'Publier'); pub.type = 'button';
+    var ecart = el('button', 'btn btn-ecart', 'Écarter'); ecart.type = 'button';
+    act.appendChild(pub); act.appendChild(ecart); c.appendChild(act); c.appendChild(zEtat);
+
+    function verifier() {
+      var ok = !!sel.value && (!bCom2.checked || bPropre.checked || bMarque.checked);
+      if (bMarque.checked && sel.value === 'SELF_ONLY') ok = false;
+      pub.disabled = !ok;
+    }
+    bCom2.addEventListener('change', function () { sousCom.hidden = !bCom2.checked; if (!bCom2.checked) { bPropre.checked = bMarque.checked = false; } majNote(); verifier(); });
+    [bPropre, bMarque].forEach(function (b) { b.addEventListener('change', function () { majNote(); verifier(); }); });
+    sel.addEventListener('change', verifier);
+    verifier();
+    if (v.statut === 'envoyee') { etat(zEtat, 'info', 'Déjà envoyée à TikTok, en cours de traitement.'); pub.disabled = true; }
+    if (v.statut === 'echec' && v.detail) etat(zEtat, 'err', 'Dernier essai : ' + v.detail);
+
+    pub.addEventListener('click', function () {
+      pub.disabled = ecart.disabled = true; pub.textContent = 'Publication…';
+      appel({ action: 'publier', id: v.id, legende: leg.value, confidentialite: sel.value, commentaires: bCom.checked, duo: bDuo.checked, stitch: bSti.checked, marquePropre: bPropre.checked, contenuMarque: bMarque.checked })
+        .then(function () { etat(zEtat, 'ok', 'Envoyée à TikTok. Elle apparaît sur ton profil d’ici quelques minutes.'); pub.textContent = 'Publiée'; })
+        .catch(function (e) { etat(zEtat, 'err', e.message); pub.textContent = 'Réessayer'; pub.disabled = ecart.disabled = false; });
+    });
+    ecart.addEventListener('click', function () {
+      ecart.disabled = true;
+      appel({ action: 'ecarter', id: v.id }).then(function () { c.remove(); if (!liste.children.length) videVue(); })
+        .catch(function (e) { etat(zEtat, 'err', e.message); ecart.disabled = false; });
+    });
+    return c;
+  }
+
+  function videVue() { liste.innerHTML = ''; liste.appendChild(el('p', 'vide', 'Aucune vidéo en attente. Les prochaines arrivent automatiquement.')); }
+
+  function charger() {
+    liste.innerHTML = ''; liste.appendChild(el('p', 'vide', 'Chargement…'));
+    appel({ action: 'liste' }).then(function (r) {
+      liste.innerHTML = '';
+      if (!r.videos.length) return videVue();
+      r.videos.forEach(function (v) { liste.appendChild(carte(v, r.createurs[v.account_id])); });
+    }).catch(function (e) {
+      if (e.code === 401) { document.getElementById('cle').hidden = false; liste.innerHTML = ''; return; }
+      liste.innerHTML = ''; var z = el('div', 'etat'); etat(z, 'err', 'Impossible de charger : ' + e.message); liste.appendChild(z);
+    });
+  }
+
+  document.getElementById('cleOk').addEventListener('click', function () {
+    ecrireCle(document.getElementById('cleInput').value.trim());
+    document.getElementById('cle').hidden = true; charger();
+  });
+  if (!lireCle()) document.getElementById('cle').hidden = false; else charger();
+})();
+</script>
+</body>
+</html>
