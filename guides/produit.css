@@ -69,3 +69,15 @@
 .couv.img { padding: 0; background: #17140f; } .couv.img img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; } .couv.img::after { display: none; }
 .lien-clair { display: inline-block; margin-top: 18px; font: 700 15px "Inter"; color: var(--or-p); text-decoration: none; }
 .ebook > .couv { text-decoration: none; } .ebook > .couv.img { display: block; } .pack h3 a { text-decoration: none; }
+.merci { padding: 70px 0 90px; }
+.merci-carte { padding: 44px 36px; border-radius: 28px; background: var(--blanc); box-shadow: var(--ombre); text-align: center; }
+.merci-carte h1 { margin: 18px 0 12px; font-size: clamp(30px, 4vw, 44px); } .merci-carte p { color: var(--doux); }
+.merci-rond { display: inline-grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: var(--fond2); font: 800 34px "Inter"; color: var(--or); }
+.merci-rond i { width: 34px; height: 34px; border-radius: 50%; border: 4px solid #e3ddd0; border-top-color: var(--or); animation: tourne 1s linear infinite; }
+@keyframes tourne { to { transform: rotate(360deg); } }
+.merci-rond.ok { background: #e8efe5; color: var(--vert); } .merci-rond.ko { background: #f6e6df; color: var(--rouge); }
+.merci-liens { display: grid; gap: 10px; margin: 26px 0 16px; } .merci-liens .btn { width: 100%; }
+.note-sombre { color: var(--gris); font-size: 14px; }
+.merci-aide { margin-top: 24px; padding: 26px; border-radius: 22px; background: var(--fond2); text-align: center; }
+.merci-aide b { display: block; font: 600 22px "Fraunces"; } .merci-aide p { margin: 6px 0 16px; color: var(--doux); } .merci-aide small { display: block; margin-top: 12px; color: var(--gris); }
+.annule { position: sticky; top: 0; z-index: 80; padding: 14px 20px; background: #f6e6df; color: var(--rouge); text-align: center; font: 700 15px "Inter"; }
