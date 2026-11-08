@@ -406,6 +406,7 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   var declencheur = null;
   var formule = null;          // { nom, prix } quand une formule a été cliquée
   var besoinImpose = null;     // 'site' ou 'design' quand l'origine du clic le dit
+  var motif = '';              // phrase d'ouverture fournie par data-motif
   var etape = 1;
 
   // D'où vient le visiteur : cette information part avec le message
@@ -535,6 +536,7 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   function ouvrir(el) {
     declencheur = el;
     formule = el.dataset.formule ? { nom: el.dataset.formule, prix: el.dataset.prix || '' } : null;
+    motif = el.dataset.motif || '';
     besoinImpose = formule ? 'site' : (el.hasAttribute('data-creatif') ? 'design' : null);
 
     blocBesoin.hidden = !!besoinImpose;
@@ -584,7 +586,10 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     var b = besoin();
     var lignes = ['Bonjour Pharel,', ''];
 
-    if (formule) {
+    // data-motif : phrase d'ouverture propre au bouton cliqué
+    if (motif && !formule) {
+      lignes.push(motif);
+    } else if (formule) {
       lignes.push('Je suis intéressé(e) par la formule ' + formule.nom +
         (formule.prix ? ' (' + formule.prix + ')' : '') + '.');
     } else if (b === 'site') {
@@ -620,8 +625,9 @@ var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     return lignes.join('\n');
   }
 
-  // Tout lien WhatsApp du site passe par le questionnaire
-  document.querySelectorAll('a[href*="wa.me"]').forEach(function (lien) {
+  // Tout lien WhatsApp du site passe par le questionnaire,
+  // sauf ceux marqués data-direct, qui ouvrent WhatsApp tels quels.
+  document.querySelectorAll('a[href*="wa.me"]:not([data-direct])').forEach(function (lien) {
     lien.addEventListener('click', function (e) {
       e.preventDefault();
       ouvrir(lien);
