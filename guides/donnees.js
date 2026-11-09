@@ -134,7 +134,8 @@ var BOUTIQUE = {
     "PDF à garder"
    ],
    "reco": true,
-   "page": "pack-complet.html"
+   "page": "pack-complet.html",
+   "chariow": "https://slfnpoez.mychariow.com/prd_owkohc8l"
   },
   {
    "id": "pack-audit",

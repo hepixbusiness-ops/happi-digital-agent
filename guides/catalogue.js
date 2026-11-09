@@ -49,7 +49,7 @@
       '<div class="pack-prix">' + (p.barre ? "<s>" + fcfa(p.barre) + "</s>" : "") + "<b>" + fcfa(p.prix) + "</b></div>" +
       (p.barre ? '<div class="eco">Tu économises ' + fcfa(p.barre - p.prix) + "</div>" : "") +
       "<ul>" + p.inclus.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
-      '<a class="btn ' + (p.reco ? "btn-or" : "btn-clair") + '" href="' + wa(texte) + '" target="_blank" rel="noopener">' + (tousDispo ? "Choisir" : "Être prévenu") + "</a></div>";
+      '<a class="btn ' + (p.reco ? "btn-or" : "btn-clair") + '" href="' + (tousDispo && p.chariow ? p.chariow : wa(texte)) + '" target="_blank" rel="noopener" data-direct>' + (tousDispo ? "Choisir" : "Être prévenu") + "</a></div>";
   }).join("");
 
   // apparition au défilement
