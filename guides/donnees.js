@@ -34,7 +34,8 @@ var BOUTIQUE = {
     "Présenter tes prix",
     "WhatsApp et formulaires qui qualifient"
    ],
-   "couv": "img/couv-site-qui-vend.webp"
+   "couv": "img/couv-site-qui-vend.webp",
+   "chariow": "https://slfnpoez.mychariow.com/prd_ycszt0kb"
   },
   {
    "id": "psychologie",
@@ -51,7 +52,8 @@ var BOUTIQUE = {
     "L'ancrage",
     "L'effet leurre"
    ],
-   "couv": "img/couv-psychologie.webp"
+   "couv": "img/couv-psychologie.webp",
+   "chariow": "https://slfnpoez.mychariow.com/prd_v33e3jfe"
   },
   {
    "id": "google",
@@ -68,7 +70,8 @@ var BOUTIQUE = {
     "Semaine 4 · Actualités et rythme",
     "Le référencement local"
    ],
-   "couv": "img/couv-google.webp"
+   "couv": "img/couv-google.webp",
+   "chariow": "https://slfnpoez.mychariow.com/prd_pzbygxjt"
   },
   {
    "id": "whatsapp",
@@ -85,7 +88,8 @@ var BOUTIQUE = {
     "Les relances qui ne dérangent pas",
     "Catalogue et statuts"
    ],
-   "couv": "img/couv-whatsapp.webp"
+   "couv": "img/couv-whatsapp.webp",
+   "chariow": "https://slfnpoez.mychariow.com/prd_7rg1muq9"
   },
   {
    "id": "videos",
@@ -102,7 +106,8 @@ var BOUTIQUE = {
     "Monter les premières secondes",
     "Sous-titres et son"
    ],
-   "couv": ""
+   "couv": "img/couv-videos.webp",
+   "chariow": "https://slfnpoez.mychariow.com/prd_z0dhvwpp"
   }
  ],
  "packs": [

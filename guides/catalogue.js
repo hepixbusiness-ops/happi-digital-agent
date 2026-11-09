@@ -19,7 +19,7 @@
   var grille = document.getElementById("liste-ebooks");
   if (grille) grille.innerHTML = B.ebooks.map(function (e) {
     var dispo = e.statut === "disponible";
-    var lien = dispo
+    var lien = dispo && e.chariow ? e.chariow : dispo
       ? wa("Bonjour Pharel, je veux acheter l'ebook « " + e.titre + " » (" + fcfa(e.prix) + "). Je paie par : MTN MoMo / Orange Money (je précise).")
       : wa("Bonjour Pharel, préviens-moi à la sortie de l'ebook « " + e.titre + " ».");
     var page = e.id + ".html";
