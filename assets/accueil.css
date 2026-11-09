@@ -347,3 +347,13 @@
   .ac-fact { padding: 1.1rem .8rem; }
   .ac-fact b { font-size: 1.25rem; }
 }
+
+/* ── Illustrations (Higgsfield) ──────────────────────────── */
+.ac-photo { margin: 0; }
+.ac-photo img { width: 100%; height: auto; display: block; border-radius: 22px; box-shadow: var(--shadow-md); }
+.ac-photo-large { margin-bottom: clamp(2rem, 4vw, 2.8rem); }
+.ac-photo-large img { aspect-ratio: 16 / 7; object-fit: cover; object-position: center 35%; }
+.ac-photo-final { max-width: 620px; margin: 0 auto 2.6rem; }
+.ac-photo-final img { aspect-ratio: 16 / 10; object-fit: cover; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .7); }
+.ac-service:not(.ac-service-main) .ac-illu img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 640px) { .ac-photo-large img { aspect-ratio: 4 / 3; object-position: 40% center; } }

@@ -33,7 +33,7 @@
         "<ul>" + e.sommaire.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
         '<a class="voir" href="' + page + '">Tout le contenu et pourquoi le lire →</a>' +
         '<div class="ebook-pied"><div><b>' + fcfa(e.prix) + "</b><small>PDF · " + e.pages + " pages</small></div>" +
-        '<a class="btn ' + (dispo ? "btn-or" : "btn-clair") + '" href="' + lien + '" target="_blank" rel="noopener" data-direct' + (dispo ? ' data-acheter="' + e.id + '"' : "") + '>' + (dispo ? "Acheter" : "Me prévenir") + "</a></div>" +
+        '<a class="btn ' + (dispo ? "btn-or" : "btn-clair") + '" href="' + lien + '" target="_blank" rel="noopener" data-direct>' + (dispo ? "Acheter" : "Me prévenir") + "</a></div>" +
       "</div></article>";
   }).join("");
 
@@ -49,7 +49,7 @@
       '<div class="pack-prix">' + (p.barre ? "<s>" + fcfa(p.barre) + "</s>" : "") + "<b>" + fcfa(p.prix) + "</b></div>" +
       (p.barre ? '<div class="eco">Tu économises ' + fcfa(p.barre - p.prix) + "</div>" : "") +
       "<ul>" + p.inclus.map(function (s) { return "<li>" + esc(s) + "</li>"; }).join("") + "</ul>" +
-      '<a class="btn ' + (p.reco ? "btn-or" : "btn-clair") + '" href="' + wa(texte) + '" target="_blank" rel="noopener" data-direct' + (tousDispo && p.id === "pack-complet" ? ' data-acheter="pack-complet"' : "") + '>' + (tousDispo ? (p.id === "pack-audit" ? "En parler" : "Choisir") : "Être prévenu") + "</a></div>";
+      '<a class="btn ' + (p.reco ? "btn-or" : "btn-clair") + '" href="' + wa(texte) + '" target="_blank" rel="noopener">' + (tousDispo ? "Choisir" : "Être prévenu") + "</a></div>";
   }).join("");
 
   // apparition au défilement
