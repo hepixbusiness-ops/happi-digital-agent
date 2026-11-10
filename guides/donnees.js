@@ -35,7 +35,7 @@ var BOUTIQUE = {
     "WhatsApp et formulaires qui qualifient"
    ],
    "couv": "img/couv-site-qui-vend.webp",
-   "chariow": "https://slfnpoez.mychariow.com/prd_ycszt0kb"
+   "chariow": "https://slfnpoez.mychariow.com/prd_ycszt0kb?chw_campaign=SCW8NIVM5J"
   },
   {
    "id": "psychologie",
@@ -53,7 +53,7 @@ var BOUTIQUE = {
     "L'effet leurre"
    ],
    "couv": "img/couv-psychologie.webp",
-   "chariow": "https://slfnpoez.mychariow.com/prd_v33e3jfe"
+   "chariow": "https://slfnpoez.mychariow.com/prd_v33e3jfe?chw_campaign=SCW8NIVM5J"
   },
   {
    "id": "google",
@@ -71,7 +71,7 @@ var BOUTIQUE = {
     "Le référencement local"
    ],
    "couv": "img/couv-google.webp",
-   "chariow": "https://slfnpoez.mychariow.com/prd_pzbygxjt"
+   "chariow": "https://slfnpoez.mychariow.com/prd_pzbygxjt?chw_campaign=SCW8NIVM5J"
   },
   {
    "id": "whatsapp",
@@ -89,7 +89,7 @@ var BOUTIQUE = {
     "Catalogue et statuts"
    ],
    "couv": "img/couv-whatsapp.webp",
-   "chariow": "https://slfnpoez.mychariow.com/prd_7rg1muq9"
+   "chariow": "https://slfnpoez.mychariow.com/prd_7rg1muq9?chw_campaign=SCW8NIVM5J"
   },
   {
    "id": "videos",
@@ -107,7 +107,7 @@ var BOUTIQUE = {
     "Sous-titres et son"
    ],
    "couv": "img/couv-videos.webp",
-   "chariow": "https://slfnpoez.mychariow.com/prd_z0dhvwpp"
+   "chariow": "https://slfnpoez.mychariow.com/prd_z0dhvwpp?chw_campaign=SCW8NIVM5J"
   }
  ],
  "packs": [
@@ -135,7 +135,7 @@ var BOUTIQUE = {
    ],
    "reco": true,
    "page": "pack-complet.html",
-   "chariow": "https://slfnpoez.mychariow.com/prd_owkohc8l"
+   "chariow": "https://slfnpoez.mychariow.com/prd_owkohc8l?chw_campaign=SCW8NIVM5J"
   },
   {
    "id": "pack-audit",
