@@ -4,5 +4,17 @@
   "installCommand": "echo \"Dépendances installées par scripts/build-site.mjs\"",
   "buildCommand": "node scripts/build-site.mjs",
   "outputDirectory": "_site",
-  "cleanUrls": false
+  "cleanUrls": false,
+  "redirects": [
+    {
+      "source": "/guides/guide-gratuit-pharel.pdf",
+      "destination": "https://slfnpoez.mychariow.com/prd_gecj6oaw",
+      "permanent": false
+    },
+    {
+      "source": "/assets/guide-gratuit-clients-en-ligne.pdf",
+      "destination": "https://slfnpoez.mychariow.com/prd_gecj6oaw",
+      "permanent": false
+    }
+  ]
 }
